@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import cn from "classnames";
 import { Link } from "react-router-dom";
 
@@ -11,11 +11,15 @@ import classes from "./sidebar.module.css";
 import {
     DashboardOutlined,
     FileAddOutlined,
+    MenuOutlined,
     UnorderedListOutlined,
 } from "@ant-design/icons";
 
 import Logo from "../../components/Logo";
 import Icon from "@ant-design/icons";
+import { SizeType } from "antd/lib/config-provider/SizeContext";
+import { Size } from "../../types/app.types";
+import { useWindowSize } from "../../utils/useWindowSize";
 
 interface Props {
     classes?: object;
@@ -29,6 +33,8 @@ export type SideBarItemType = {
 };
 
 const SideBar = ({ classes: propsClasses }: Props) => {
+    const [hide, setHide] = useState<boolean>(true);
+
     const navigation = [
         {
             name: "Sinh viên",
@@ -87,6 +93,42 @@ const SideBar = ({ classes: propsClasses }: Props) => {
             );
         });
     };
+
+    const size: Size = useWindowSize();
+
+    const { width } = size || {};
+
+    if (width && width <= 1024) {
+        return (
+            <React.Fragment>
+                <button
+                    className={classes.toggleBtn}
+                    onClick={() => setHide((value) => !value)}
+                >
+                    {(hide && <MenuOutlined />) || "X"}
+                </button>
+                {!hide && (
+                    <div
+                        className={classes.mask}
+                        onClick={() => setHide(true)}
+                    ></div>
+                )}
+                <div
+                    className={cn(classes.root, {
+                        [classes.hide]: hide,
+                    })}
+                >
+                    <Logo
+                        classes={{
+                            root: classes.LogoRoot,
+                            img: classes.LogoImg,
+                        }}
+                    />
+                    {renderLevels(navigation)}
+                </div>
+            </React.Fragment>
+        );
+    }
 
     return (
         <div className={classes.root}>

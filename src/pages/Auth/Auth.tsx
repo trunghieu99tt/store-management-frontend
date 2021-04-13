@@ -43,12 +43,12 @@ const Auth = () => {
         const { username, password } = values;
 
         if (username === USERNAME && password === PASSWORD) {
-            message.success("Login Successful");
+            message.success("Đăng nhập thành công");
             setAuth(true);
             history.push("/");
             setUser(true);
         } else {
-            message.error("Incorrect username or password");
+            message.error("Thông tin đăng nhập không chính xác");
         }
     };
 
@@ -65,7 +65,7 @@ const Auth = () => {
                 onFinishFailed={onFinishFailed}
                 className={classes.form}
             >
-                <h2 className={classes.title}>Login Form</h2>
+                <h2 className={classes.title}>Đăng nhập</h2>
                 <Form.Item
                     label="Username"
                     name="username"

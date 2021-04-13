@@ -11,3 +11,8 @@ export interface iStudent {
     owe?: number | null;
     ok?: boolean | null;
 }
+
+export interface Size {
+    width: number | undefined;
+    height: number | undefined;
+}

@@ -1,12 +1,19 @@
-import { UserOutlined } from "@ant-design/icons";
 import React, { useState } from "react";
 import cn from "classnames";
 
-import classes from "./userLogo.module.css";
-import { useSetRecoilState } from "recoil";
-import { authState } from "../../states/app.state";
-import { useLocalStorage } from "../../utils/useLocalStorage";
+// talons
 import { useHistory } from "react-router";
+import { useSetRecoilState } from "recoil";
+import { useLocalStorage } from "../../utils/useLocalStorage";
+
+// icons
+import { UserOutlined } from "@ant-design/icons";
+
+// styles
+import classes from "./userLogo.module.css";
+
+// states
+import { authState } from "../../states/app.state";
 
 const UserLogo = () => {
     const [showDropdown, setShowDropdown] = useState(false);

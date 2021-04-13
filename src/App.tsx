@@ -30,13 +30,11 @@ const App = () => {
         if (!user) {
             history.push("/auth");
         } else {
-            console.log("Go here");
             setStudents(localStudents);
         }
     }, []);
 
     useEffect(() => {
-        console.log(`students`, students);
         setLocalStudents(students);
     }, [students, setLocalStudents]);
 

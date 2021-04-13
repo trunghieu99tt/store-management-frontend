@@ -1,5 +1,5 @@
 import React from "react";
-import { FORM_TYPE, iStudent } from "../../types/app.types";
+import { FORM_TYPE } from "../../types/app.types";
 
 // components
 import {
