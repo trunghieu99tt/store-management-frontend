@@ -1,0 +1,11 @@
+.root {
+    display: flex;
+}
+
+.sidebar {
+    max-width: 300px;
+}
+
+.main {
+    flex: 1;
+}
