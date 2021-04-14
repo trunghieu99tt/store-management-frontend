@@ -1,6 +1,11 @@
 .root {
-    font-size: 4rem;
-    text-transform: uppercase;
-    font-weight: bold;
-    text-align: center;
+    margin-bottom: 2rem;
+    height: 10rem;
+    display: flex;
+    justify-content: center;
+}
+
+.img {
+    object-fit: contain;
+    height: 100%;
 }

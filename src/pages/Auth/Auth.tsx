@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 // talons
 import { useRecoilState } from "recoil";
@@ -27,19 +27,40 @@ interface iLoginForm {
     password: string;
 }
 
+// Các biến này được set trong env
 const USERNAME = process.env.REACT_APP_USERNAME;
 const PASSWORD = process.env.REACT_APP_PASSWORD;
 
 const Auth = () => {
     const [auth, setAuth] = useRecoilState(authState);
     const [user, setUser] = useLocalStorage("user", false);
+    const [failedCounter, setFailedCounter] = useState<number>(0);
+    const [fineTime, setFineTime] = useState<Date | null>(null);
     const history = useHistory();
 
+    // Nếu user đã đăng nhập rồi thì không cho vào trang login nữa
+    // Mà sẽ điều hướng về trang chủ.
     useEffect(() => {
         if (user) history.push("/");
     }, []);
 
     const onFinish = (values: iLoginForm) => {
+        if (fineTime) {
+            const dateNow = new Date();
+            const diffTime = Math.abs(dateNow.getTime() - fineTime.getTime());
+            if (diffTime / 1000 >= 5 * 60) {
+                handleLogin(values);
+            } else {
+                message.error(
+                    "Bạn đã nhập sai thông tin quá nhiều, xin chờ ít nhất 5 phút và thử lại"
+                );
+            }
+        } else {
+            handleLogin(values);
+        }
+    };
+
+    const handleLogin = (values: iLoginForm) => {
         const { username, password } = values;
 
         if (username === USERNAME && password === PASSWORD) {
@@ -49,6 +70,11 @@ const Auth = () => {
             setUser(true);
         } else {
             message.error("Thông tin đăng nhập không chính xác");
+            setFailedCounter((value) => value + 1);
+            if (failedCounter >= 5) {
+                setFineTime(new Date());
+                setFailedCounter(0);
+            }
         }
     };
 

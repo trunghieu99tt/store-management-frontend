@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 /**
  * A [React Hook]{@link https://reactjs.org/docs/hooks-intro.html}
- * that helps with manipulating data from local storage
+ * Hàm giúp quản lí data từ local storage
  * @kind function.
  *
  *
@@ -14,23 +14,21 @@ import { useEffect, useState } from "react";
  * */
 
 const useLocalStorage = (key: string, initialValue: any) => {
-    // State to store our value
-    // Pass initial state function to useState so logic is only executed once
     const [storedValue, setStoredValue] = useState(() => {
         try {
-            // Get from local storage by key
+            // Lấy ra giá trị từ local storage theo key truyền vào
             const item = window.localStorage.getItem(key);
-            // Parse stored json or if none return initialValue
+
+            // COnvert dữ liệu
             return item ? JSON.parse(item) : initialValue;
         } catch (error) {
-            // If error also return initialValue
+            // Nếu không tồn tại object với thằng key truyền vào thì trả về giá trị ban đầu truyền vào
             console.log(error);
             return initialValue;
         }
     });
 
-    // Return a wrapped version of useState's setter function that ...
-    // ... persists the new value to localStorage.
+    // Hàm  set giá trị mới cho object trong localstorage
     const setValue = (value: any) => {
         try {
             // Allow value to be a function so we have same API as useState

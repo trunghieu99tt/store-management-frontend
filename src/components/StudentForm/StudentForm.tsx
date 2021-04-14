@@ -137,6 +137,7 @@ const StudentForm = ({ view: propsView }: Props) => {
                 <Form.Item label="Số tiền đã đóng" name="paid">
                     <InputNumber
                         disabled={view === "VIEW"}
+                        // Đây là hàm để format lại giá trị của số
                         formatter={(value) =>
                             `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                         }
