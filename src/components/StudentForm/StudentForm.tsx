@@ -1,5 +1,7 @@
 import React from "react";
-import { FORM_TYPE } from "../../types/app.types";
+
+// talons
+import { useStudentForm } from "../../talons/useStudentForm";
 
 // components
 import {
@@ -12,8 +14,11 @@ import {
     Switch,
 } from "antd";
 
+// classes
 import classes from "./studentForm.module.css";
-import { useStudentForm } from "../../talons/useStudentForm";
+
+// types
+import { FORM_TYPE } from "../../types/app.types";
 
 interface Props {
     view: FORM_TYPE;
