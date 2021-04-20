@@ -1,0 +1,102 @@
+.root {
+    height: 100vh;
+    width: 300px;
+    max-width: 100vw;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    /* background: #232944; */
+    color: #fff;
+    transform: all 0.2s;
+}
+
+.root.hide {
+    width: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.toggleBtn {
+    position: absolute;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: none;
+    top: 1rem;
+    left: 2rem;
+    width: 5rem;
+    height: 5rem;
+    z-index: 2;
+}
+
+.LogoRoot {
+    margin: 0;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.LogoImg {
+    filter: invert(1);
+    object-fit: contain;
+}
+
+.item {
+    display: flex;
+    height: 44px;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 15px;
+    padding: 10px 16px;
+    overflow: hidden;
+    width: 100%;
+    color: #000;
+    transition: all 0.2s;
+}
+
+.item:hover {
+    background-color: #287cf2;
+    color: #fff;
+}
+
+.itemName {
+    font-size: 1.4rem;
+    font-weight: 500;
+}
+
+.btn {
+    width: 100%;
+    border: none;
+    background-color: transparent;
+}
+
+.btn:hover {
+    /* background-color: rgba(255, 255, 255, 0.08); */
+}
+
+.itemActive {
+    background: #7467ef !important;
+    color: #fff !important;
+    border-radius: 4px !important;
+}
+
+@media (max-width: 1025px) {
+    .root {
+        position: fixed;
+        left: 0;
+        height: 100%;
+        z-index: 1;
+    }
+}
