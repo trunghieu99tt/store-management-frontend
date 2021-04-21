@@ -70,7 +70,6 @@ const StudentList = (props: Props) => {
         },
     ];
 
-    // Số bản ghi ở mỗi trang
     const pageSize = 20;
     const [students, setStudents] = useRecoilState(studentState);
     const [data, setData] = useState<iStudent[]>([]);
@@ -80,31 +79,18 @@ const StudentList = (props: Props) => {
         if (data.length === 0) setData(students);
     }, [students]);
 
-    /**
-     * Hàm thực thi nhiệm vụ search
-     */
     const handleSearch = (values: any) => {
         const { studentId } = values;
-
-        // Trả về 1 list gồm danh sách sinh viên có mã sinh viên chứa từ khóa vừa nhập
-        // (chú ý ở đây có phân biệt chữ hoa chữ thường)
         const newData =
             students?.filter((item) => item.studentId.includes(studentId)) ||
             [];
         setData(newData);
     };
 
-    /**
-     *  Hàm này được gọi mỗi khi có sự thay đổi trong table (ví dụ như sort, thay đổi trang)
-     */
     const handleChangeTable = (pagination: any) => {
-        // Ở đây chúng ta chỉ quan tâm sự thay đổi về trang
         setCurrentPage(pagination.current);
     };
 
-    /**
-     * Hàm thực hiện xác  nhận xóa
-     */
     const onDelete = (id: string) => {
         Modal.error({
             title: "Xóa?",
@@ -115,25 +101,15 @@ const StudentList = (props: Props) => {
         });
     };
 
-    /**
-     * Hàm xóa
-     */
     const handleDelete = (id: string) => {
-        // Đơn giản nhất là lọc bỏ sinh viên nào có id trùng với id của sinh viên cần bị xóa
         const newStudents = students.filter((item) => item.id !== id);
-
-        // Update lại danh sách sinh viên toàn cục, danh sách sinh viên cục bộ
-        // Set lại trang trở về 1
         setStudents(newStudents);
         setData(newStudents);
         setCurrentPage(1);
     };
 
-    // Phục vụ phân trang
     const from = pageSize * (currentPage - 1);
     const to = pageSize * currentPage;
-
-    // Cắt mảng dữ liệu từ from tới to để hiển thị
     const currentShowData = data?.slice(from, Math.min(to, data.length));
 
     return (

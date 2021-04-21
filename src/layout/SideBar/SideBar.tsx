@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import cn from "classnames";
 import { Link } from "react-router-dom";
 
+// talons
+import { useWindowSize } from "../../utils/useWindowSize";
+
 // components
 import ExpansionPanel from "./ExpansionPanel";
 
@@ -16,10 +19,9 @@ import {
 } from "@ant-design/icons";
 
 import Logo from "../../components/Logo";
-import Icon from "@ant-design/icons";
-import { SizeType } from "antd/lib/config-provider/SizeContext";
+
+// types
 import { Size } from "../../types/app.types";
-import { useWindowSize } from "../../utils/useWindowSize";
 
 interface Props {
     classes?: object;
@@ -37,20 +39,9 @@ const SideBar = ({ classes: propsClasses }: Props) => {
 
     const navigation = [
         {
-            name: "Sinh viên",
+            name: "Doanh thu",
             icon: <DashboardOutlined />,
-            children: [
-                {
-                    name: "Danh sách",
-                    icon: <UnorderedListOutlined />,
-                    path: "student/list",
-                },
-                {
-                    name: "Thêm sinh viên",
-                    icon: <FileAddOutlined />,
-                    path: "student/add",
-                },
-            ],
+            path: "revenue",
         },
     ];
 

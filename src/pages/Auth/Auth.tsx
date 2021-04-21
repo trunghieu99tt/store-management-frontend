@@ -27,7 +27,6 @@ interface iLoginForm {
     password: string;
 }
 
-// Các biến này được set trong env
 const USERNAME = process.env.REACT_APP_USERNAME;
 const PASSWORD = process.env.REACT_APP_PASSWORD;
 
@@ -38,8 +37,6 @@ const Auth = () => {
     const [fineTime, setFineTime] = useState<Date | null>(null);
     const history = useHistory();
 
-    // Nếu user đã đăng nhập rồi thì không cho vào trang login nữa
-    // Mà sẽ điều hướng về trang chủ.
     useEffect(() => {
         if (user) history.push("/");
     }, []);

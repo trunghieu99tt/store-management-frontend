@@ -16,6 +16,7 @@ import "antd/dist/antd.css";
 import "./App.css";
 import { useRecoilState } from "recoil";
 import { authState, studentState } from "./states/app.state";
+import RevenueList from "./components/Revenue/RevenueList";
 
 const App = () => {
     const [user, setUser] = useLocalStorage("user", false);
@@ -42,7 +43,7 @@ const App = () => {
         <React.Fragment>
             <Switch>
                 <Route exact path="/" component={StudentList} />
-                <Route exact path="/student/list" component={StudentList} />
+
                 <Route
                     exact
                     path="/auth"
@@ -51,6 +52,10 @@ const App = () => {
                     }
                     component={Auth}
                 ></Route>
+
+                <Route exact path="/revenue" component={RevenueList} />
+
+                <Route exact path="/student/list" component={StudentList} />
                 <Route
                     exact
                     path="/student/add"
