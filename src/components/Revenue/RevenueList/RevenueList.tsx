@@ -1,12 +1,22 @@
-import { Button, DatePicker, Form, Input, Space, Table } from "antd";
 import React from "react";
 import { Link } from "react-router-dom";
+
+// talons
 import { useRevenueList } from "../../../talons/Revenue/useRevenueList";
-import { iRevenue } from "../../../types/revenue.types";
+
+// utils
 import mergeClasses from "../../../utils/mergeClasses";
+
+// components
+import { Button, DatePicker, Form, Space, Table } from "antd";
 
 // styles
 import defaultClasses from "./revenueList.module.css";
+
+// types
+import { iRevenue } from "../../../types/revenue.types";
+import { iBankAccount } from "../../../types/bankAccount.types";
+import { iStaff } from "../../../types/user.types";
 
 interface Props {
     classes?: object;
@@ -18,6 +28,7 @@ const RevenueList = ({ classes: propsClasses }: Props) => {
     const {
         data,
         pageSize,
+        totalNumber,
 
         onDelete,
         handleSearch,
@@ -31,31 +42,70 @@ const RevenueList = ({ classes: propsClasses }: Props) => {
             key: "id",
         },
         {
+            title: "Tên",
+            dataIndex: "name",
+            key: "name",
+            width: 300,
+        },
+        {
             title: "Mô tả",
             dataIndex: "description",
             key: "description",
             width: 300,
+            render: (record: string) => {
+                if (record.length > 50) return <p>{record.slice(0, 50)}...</p>;
+                return <p>{record}</p>;
+            },
         },
-
+        {
+            title: "Ngày tạo",
+            dataIndex: "createdAt",
+            key: "createdAt",
+            width: 300,
+            render: (record: Date) => {
+                return <p>{new Date(record).toLocaleDateString()}</p>;
+            },
+        },
+        {
+            title: "Số lượng",
+            dataIndex: "quantity",
+            key: "quantity",
+            width: 150,
+        },
+        {
+            title: "Đơn giá",
+            dataIndex: "priceUnit",
+            key: "priceUnit",
+            width: 150,
+        },
         {
             title: "Tổng tiền",
             dataIndex: "total",
             key: "total",
-            width: 300,
+            width: 150,
         },
 
         {
-            title: "Phương thức thanh toán",
-            dataIndex: "paymentMethod",
-            key: "paymentMethod",
+            title: "Số tài khoản ngân hàng",
+            dataIndex: "bankAccount",
+            key: "bankAccount",
             width: 300,
+            render: (record: iBankAccount) => {
+                return <p>{record.accountNumber}</p>;
+            },
         },
-
         {
-            title: "Mã tài khoản ngân hàng",
-            dataIndex: "bankAccountID",
-            key: "bankAccountID",
+            title: "Nhân viên ",
+            dataIndex: "staff",
+            key: "staff",
             width: 300,
+            render: (record: iStaff) => {
+                return (
+                    <p>
+                        {record.id} - {record.name}
+                    </p>
+                );
+            },
         },
 
         {
@@ -63,8 +113,11 @@ const RevenueList = ({ classes: propsClasses }: Props) => {
             key: "action",
             render: (text: any, record: iRevenue) => (
                 <Space size="middle">
-                    <Link to={`/student/view/${record.id}`}>
-                        <Button type="primary">Xem chi tiết</Button>
+                    <Link to={`/revenue/view/${record.id}`}>
+                        <Button type="primary">Xem</Button>
+                    </Link>
+                    <Link to={`/revenue/edit/${record.id}`}>
+                        <Button type="primary">Sửa</Button>
                     </Link>
                     <Button
                         type="primary"
@@ -81,6 +134,10 @@ const RevenueList = ({ classes: propsClasses }: Props) => {
 
     return (
         <div className={classes.root}>
+            <Link to="/revenue/add">
+                <Button type="primary">Thêm mới</Button>
+            </Link>
+
             <div className={classes.header}>
                 <Form layout="inline" onFinish={handleSearch}>
                     <Form.Item label="Tìm kiếm theo ngày" name="createdAt">
@@ -98,7 +155,7 @@ const RevenueList = ({ classes: propsClasses }: Props) => {
                 dataSource={data}
                 pagination={{
                     pageSize: pageSize,
-                    total: data.length,
+                    total: totalNumber,
                 }}
                 onChange={handleChangeTable}
                 scroll={{ x: "500px" }}

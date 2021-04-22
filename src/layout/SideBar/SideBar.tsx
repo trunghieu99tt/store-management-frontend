@@ -13,9 +13,8 @@ import classes from "./sidebar.module.css";
 
 import {
     DashboardOutlined,
-    FileAddOutlined,
     MenuOutlined,
-    UnorderedListOutlined,
+    TransactionOutlined,
 } from "@ant-design/icons";
 
 import Logo from "../../components/Logo";
@@ -39,9 +38,20 @@ const SideBar = ({ classes: propsClasses }: Props) => {
 
     const navigation = [
         {
-            name: "Doanh thu",
+            name: "Quản lí thu chi",
             icon: <DashboardOutlined />,
-            path: "revenue",
+            children: [
+                {
+                    name: "Quản lí thu",
+                    icon: <TransactionOutlined />,
+                    path: "revenue",
+                },
+                {
+                    name: "Quản lí chi",
+                    icon: <TransactionOutlined />,
+                    path: "expense",
+                },
+            ],
         },
     ];
 

@@ -1,17 +1,19 @@
 import React from "react";
 
+// talons
+import { useRevenueForm } from "../../../talons/Revenue/useRevenueForm";
+
 // utils
 import mergeClasses from "../../../utils/mergeClasses";
 
 // components
-import { Button, DatePicker, Form, Input, InputNumber, Switch } from "antd";
+import { Button, Form, Input, InputNumber, Switch } from "antd";
 
 // styles
-import defaultClasses from "./revenue.module.css";
+import defaultClasses from "./revenueForm.module.css";
 
 // types'
 import { FORM_TYPE } from "../../../types/app.types";
-import { useRevenueForm } from "../../../talons/Revenue/useRevenueForm";
 
 interface Props {
     classes?: object;
@@ -21,7 +23,11 @@ interface Props {
 const RevenueForm = ({ classes: propsClasses, view }: Props) => {
     const classes = mergeClasses(defaultClasses, propsClasses);
 
-    const { form, handleCancel, onChange, onSubmit } = useRevenueForm();
+    const { form, revenue, handleCancel, onChange, onSubmit } = useRevenueForm({
+        view,
+    });
+
+    console.log(`revenue`, revenue);
 
     let title = null;
     let buttonText = null;
@@ -55,10 +61,83 @@ const RevenueForm = ({ classes: propsClasses, view }: Props) => {
                 onFinish={onSubmit}
                 onValuesChange={onChange}
                 form={form}
+                initialValues={revenue || {}}
+                key={Math.random()}
             >
+                {view !== "ADD" && (
+                    <Form.Item label="Ngày tạo" name="createdAt">
+                        <Input disabled />
+                    </Form.Item>
+                )}
                 <Form.Item
-                    label="Name"
+                    label="Tên"
                     name="name"
+                    rules={[
+                        {
+                            required: true,
+                            message: "Xin hãy nhập tên cho phiếu thu",
+                        },
+                    ]}
+                >
+                    <Input disabled={view === "VIEW"} />
+                </Form.Item>
+                <Form.Item
+                    label="Mô tả"
+                    name="description"
+                    rules={[
+                        {
+                            required: true,
+                            message: "Xin hãy nhập mô tả cho phiếu thu",
+                        },
+                    ]}
+                >
+                    <Input disabled={view === "VIEW"} />
+                </Form.Item>
+                <Form.Item
+                    label="Số lượng"
+                    name="quantity"
+                    rules={[
+                        {
+                            required: true,
+                            message: "Xin hãy nhập số lượng",
+                        },
+                    ]}
+                >
+                    <InputNumber
+                        disabled={view === "VIEW"}
+                        formatter={(value) =>
+                            `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                        }
+                        parser={(value: any) =>
+                            (value && value.replace(/\$\s?|(,*)/g, "")) || ""
+                        }
+                        min={0}
+                    />
+                </Form.Item>{" "}
+                <Form.Item
+                    label="Đơn giá"
+                    name="priceUnit"
+                    rules={[
+                        {
+                            required: true,
+                            message: "Xin hãy nhập đơn giá",
+                        },
+                    ]}
+                >
+                    <InputNumber
+                        disabled={view === "VIEW"}
+                        formatter={(value) =>
+                            `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                        }
+                        parser={(value: any) =>
+                            (value && value.replace(/\$\s?|(,*)/g, "")) || ""
+                        }
+                        min={0}
+                    />
+                </Form.Item>
+                <Form.Item
+                    label="Tổng tiền"
+                    name="total"
                     rules={[
                         {
                             required: true,
@@ -66,9 +145,29 @@ const RevenueForm = ({ classes: propsClasses, view }: Props) => {
                         },
                     ]}
                 >
-                    <Input />
+                    <InputNumber
+                        disabled={view === "VIEW"}
+                        formatter={(value) =>
+                            `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                        }
+                        parser={(value: any) =>
+                            (value && value.replace(/\$\s?|(,*)/g, "")) || ""
+                        }
+                        min={0}
+                    />
                 </Form.Item>
-
+                <Form.Item
+                    label="Số tài khoản ngân hàng"
+                    name="bankAccountNumber"
+                    rules={[
+                        {
+                            required: true,
+                            message: "Xin hãy nhập số tài khoản ngân hàng",
+                        },
+                    ]}
+                >
+                    <Input disabled={view === "VIEW"} />
+                </Form.Item>
                 <Form.Item className={classes.btnGroup}>
                     <Button
                         type="primary"
