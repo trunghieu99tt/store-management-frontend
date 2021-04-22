@@ -13,7 +13,9 @@ import classes from "./sidebar.module.css";
 
 import {
     DashboardOutlined,
+    LineChartOutlined,
     MenuOutlined,
+    RadarChartOutlined,
     TransactionOutlined,
 } from "@ant-design/icons";
 
@@ -50,6 +52,17 @@ const SideBar = ({ classes: propsClasses }: Props) => {
                     name: "Quản lí chi",
                     icon: <TransactionOutlined />,
                     path: "expense",
+                },
+            ],
+        },
+        {
+            name: "Thống kê tài chính",
+            icon: <RadarChartOutlined />,
+            children: [
+                {
+                    name: "Thống kê theo doanh thu",
+                    icon: <LineChartOutlined />,
+                    path: "statistic/revenue",
                 },
             ],
         },

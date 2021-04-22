@@ -74,7 +74,12 @@ const useRevenueForm = ({ view: propsView }: { view: FORM_TYPE }) => {
     };
 
     const handleAddRevenue = async (values: iRevenueDTO) => {
-        await addRevenue(values);
+        const response = await addRevenue(values);
+        if (response.status === 201) {
+            message.success("Them moi thanh cong");
+        } else {
+            message.error(response.message);
+        }
     };
 
     const handleUpdateRevenue = async (values: iRevenueDTO) => {

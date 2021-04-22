@@ -23,7 +23,7 @@ import moment from "moment";
  * */
 
 const useRevenueList = () => {
-    const pageSize = 2;
+    const pageSize = 10;
 
     const [pageNumber, setPageNumber] = useState<number>(1);
     const [data, setData] = useState<iRevenue[]>([]);
@@ -36,22 +36,56 @@ const useRevenueList = () => {
         handleFetchRevenues();
     }, [pageNumber]);
 
-    const handleFetchRevenues = async () => {
+    const handleFetchRevenues = async (sortBy = 4, isAsc = true) => {
         setLoading(true);
-        const data = await fetchRevenues(pageNumber, pageSize, null);
+        const data = await fetchRevenues(
+            pageNumber,
+            pageSize,
+            null,
+            sortBy,
+            isAsc
+        );
         setData(data.data);
         setTotalNumber(data.total);
         setLoading(false);
     };
 
-    const handleChangeTable = (pagination: any) => {
+    const handleChangeTable = (
+        pagination: any,
+        filters: any,
+        sorter: any,
+        extra: any
+    ) => {
+        let sortBy = 4;
+        let isAsc = true;
+        switch (sorter.field) {
+            case "name":
+                sortBy = 4;
+                break;
+            case "quantity":
+                sortBy = 1;
+                break;
+            case "priceUnit":
+                sortBy = 2;
+                break;
+            case "total":
+                sortBy = 3;
+                break;
+            default:
+                sortBy = 4;
+        }
+
+        if (sorter.order === "descend") {
+            isAsc = false;
+        }
+        handleSort(sortBy, isAsc);
         setPageNumber(pagination.current);
     };
 
     const handleSearch = async (values: any) => {
-        setPageNumber(1);
         if (!values.createdAt) {
             handleFetchRevenues();
+            setPageNumber(1);
         } else {
             const day = moment(values.createdAt).toDate().toLocaleDateString();
             const response = await fetchRevenues(1, pageSize, day);
@@ -81,12 +115,18 @@ const useRevenueList = () => {
         });
     };
 
+    const handleSort = async (sortBy = 4, isAsc = true) => {
+        await handleFetchRevenues(sortBy, isAsc);
+    };
+
     return {
         data,
         pageSize,
+        loading,
         totalNumber,
 
         onDelete,
+        handleSort,
         handleSearch,
         handleChangeTable,
     };

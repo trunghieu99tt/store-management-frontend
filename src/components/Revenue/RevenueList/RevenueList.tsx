@@ -17,6 +17,7 @@ import defaultClasses from "./revenueList.module.css";
 import { iRevenue } from "../../../types/revenue.types";
 import { iBankAccount } from "../../../types/bankAccount.types";
 import { iStaff } from "../../../types/user.types";
+import { LoadingOutlined } from "@ant-design/icons";
 
 interface Props {
     classes?: object;
@@ -28,6 +29,7 @@ const RevenueList = ({ classes: propsClasses }: Props) => {
     const {
         data,
         pageSize,
+        loading,
         totalNumber,
 
         onDelete,
@@ -46,6 +48,7 @@ const RevenueList = ({ classes: propsClasses }: Props) => {
             dataIndex: "name",
             key: "name",
             width: 300,
+            sorter: (a: any, b: any) => NaN,
         },
         {
             title: "Mô tả",
@@ -71,18 +74,21 @@ const RevenueList = ({ classes: propsClasses }: Props) => {
             dataIndex: "quantity",
             key: "quantity",
             width: 150,
+            sorter: (a: any, b: any) => NaN,
         },
         {
             title: "Đơn giá",
             dataIndex: "priceUnit",
             key: "priceUnit",
             width: 150,
+            sorter: (a: any, b: any) => NaN,
         },
         {
             title: "Tổng tiền",
             dataIndex: "total",
             key: "total",
             width: 150,
+            sorter: (a: any, b: any) => NaN,
         },
 
         {
@@ -156,9 +162,11 @@ const RevenueList = ({ classes: propsClasses }: Props) => {
                 pagination={{
                     pageSize: pageSize,
                     total: totalNumber,
+                    pageSizeOptions: ["10", "20", "30"],
                 }}
                 onChange={handleChangeTable}
                 scroll={{ x: "500px" }}
+                loading={loading}
             />
         </div>
     );

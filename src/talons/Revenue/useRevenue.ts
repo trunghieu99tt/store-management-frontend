@@ -8,7 +8,8 @@
  * fetchRevenue: func,
  * updateRevenue: func,
  * addRevenue: func,
- * deleteRevenue: func
+ * deleteRevenue: func,
+ * fetchRevenuesInRange: func,
  *
  * */
 
@@ -18,14 +19,26 @@ const useRevenue = () => {
     const fetchRevenues = async (
         pageNumber = 1,
         pageSize = 10,
-        day: String | null
+        day: String | null,
+        sortBy = 4,
+        isAsc = true
     ) => {
         const response = await fetch(
             `${BACKEND_URL}/?pageSize=${pageSize}&pageNumber=${pageNumber}${
                 (day !== null && `&day=${day}`) || ""
-            }`
+            }&sortBy=${sortBy}&isAsc=${isAsc}`
         );
         const data = await response.json();
+        return data;
+    };
+
+    const fetchRevenuesInRange = async (dateFrom: String, dateTo: String) => {
+        const response = await fetch(
+            `${BACKEND_URL}/statistic?dayStart=${dateFrom}&dayEnd=${dateTo}`
+        );
+
+        const data = await response.json();
+
         return data;
     };
 
@@ -81,6 +94,7 @@ const useRevenue = () => {
         addRevenue,
         deleteRevenue,
         updateRevenue,
+        fetchRevenuesInRange,
     };
 };
 

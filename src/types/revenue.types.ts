@@ -21,3 +21,8 @@ export interface iRevenueDTO {
     description: string;
     bankAccountNumber: number;
 }
+
+export interface iRevenueStatistic {
+    date: string;
+    value: number;
+}

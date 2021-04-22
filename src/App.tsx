@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Redirect, Route, Switch, useHistory } from "react-router";
+import { useRecoilState } from "recoil";
 
 // utils
 import { useLocalStorage } from "./utils/useLocalStorage";
@@ -9,15 +10,17 @@ import Auth from "./pages/Auth";
 import BaseView from "./layout/BaseView";
 import StudentForm from "./components/StudentForm";
 import StudentList from "./components/StudentList";
+import RevenueList from "./components/Revenue/RevenueList";
+import RevenueForm from "./components/Revenue/RevenueForm";
+import RevenueStatistic from "./components/Revenue/RevenueStatistic";
 
 // styles
 import "bootstrap/dist/css/bootstrap.min.css";
 import "antd/dist/antd.css";
 import "./App.css";
-import { useRecoilState } from "recoil";
+
+// states
 import { authState, studentState } from "./states/app.state";
-import RevenueList from "./components/Revenue/RevenueList";
-import RevenueForm from "./components/Revenue/RevenueForm";
 
 const App = () => {
     const [user, setUser] = useLocalStorage("user", false);
@@ -53,12 +56,18 @@ const App = () => {
                     component={Auth}
                 ></Route>
                 <Route exact path="/revenue" component={RevenueList} />
+                <Route
+                    exact
+                    path="/statistic/revenue"
+                    component={RevenueStatistic}
+                />
 
                 <Route
                     exact
                     path="/revenue/add"
                     component={() => <RevenueForm view="ADD" />}
                 />
+
                 <Route
                     exact
                     path="/revenue/view/:id"
