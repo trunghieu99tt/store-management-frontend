@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 // styles
 import classes from "./Logo.module.css";
@@ -10,16 +11,15 @@ interface Props {
 const Logo = ({ classes: propsClasses }: Props) => {
     return (
         <figure className={classes.root}>
-            <img
-                src={
-                    require("../../static/images/logo-dai-hoc-tai-chinh-ngan-hang.jpg")
-                        .default
-                }
-                alt="logo"
-                width={150}
-                height={50}
-                className={classes.img}
-            />
+            <Link to="/">
+                <img
+                    src={require("../../static/images/logo.jpg").default}
+                    alt="logo"
+                    width={150}
+                    height={50}
+                    className={classes.img}
+                />
+            </Link>
         </figure>
         // <div className={classes.root}>SMA</div>
     );

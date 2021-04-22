@@ -1,0 +1,33 @@
+.root {
+    background: #fff;
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 3px 5px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.name {
+    font-weight: 600;
+    font-size: 2.5rem;
+}
+
+.number {
+    font-size: 3rem;
+    font-weight: 600;
+}
+
+.percent {
+    font-weight: bold;
+    color: red;
+}
+
+.percent.inc {
+    color: green;
+}
+
+.right svg {
+    width: 4rem;
+    height: 4rem;
+}

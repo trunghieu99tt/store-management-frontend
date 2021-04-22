@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import cn from "classnames";
 import { Link } from "react-router-dom";
 
+// talons
+import { useWindowSize } from "../../utils/useWindowSize";
+
 // components
 import ExpansionPanel from "./ExpansionPanel";
 
@@ -10,16 +13,17 @@ import classes from "./sidebar.module.css";
 
 import {
     DashboardOutlined,
-    FileAddOutlined,
+    LineChartOutlined,
     MenuOutlined,
-    UnorderedListOutlined,
+    RadarChartOutlined,
+    TransactionOutlined,
+    UserOutlined,
 } from "@ant-design/icons";
 
 import Logo from "../../components/Logo";
-import Icon from "@ant-design/icons";
-import { SizeType } from "antd/lib/config-provider/SizeContext";
+
+// types
 import { Size } from "../../types/app.types";
-import { useWindowSize } from "../../utils/useWindowSize";
 
 interface Props {
     classes?: object;
@@ -37,20 +41,36 @@ const SideBar = ({ classes: propsClasses }: Props) => {
 
     const navigation = [
         {
-            name: "Sinh viên",
+            name: "Quản lí thu chi",
             icon: <DashboardOutlined />,
             children: [
                 {
-                    name: "Danh sách",
-                    icon: <UnorderedListOutlined />,
-                    path: "student/list",
+                    name: "Quản lí thu",
+                    icon: <TransactionOutlined />,
+                    path: "revenue",
                 },
                 {
-                    name: "Thêm sinh viên",
-                    icon: <FileAddOutlined />,
-                    path: "student/add",
+                    name: "Quản lí chi",
+                    icon: <TransactionOutlined />,
+                    path: "expense",
                 },
             ],
+        },
+        {
+            name: "Thống kê tài chính",
+            icon: <RadarChartOutlined />,
+            children: [
+                {
+                    name: "Thống kê theo doanh thu",
+                    icon: <LineChartOutlined />,
+                    path: "statistic/revenue",
+                },
+            ],
+        },
+        {
+            name: "Quản lí người dùng",
+            icon: <UserOutlined />,
+            path: "users",
         },
     ];
 
@@ -78,7 +98,7 @@ const SideBar = ({ classes: propsClasses }: Props) => {
                     <button
                         key={item.name}
                         name="child"
-                        className={cn(classes.btn, {
+                        className={cn(classes.btn, classes.itemRoot, {
                             [classes.itemActive]: isActive,
                         })}
                     >
