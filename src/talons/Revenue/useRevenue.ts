@@ -9,6 +9,7 @@
  * updateRevenue: func,
  * addRevenue: func,
  * deleteRevenue: func,
+ * fetch2NearestMonths: func,
  * fetchRevenuesInRange: func,
  *
  * */
@@ -46,6 +47,12 @@ const useRevenue = () => {
         const response = await fetch(`${BACKEND_URL}/${revenueID}`);
         const data = await response.json();
         return data.data;
+    };
+
+    const fetch2NearestMonths = async () => {
+        const response = await fetch(`${BACKEND_URL}/get-2-nearest-months`);
+        const data = await response.json();
+        return data;
     };
 
     const addRevenue = async (data: any, type = "json") => {
@@ -94,6 +101,7 @@ const useRevenue = () => {
         addRevenue,
         deleteRevenue,
         updateRevenue,
+        fetch2NearestMonths,
         fetchRevenuesInRange,
     };
 };

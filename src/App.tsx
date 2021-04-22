@@ -21,6 +21,7 @@ import "./App.css";
 
 // states
 import { authState, studentState } from "./states/app.state";
+import Overview from "./pages/Overview";
 
 const App = () => {
     const [user, setUser] = useLocalStorage("user", false);
@@ -46,7 +47,7 @@ const App = () => {
     return (
         <React.Fragment>
             <Switch>
-                <Route exact path="/" component={StudentList} />
+                <Route exact path="/" component={Overview} />
                 <Route
                     exact
                     path="/auth"

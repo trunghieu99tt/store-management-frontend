@@ -17,6 +17,7 @@ import {
     MenuOutlined,
     RadarChartOutlined,
     TransactionOutlined,
+    UserOutlined,
 } from "@ant-design/icons";
 
 import Logo from "../../components/Logo";
@@ -66,6 +67,11 @@ const SideBar = ({ classes: propsClasses }: Props) => {
                 },
             ],
         },
+        {
+            name: "Quản lí người dùng",
+            icon: <UserOutlined />,
+            path: "users",
+        },
     ];
 
     const renderLevels = (data: SideBarItemType[]) => {
@@ -92,7 +98,7 @@ const SideBar = ({ classes: propsClasses }: Props) => {
                     <button
                         key={item.name}
                         name="child"
-                        className={cn(classes.btn, {
+                        className={cn(classes.btn, classes.itemRoot, {
                             [classes.itemActive]: isActive,
                         })}
                     >

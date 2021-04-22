@@ -68,6 +68,7 @@
     transition: all 0.2s;
 }
 
+.itemRoot,
 .item:hover {
     background-color: #287cf2;
     color: #fff;
