@@ -1,10 +1,9 @@
 import { useRevenue } from "./useRevenue";
 
 import moment from "moment";
-import { useState } from "react";
-import { iRevenue, iRevenueStatistic } from "../../types/revenue.types";
+import { useEffect, useState } from "react";
+import { iRevenueStatistic } from "../../types/revenue.types";
 import { message } from "antd";
-import { delay } from "lodash";
 
 /**
  * A [React Hook]{@link https://reactjs.org/docs/hooks-intro.html}
@@ -65,22 +64,7 @@ const useRevenueStatistic = () => {
                         smooth: true,
                     },
                 ],
-                dataZoom: [
-                    {
-                        show: true,
-                        type: "inside",
-                        filterMode: "none",
-                        xAxisIndex: [0],
-                    },
-                    {
-                        show: true,
-                        type: "inside",
-                        filterMode: "none",
-                        yAxisIndex: [0],
-                    },
-                ],
             };
-
             setOption(newOption);
         } else {
             message.error("Something went wrong. Please try again later");

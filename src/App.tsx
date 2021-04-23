@@ -5,6 +5,10 @@ import { useRecoilState } from "recoil";
 // utils
 import { useLocalStorage } from "./utils/useLocalStorage";
 
+// pages
+import Overview from "./pages/Overview";
+import NotFound from "./pages/NotFound";
+
 // components
 import Auth from "./pages/Auth";
 import BaseView from "./layout/BaseView";
@@ -21,7 +25,6 @@ import "./App.css";
 
 // states
 import { authState, studentState } from "./states/app.state";
-import Overview from "./pages/Overview";
 
 const App = () => {
     const [user, setUser] = useLocalStorage("user", false);
@@ -94,6 +97,8 @@ const App = () => {
                     path="/student/view/:id"
                     component={() => <StudentForm view="VIEW" />}
                 ></Route>
+
+                <Route component={NotFound}></Route>
             </Switch>
         </React.Fragment>
     );

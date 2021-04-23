@@ -58,6 +58,20 @@ const RevenueStatistic = ({ classes: propsClasses }: Props) => {
                 show: false,
             },
         },
+        dataZoom: [
+            {
+                show: true,
+                type: "inside",
+                filterMode: "none",
+                xAxisIndex: [0],
+            },
+            {
+                show: true,
+                type: "inside",
+                filterMode: "none",
+                yAxisIndex: [0],
+            },
+        ],
     };
 
     return (
@@ -84,12 +98,12 @@ const RevenueStatistic = ({ classes: propsClasses }: Props) => {
                 </Form>
             </header>
             <div className={classes.main}>
-                {data && (
+                {(data && (
                     <ReactEcharts
                         style={{ height: 500 }}
                         option={merge({}, defaultOption, option)}
                     />
-                )}
+                )) || <p>Xin hãy chọn khoảng ngày để xem thống kê chi tiết</p>}
             </div>
         </div>
     );

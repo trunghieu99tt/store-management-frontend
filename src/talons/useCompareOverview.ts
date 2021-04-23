@@ -1,12 +1,17 @@
 import { message } from "antd";
+import { useState } from "react";
 import { iRevenue } from "../types/revenue.types";
 import { useRevenue } from "./Revenue/useRevenue";
 
 const useCompareOverview = () => {
     const { fetch2NearestMonths } = useRevenue();
 
+    const [loading, setLoading] = useState<boolean>(false);
+
     const parse2NearestMonthData = async () => {
+        setLoading(true);
         const response = await fetch2NearestMonths();
+        setLoading(false);
         if (response.status !== 200) {
             message.error("Fetching Error");
         } else {
@@ -33,7 +38,7 @@ const useCompareOverview = () => {
         }
     };
 
-    return { parse2NearestMonthData };
+    return { loading, parse2NearestMonthData };
 };
 
 export { useCompareOverview };
