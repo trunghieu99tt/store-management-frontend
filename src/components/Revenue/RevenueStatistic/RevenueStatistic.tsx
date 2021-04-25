@@ -6,7 +6,7 @@ import { merge } from "lodash";
 import mergeClasses from "../../../utils/mergeClasses";
 
 // components
-import { Form, Button, DatePicker } from "antd";
+import { Form, Button, DatePicker, Empty } from "antd";
 
 import defaultClasses from "./revenueStatistic.module.css";
 import { useRevenueStatistic } from "../../../talons/Revenue/useRevenueStatistic";
@@ -103,7 +103,7 @@ const RevenueStatistic = ({ classes: propsClasses }: Props) => {
                         style={{ height: 500 }}
                         option={merge({}, defaultOption, option)}
                     />
-                )) || <p>Xin hãy chọn khoảng ngày để xem thống kê chi tiết</p>}
+                )) || <Empty description={false} />}
             </div>
         </div>
     );

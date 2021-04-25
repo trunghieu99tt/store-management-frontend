@@ -1,0 +1,163 @@
+import { useReport } from "./useReport";
+
+import moment from "moment";
+import { message } from "antd";
+import { useEffect, useState } from "react";
+import { iCustomReport, iReport } from "../../types/report.types";
+import { iExpense } from "../../types/expense.types";
+import { iRevenue } from "../../types/revenue.types";
+import { FORM_TYPE } from "../../types/app.types";
+import { useHistory, useParams } from "react-router";
+
+type Props = {
+    view: FORM_TYPE;
+};
+
+const useGenerateReport = ({ view }: Props) => {
+    const {
+        fetchReport,
+        generateReport,
+        getInformationForReport,
+    } = useReport();
+
+    const [loading, setLoading] = useState<boolean>(false);
+    const [data, setData] = useState<iReport | null>(null);
+    const [customData, setCustomData] = useState<iCustomReport | null>(null);
+    const params: { id: string } = useParams();
+    const history = useHistory();
+
+    useEffect(() => {
+        if (params?.id) {
+            handleGetReport(params.id);
+        }
+    }, [params.id]);
+
+    const parseFromReportToCustomReport = (data: iReport) => {
+        const result: iCustomReport = {
+            dateFrom: data.dateFrom || data.reportFrom,
+            dateTo: data.dateTo || data.reportTo,
+            description: data.description,
+            expense: data.expense,
+            revenue: data.revenue,
+            staffID: data.staffID,
+            reportDate: new Date(),
+            profit: 0,
+            row: [],
+            staff: data?.staff,
+        };
+        const { expenses, revenues } = data;
+        const tempRow: any = {};
+        expenses.forEach((expense: iExpense) => {
+            const { date, total } = expense;
+            const createdAt = date.toString();
+            if (tempRow.hasOwnProperty(createdAt)) {
+                tempRow[createdAt].expenses += total;
+            } else {
+                tempRow[createdAt].expenses = total;
+                tempRow[createdAt.toString()] = {
+                    expenses: total,
+                    revenues: 0,
+                };
+            }
+        });
+
+        revenues.forEach((revenue: iRevenue) => {
+            const { createdAt, total } = revenue;
+            if (tempRow.hasOwnProperty(createdAt.toString())) {
+                tempRow[createdAt.toString()].revenues += total;
+            } else {
+                tempRow[createdAt.toString()] = {
+                    expenses: 0,
+                    revenues: total,
+                };
+            }
+        });
+
+        result.row =
+            tempRow &&
+            Object.entries(tempRow)
+                .map(([key, value], idx) => {
+                    const { expenses, revenues } = value as any;
+                    const profit = revenues - expenses;
+                    result.profit += profit;
+                    return {
+                        id: idx + 1,
+                        date: key,
+                        totalExpense: expenses,
+                        totalRevenue: revenues,
+                        profit,
+                    };
+                })
+                .sort((a: any, b: any) => {
+                    const { date: dateA } = a;
+                    const { date: dateB } = b;
+                    return dateA.localeCompare(dateB);
+                });
+
+        return result;
+    };
+
+    const handleGetInfoForReport = async (values: any) => {
+        const dateFrom = moment(values.dateRange[0])
+            .toDate()
+            .toLocaleDateString();
+
+        const dateTo = moment(values.dateRange[1])
+            .toDate()
+            .toLocaleDateString();
+
+        const dataDTO = {
+            dateFrom,
+            dateTo,
+            staffID: 1,
+        };
+
+        setLoading(true);
+
+        const response = await getInformationForReport(dataDTO);
+        if (response.status === 200) {
+            const temp = parseFromReportToCustomReport(response.data);
+            setCustomData(temp);
+            setData(response.data);
+        } else {
+            message.error(response.message);
+        }
+
+        setLoading(false);
+    };
+
+    const handleGenerateReport = async (values: any) => {
+        const description = values?.description || "";
+        const response = await generateReport({
+            ...data,
+            description,
+        });
+        if (response.status === 201) {
+            message.success("Tạo báo cáo thành công");
+            history.push(`/report/${response.data.id}`);
+            console.log(`response.data`, response.data);
+        } else {
+            message.error(response.message);
+        }
+    };
+
+    const handleGetReport = async (id: string) => {
+        const response = await fetchReport(~~id);
+        if (response.status === 200) {
+            const temp = parseFromReportToCustomReport(response.data);
+            setCustomData(temp);
+        } else {
+            message.error(response.message);
+            history.push("/report");
+        }
+    };
+
+    return {
+        loading,
+        data: customData,
+        handleGenerateReport,
+        handleGetInfoForReport,
+    };
+};
+
+export { useGenerateReport };

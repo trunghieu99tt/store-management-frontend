@@ -25,7 +25,7 @@ const useRevenue = () => {
         isAsc = true
     ) => {
         const response = await fetch(
-            `${BACKEND_URL}/?pageSize=${pageSize}&pageNumber=${pageNumber}${
+            `${BACKEND_URL}?pageSize=${pageSize}&pageNumber=${pageNumber}${
                 (day !== null && `&day=${day}`) || ""
             }&sortBy=${sortBy}&isAsc=${isAsc}`
         );

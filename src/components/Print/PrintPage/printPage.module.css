@@ -1,0 +1,14 @@
+.printWrapper {
+    display: block !important;
+    height: 0px;
+    overflow: hidden;
+}
+.logo {
+    margin-bottom: 1rem;
+}
+@media print {
+    .printWrapper {
+        height: auto;
+        padding: 30px;
+    }
+}

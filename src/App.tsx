@@ -14,8 +14,11 @@ import Auth from "./pages/Auth";
 import BaseView from "./layout/BaseView";
 import StudentForm from "./components/StudentForm";
 import StudentList from "./components/StudentList";
+import ReportList from "./components/Report/ReportList";
 import RevenueList from "./components/Revenue/RevenueList";
 import RevenueForm from "./components/Revenue/RevenueForm";
+import ReportDetail from "./components/Report/ReportDetail";
+import ReportGenerator from "./components/Report/ReportGenerator";
 import RevenueStatistic from "./components/Revenue/RevenueStatistic";
 
 // styles
@@ -59,12 +62,10 @@ const App = () => {
                     }
                     component={Auth}
                 ></Route>
+
+                {/* ----------------- REVENUE ----------------------- */}
+
                 <Route exact path="/revenue" component={RevenueList} />
-                <Route
-                    exact
-                    path="/statistic/revenue"
-                    component={RevenueStatistic}
-                />
 
                 <Route
                     exact
@@ -82,6 +83,25 @@ const App = () => {
                     path="/revenue/edit/:id"
                     component={() => <RevenueForm view="EDIT" />}
                 />
+
+                {/* ----------------- REPORT ----------------------- */}
+
+                <Route exact path="/report" component={ReportList} />
+                <Route path="/report/generate" component={ReportGenerator} />
+                <Route
+                    path="/report/:id"
+                    component={() => <ReportGenerator view="VIEW" />}
+                />
+
+                {/* ----------------- STATISTIC ----------------------- */}
+
+                <Route
+                    exact
+                    path="/statistic/revenue"
+                    component={RevenueStatistic}
+                />
+
+                {/* ----------------- STUDENT ----------------------- */}
 
                 <Route exact path="/student/list" component={StudentList} />
                 <Route

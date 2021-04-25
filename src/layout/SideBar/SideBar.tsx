@@ -12,7 +12,10 @@ import ExpansionPanel from "./ExpansionPanel";
 import classes from "./sidebar.module.css";
 
 import {
+    ContainerOutlined,
     DashboardOutlined,
+    DatabaseOutlined,
+    FileAddOutlined,
     LineChartOutlined,
     MenuOutlined,
     RadarChartOutlined,
@@ -64,6 +67,22 @@ const SideBar = ({ classes: propsClasses }: Props) => {
                     name: "Thống kê theo doanh thu",
                     icon: <LineChartOutlined />,
                     path: "statistic/revenue",
+                },
+            ],
+        },
+        {
+            name: "Báo cáo",
+            icon: <ContainerOutlined />,
+            children: [
+                {
+                    name: "Danh sách báo cáo",
+                    icon: <DatabaseOutlined />,
+                    path: "report",
+                },
+                {
+                    name: "Tạo báo cáo",
+                    icon: <FileAddOutlined />,
+                    path: "report/generate",
                 },
             ],
         },

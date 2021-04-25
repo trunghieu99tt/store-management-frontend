@@ -1,0 +1,29 @@
+.root {
+    margin: 2rem;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+}
+
+.main {
+    max-width: calc(100% - 400px);
+    margin: 0 auto;
+    margin-top: 2rem;
+}
+
+.staffInfo {
+    margin-bottom: 2rem;
+}
+
+.summaryInfo {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.pdfBtn {
+    display: block !important;
+    margin-left: auto;
+}

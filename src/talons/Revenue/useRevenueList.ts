@@ -4,6 +4,8 @@ import { iRevenue } from "../../types/revenue.types";
 import { useRevenue } from "./useRevenue";
 
 import moment from "moment";
+import { useRecoilValue } from "recoil";
+import { pageSizeState } from "../../states/app.state";
 
 /**
  * A [React Hook]{@link https://reactjs.org/docs/hooks-intro.html} that provides revenue list logic
@@ -23,8 +25,7 @@ import moment from "moment";
  * */
 
 const useRevenueList = () => {
-    const pageSize = 10;
-
+    const pageSize = useRecoilValue(pageSizeState);
     const [pageNumber, setPageNumber] = useState<number>(1);
     const [data, setData] = useState<iRevenue[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
