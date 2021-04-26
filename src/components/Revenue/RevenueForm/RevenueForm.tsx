@@ -7,7 +7,7 @@ import { useRevenueForm } from "../../../talons/Revenue/useRevenueForm";
 import mergeClasses from "../../../utils/mergeClasses";
 
 // components
-import { Button, Form, Input, InputNumber, Switch } from "antd";
+import { Button, Form, Input, InputNumber } from "antd";
 
 // styles
 import defaultClasses from "./revenueForm.module.css";
@@ -26,8 +26,6 @@ const RevenueForm = ({ classes: propsClasses, view }: Props) => {
     const { form, revenue, handleCancel, onChange, onSubmit } = useRevenueForm({
         view,
     });
-
-    console.log(`revenue`, revenue);
 
     let title = null;
     let buttonText = null;

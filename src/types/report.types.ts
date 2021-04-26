@@ -8,6 +8,7 @@ interface iReportRow {
 }
 
 export interface iBaseReport {
+    id?: number;
     reportDate: Date;
     description: string;
     dateFrom: Date;
@@ -22,11 +23,11 @@ export interface iBaseReport {
 }
 
 export interface iReport extends iBaseReport {
-    id: string;
     expenses: iExpense[];
     revenues: iRevenue[];
 }
 
 export interface iCustomReport extends iBaseReport {
+    id?: number;
     row?: iReportRow[];
 }

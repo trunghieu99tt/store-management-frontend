@@ -1,0 +1,13 @@
+.root {
+    margin: 3rem;
+}
+
+.header {
+    margin: 2rem 0;
+}
+
+.main {
+    margin-top: 5rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}

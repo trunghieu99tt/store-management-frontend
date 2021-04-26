@@ -100,7 +100,8 @@ const useRevenueList = () => {
     const onDelete = (revenueID: number) => {
         Modal.confirm({
             title: "Xóa phiếu thu này?",
-            content: "Bạn có chắc muốn xóa phiếu thu này không ? ",
+            content:
+                "Bạn có chắc muốn xóa phiếu thu này không? Tất cả các báo cáo liên quan đến phiếu thu này cũng sẽ bị xóa ",
             okText: "Xác nhận xóa",
             cancelText: "Hủy",
             onOk: async () => {

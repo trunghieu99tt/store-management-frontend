@@ -1,7 +1,7 @@
 import { useRevenue } from "./useRevenue";
 
 import moment from "moment";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { iRevenueStatistic } from "../../types/revenue.types";
 import { message } from "antd";
 

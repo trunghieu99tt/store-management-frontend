@@ -49,12 +49,11 @@ const useGenerateReport = ({ view }: Props) => {
         const tempRow: any = {};
         expenses.forEach((expense: iExpense) => {
             const { date, total } = expense;
-            const createdAt = date.toString();
+            const createdAt = new Date(date).toLocaleDateString();
             if (tempRow.hasOwnProperty(createdAt)) {
                 tempRow[createdAt].expenses += total;
             } else {
-                tempRow[createdAt].expenses = total;
-                tempRow[createdAt.toString()] = {
+                tempRow[createdAt] = {
                     expenses: total,
                     revenues: 0,
                 };
@@ -63,10 +62,12 @@ const useGenerateReport = ({ view }: Props) => {
 
         revenues.forEach((revenue: iRevenue) => {
             const { createdAt, total } = revenue;
-            if (tempRow.hasOwnProperty(createdAt.toString())) {
-                tempRow[createdAt.toString()].revenues += total;
+            const date = new Date(createdAt).toLocaleDateString();
+            console.log(`date`, date);
+            if (tempRow.hasOwnProperty(date)) {
+                tempRow[date].revenues += total;
             } else {
-                tempRow[createdAt.toString()] = {
+                tempRow[date] = {
                     expenses: 0,
                     revenues: total,
                 };

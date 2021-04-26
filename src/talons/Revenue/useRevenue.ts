@@ -1,5 +1,5 @@
 /**
- * A [React Hook]{@link https://reactjs.org/docs/hooks-intro.html} that revenue actions logic
+ * A [React Hook]{@link https://reactjs.org/docs/hooks-intro.html} that contains revenue actions logic
  *
  * @kind function.
  *
@@ -11,7 +11,7 @@
  * deleteRevenue: func,
  * fetch2NearestMonths: func,
  * fetchRevenuesInRange: func,
- *
+ *}}
  * */
 
 const BACKEND_URL = `${process.env.REACT_APP_API_LINK}/revenue`;

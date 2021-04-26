@@ -4,7 +4,7 @@ import cn from "classnames";
 // talons
 import { useHistory } from "react-router";
 import { useSetRecoilState } from "recoil";
-import { useLocalStorage } from "../../utils/useLocalStorage";
+import { useLocalStorage } from "../../../utils/useLocalStorage";
 
 // icons
 import { UserOutlined } from "@ant-design/icons";
@@ -13,7 +13,7 @@ import { UserOutlined } from "@ant-design/icons";
 import classes from "./userLogo.module.css";
 
 // states
-import { authState } from "../../states/app.state";
+import { authState } from "../../../states/app.state";
 
 const UserLogo = () => {
     const [showDropdown, setShowDropdown] = useState(false);

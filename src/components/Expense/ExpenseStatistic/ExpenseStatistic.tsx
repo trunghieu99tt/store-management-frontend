@@ -1,14 +1,11 @@
 import React from "react";
-
-// utils
 import mergeClasses from "../../../utils/mergeClasses";
 
-// components
-import { Form, Button, DatePicker, Empty } from "antd";
-
-import defaultClasses from "./revenueStatistic.module.css";
-import { useRevenueStatistic } from "../../../talons/Revenue/useRevenueStatistic";
-import SmoothedLineChart from "../../CompareChart/SmoothedLineChart";
+import defaultClasses from "./expenseStatistic.module.css";
+import { Form, DatePicker, Button, Empty } from "antd";
+import { useExpenseStatistic } from "../../../talons/Expense/useExpenseStatistic";
+import SmoothedLineChart from "../../CompareChart/SmoothedLineChart/SmoothedLineChart";
+import PieChart from "../../CompareChart/PieChart";
 
 interface Props {
     classes?: object;
@@ -16,10 +13,17 @@ interface Props {
 
 const { RangePicker } = DatePicker;
 
-const RevenueStatistic = ({ classes: propsClasses }: Props) => {
+const ExpenseStatistic = ({ classes: propsClasses }: Props) => {
     const classes = mergeClasses(defaultClasses, propsClasses);
 
-    const { data, option, handleGenerateStatistic } = useRevenueStatistic();
+    const {
+        data,
+        optionByDate,
+        optionByType,
+        handleGenerateStatistic,
+    } = useExpenseStatistic();
+
+    console.log(`optionByType`, optionByType);
 
     return (
         <div className={classes.root}>
@@ -46,14 +50,22 @@ const RevenueStatistic = ({ classes: propsClasses }: Props) => {
             </header>
             <div className={classes.main}>
                 {(data && (
-                    <SmoothedLineChart
-                        title="Thống kê doanh thu"
-                        option={option}
-                    />
+                    <React.Fragment>
+                        <SmoothedLineChart
+                            title="Thống kê chi phí"
+                            option={optionByDate}
+                            width={"100%"}
+                        />
+                        <PieChart
+                            title="Thống kê theo loại chi phí"
+                            option={optionByType}
+                            width={"100%"}
+                        />
+                    </React.Fragment>
                 )) || <Empty description={false} />}
             </div>
         </div>
     );
 };
 
-export default RevenueStatistic;
+export default ExpenseStatistic;

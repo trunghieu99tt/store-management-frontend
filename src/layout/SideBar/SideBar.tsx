@@ -68,6 +68,11 @@ const SideBar = ({ classes: propsClasses }: Props) => {
                     icon: <LineChartOutlined />,
                     path: "statistic/revenue",
                 },
+                {
+                    name: "Thống kê theo chi phí",
+                    icon: <LineChartOutlined />,
+                    path: "statistic/expense",
+                },
             ],
         },
         {

@@ -5,14 +5,16 @@ import { useGenerateReport } from "../../../talons/Report/useGenerateReport";
 
 // components
 import { Form, DatePicker, Button, Table, Empty } from "antd";
-
-// styles
-import classes from "./reportGenerator.module.css";
-import TextArea from "antd/lib/input/TextArea";
-import { FORM_TYPE } from "../../../types/app.types";
 import ReactToPrint from "react-to-print";
 import PrintPage from "../../Print/PrintPage";
 import ReportDetail from "../ReportDetail";
+import TextArea from "antd/lib/input/TextArea";
+
+// styles
+import classes from "./reportGenerator.module.css";
+
+// types
+import { FORM_TYPE } from "../../../types/app.types";
 
 interface Props {
     view: FORM_TYPE;
@@ -176,12 +178,14 @@ const ReportGenerator = ({ view }: Props) => {
                                             </div>
                                         )}
                                         <Form.Item>
-                                            <Button
-                                                type="primary"
-                                                htmlType="submit"
-                                            >
-                                                Lưu báo cáo
-                                            </Button>
+                                            {view !== "VIEW" && (
+                                                <Button
+                                                    type="primary"
+                                                    htmlType="submit"
+                                                >
+                                                    Lưu báo cáo
+                                                </Button>
+                                            )}
                                             {view === "VIEW" && (
                                                 <React.Fragment>
                                                     <div
