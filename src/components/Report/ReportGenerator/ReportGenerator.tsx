@@ -15,6 +15,7 @@ import classes from "./reportGenerator.module.css";
 
 // types
 import { FORM_TYPE } from "../../../types/app.types";
+import { dataTool } from "echarts";
 
 interface Props {
     view: FORM_TYPE;
@@ -90,7 +91,7 @@ const ReportGenerator = ({ view }: Props) => {
             )}
 
             <section className={classes.main}>
-                {(data && (
+                {(data && (data.revenue !== 0 || data.expense !== 0) && (
                     <Table
                         columns={columns}
                         dataSource={data?.row}
@@ -161,7 +162,7 @@ const ReportGenerator = ({ view }: Props) => {
                                                 <p>Ten: {data.staff.name}</p>
                                                 <p>
                                                     {" "}
-                                                    Chức vụ: {data.staff.name}
+                                                    Chức vụ: {data.staff.role}
                                                 </p>
                                                 <p>
                                                     Số điện thoại:{" "}
@@ -226,7 +227,7 @@ const ReportGenerator = ({ view }: Props) => {
                             );
                         }}
                     />
-                )) || <Empty />}
+                )) || <Empty description="Không thể truy xuất data" />}
             </section>
         </div>
     );

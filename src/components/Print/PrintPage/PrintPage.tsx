@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Logo from "../../Logo";
 
 import classes from "./printPage.module.css";
 
@@ -9,11 +10,12 @@ class PrintPage extends Component {
         return (
             <div className={classes.printWrapper}>
                 <div className={classes.header}>
-                    <p>Logo</p>
+                    <Logo />
+                    <p>Công ty trách nhiệm hữu hạn 1 thành viên</p>
                 </div>
                 <div className={classes.content}>{children}</div>
                 <div className={classes.footer}>
-                    <p>Copy Right</p>
+                    <p>Copy right. All right reserved @2020</p>
                 </div>
             </div>
         );

@@ -199,7 +199,7 @@ const ExpenseForm = ({ classes: propsClasses, view }: Props) => {
                 {type === "EMPLOYEE_SALARY" && (
                     <Form.Item
                         label="So hieu nhan vien"
-                        name="userID"
+                        name="staffID"
                         rules={[
                             {
                                 required: true,

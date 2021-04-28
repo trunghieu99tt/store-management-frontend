@@ -51,16 +51,22 @@ const ExpenseStatistic = ({ classes: propsClasses }: Props) => {
             <div className={classes.main}>
                 {(data && (
                     <React.Fragment>
-                        <SmoothedLineChart
-                            title="Thống kê chi phí"
-                            option={optionByDate}
-                            width={"100%"}
-                        />
-                        <PieChart
-                            title="Thống kê theo loại chi phí"
-                            option={optionByType}
-                            width={"100%"}
-                        />
+                        <div className={classes.item}>
+                            <SmoothedLineChart
+                                title="Thống kê chi phí"
+                                option={optionByDate}
+                                width={"100%"}
+                                padding="2rem"
+                            />
+                        </div>
+                        <div className={classes.item}>
+                            <PieChart
+                                title="Thống kê theo loại chi phí"
+                                option={optionByType}
+                                width={"100%"}
+                                padding="2rem"
+                            />
+                        </div>
                     </React.Fragment>
                 )) || <Empty description={false} />}
             </div>

@@ -7,6 +7,7 @@ interface Props {
     option?: object;
     height?: number;
     width?: number | string;
+    padding?: number | string;
 }
 
 const SmoothedLineChart = ({
@@ -14,6 +15,7 @@ const SmoothedLineChart = ({
     option = {},
     height = 500,
     width = 500,
+    padding = 0,
 }: Props) => {
     const defaultOption = {
         title: {
@@ -69,7 +71,7 @@ const SmoothedLineChart = ({
 
     return (
         <ReactEcharts
-            style={{ height, width }}
+            style={{ height, width, padding }}
             option={merge({}, defaultOption, option)}
         />
     );

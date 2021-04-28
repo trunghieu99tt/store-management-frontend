@@ -49,6 +49,7 @@ const RevenueStatistic = ({ classes: propsClasses }: Props) => {
                     <SmoothedLineChart
                         title="Thống kê doanh thu"
                         option={option}
+                        width="100%"
                     />
                 )) || <Empty description={false} />}
             </div>

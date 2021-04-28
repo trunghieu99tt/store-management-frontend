@@ -76,32 +76,31 @@ const ReportDetail = ({ data }: Props) => {
                             </p>
                         </div>
 
-                        <Form key={Math.random()}>
-                            <Form.Item
-                                label="Mô tả báo cáo"
-                                name="description"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message:
-                                            "Xin hãy nhập mô tả cho báo cáo",
-                                    },
-                                ]}
-                            >
-                                <TextArea
-                                    disabled
-                                    defaultValue={data.description}
-                                />
-                            </Form.Item>
-                            <div className={classes.staffInfo}>
-                                <p>Nhân viên lập báo cáo: </p>
-                                <p>Ten: {data.staff.name}</p>
-                                <p> Chức vụ: {data.staff.name}</p>
-                                <p>Số điện thoại: {data.staff.phoneNumber}</p>
-                                <p>Phòng ban: {data.staff.department}</p>
-                                <p>Địa chỉ email : {data.staff.email}</p>
-                            </div>
-                        </Form>
+                        <div>Mô tả : {data.description}</div>
+
+                        <div className={classes.staffInfo}>
+                            <p>Nhân viên lập báo cáo: </p>
+                            <p>
+                                Ten: <strong>{data.staff.name}</strong>
+                            </p>
+                            <p>
+                                {" "}
+                                Chức vụ:
+                                <strong>{data.staff.role}</strong>
+                            </p>
+                            <p>
+                                Số điện thoại:{" "}
+                                <strong>{data.staff.phoneNumber}</strong>
+                            </p>
+                            <p>
+                                Phòng ban:{" "}
+                                <strong>{data.staff.department}</strong>
+                            </p>
+                            <p>
+                                Địa chỉ email :{" "}
+                                <strong>{data.staff.email}</strong>
+                            </p>
+                        </div>
                     </div>
                 );
             }}

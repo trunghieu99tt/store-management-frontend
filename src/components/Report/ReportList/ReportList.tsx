@@ -34,6 +34,13 @@ const ReportList = (props: Props) => {
             },
         },
         {
+            title: "Mô tả",
+            dataIndex: "description",
+            key: "description",
+            width: 300,
+        },
+
+        {
             title: "Người tạo",
             dataIndex: "staff",
             key: "staff",

@@ -9,5 +9,11 @@
 .main {
     margin-top: 5rem;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(400px, 1fr));
+    gap: 5rem;
+}
+
+.item {
+    box-shadow: 0 0 5px 5px rgb(0 0 0 / 12%);
+    border-radius: 5px;
 }

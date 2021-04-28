@@ -7,9 +7,16 @@ interface Props {
     option?: object;
     height?: number | string;
     width?: number | string;
+    padding?: number | string;
 }
 
-const PieChart = ({ title, option = {}, height = 500, width = 500 }: Props) => {
+const PieChart = ({
+    title,
+    option = {},
+    height = 500,
+    width = 500,
+    padding = 0,
+}: Props) => {
     const defaultOption = {
         title: {
             text: title,
@@ -26,7 +33,7 @@ const PieChart = ({ title, option = {}, height = 500, width = 500 }: Props) => {
 
     return (
         <ReactEcharts
-            style={{ height, width }}
+            style={{ height, width, padding }}
             option={merge({}, defaultOption, option)}
         />
     );

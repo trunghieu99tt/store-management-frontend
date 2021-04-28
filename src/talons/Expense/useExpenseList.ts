@@ -83,7 +83,7 @@ const useExpenseList = () => {
                 setPageNumber(1);
                 await handleFetchExpenses();
                 if (data.status === 200) {
-                    message.success("Xóa phiếu thu thành công");
+                    message.success("Xóa phiếu chi thành công");
                 } else {
                     message.error("Đã xảy ra lỗi. Xin thử lại sau");
                 }

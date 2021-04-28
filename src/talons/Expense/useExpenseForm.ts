@@ -35,6 +35,7 @@ const useExpenseForm = ({ view }: { view: FORM_TYPE }) => {
         form.setFieldsValue({
             bankAccountNumber: data.bankAccount.accountNumber,
             createdAt: new Date(data.date).toLocaleDateString(),
+            staffID: data.staff.id,
         });
 
         if (data.hasOwnProperty("productID")) setType("SHOPPING");
