@@ -18,6 +18,9 @@ import RevenueForm from "./components/Revenue/RevenueForm";
 // import ReportDetail from "./components/Report/ReportDetail";
 import ReportGenerator from "./components/Report/ReportGenerator";
 import RevenueStatistic from "./components/Revenue/RevenueStatistic";
+import ExpenseList from "./components/Expense/ExpenseList";
+import ExpenseForm from "./components/Expense/ExpenseForm";
+import ExpenseStatistic from "./components/Expense/ExpenseStatistic";
 
 // styles
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -26,9 +29,6 @@ import "./App.css";
 
 // states
 import { authState } from "./states/app.state";
-import ExpenseList from "./components/Expense/ExpenseList";
-import ExpenseForm from "./components/Expense/ExpenseForm";
-import ExpenseStatistic from "./components/Expense/ExpenseStatistic";
 
 const App = () => {
     const [user, setUser] = useLocalStorage("user", false);
@@ -52,7 +52,6 @@ const App = () => {
                 {/* ----------------- REVENUE ----------------------- */}
 
                 <Route exact path="/revenue" component={RevenueList} />
-
                 <Route
                     exact
                     path="/revenue/add"
