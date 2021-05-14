@@ -52,7 +52,13 @@ const useRevenueStatistic = () => {
                     {
                         data: Object.entries(mappingData)
                             .sort((a: any, b: any) => {
-                                return a[0].localeCompare(b[0]);
+                                return (
+                                    a &&
+                                    a[0] &&
+                                    b &&
+                                    b[0] &&
+                                    a[0].localeCompare(b[0])
+                                );
                             })
                             .map(([day, value]) => {
                                 return {

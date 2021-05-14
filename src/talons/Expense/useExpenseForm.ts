@@ -1,5 +1,4 @@
 import { Form, message, Modal } from "antd";
-import { values } from "lodash";
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import { FORM_TYPE } from "../../types/app.types";

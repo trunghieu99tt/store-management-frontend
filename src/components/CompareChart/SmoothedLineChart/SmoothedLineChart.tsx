@@ -24,7 +24,7 @@ const SmoothedLineChart = ({
         tooltip: {
             trigger: "axis",
             formatter: function (params: any) {
-                params = params[0];
+                params = params && params[0];
                 var date = new Date(params.name);
                 return (
                     date.getDate() +
