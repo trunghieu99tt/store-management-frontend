@@ -2,9 +2,8 @@ import { useRevenue } from "./useRevenue";
 
 import moment from "moment";
 import { useState } from "react";
-import { iRevenue, iRevenueStatistic } from "../../types/revenue.types";
+import { iRevenueStatistic } from "../../types/revenue.types";
 import { message } from "antd";
-import { delay } from "lodash";
 
 /**
  * A [React Hook]{@link https://reactjs.org/docs/hooks-intro.html}
@@ -53,7 +52,13 @@ const useRevenueStatistic = () => {
                     {
                         data: Object.entries(mappingData)
                             .sort((a: any, b: any) => {
-                                return a[0].localeCompare(b[0]);
+                                return (
+                                    a &&
+                                    a[0] &&
+                                    b &&
+                                    b[0] &&
+                                    a[0].localeCompare(b[0])
+                                );
                             })
                             .map(([day, value]) => {
                                 return {
@@ -65,22 +70,7 @@ const useRevenueStatistic = () => {
                         smooth: true,
                     },
                 ],
-                dataZoom: [
-                    {
-                        show: true,
-                        type: "inside",
-                        filterMode: "none",
-                        xAxisIndex: [0],
-                    },
-                    {
-                        show: true,
-                        type: "inside",
-                        filterMode: "none",
-                        yAxisIndex: [0],
-                    },
-                ],
             };
-
             setOption(newOption);
         } else {
             message.error("Something went wrong. Please try again later");

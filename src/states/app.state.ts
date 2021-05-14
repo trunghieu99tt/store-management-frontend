@@ -10,3 +10,8 @@ export const studentState = atom<iStudent[]>({
     key: "studentState",
     default: [],
 });
+
+export const pageSizeState = atom<number>({
+    key: "pageSizeState",
+    default: 10,
+});

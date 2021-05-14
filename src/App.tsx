@@ -1,18 +1,26 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Redirect, Route, Switch, useHistory } from "react-router";
 import { useRecoilState } from "recoil";
 
 // utils
 import { useLocalStorage } from "./utils/useLocalStorage";
 
+// pages
+import Overview from "./pages/Overview";
+import NotFound from "./pages/NotFound";
+
 // components
 import Auth from "./pages/Auth";
 import BaseView from "./layout/BaseView";
-import StudentForm from "./components/StudentForm";
-import StudentList from "./components/StudentList";
+import ReportList from "./components/Report/ReportList";
 import RevenueList from "./components/Revenue/RevenueList";
 import RevenueForm from "./components/Revenue/RevenueForm";
+// import ReportDetail from "./components/Report/ReportDetail";
+import ReportGenerator from "./components/Report/ReportGenerator";
 import RevenueStatistic from "./components/Revenue/RevenueStatistic";
+import ExpenseList from "./components/Expense/ExpenseList";
+import ExpenseForm from "./components/Expense/ExpenseForm";
+import ExpenseStatistic from "./components/Expense/ExpenseStatistic";
 
 // styles
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -20,29 +28,13 @@ import "antd/dist/antd.css";
 import "./App.css";
 
 // states
-import { authState, studentState } from "./states/app.state";
-import Overview from "./pages/Overview";
+import { authState } from "./states/app.state";
 
 const App = () => {
     const [user, setUser] = useLocalStorage("user", false);
-    const [localStudents, setLocalStudents] = useLocalStorage("students", []);
     const [auth, setAuth] = useRecoilState(authState);
-    const [students, setStudents] = useRecoilState(studentState);
 
     const history = useHistory();
-
-    useEffect(() => {
-        setAuth(user);
-        if (!user) {
-            history.push("/auth");
-        } else {
-            setStudents(localStudents);
-        }
-    }, []);
-
-    useEffect(() => {
-        setLocalStudents(students);
-    }, [students, setLocalStudents]);
 
     return (
         <React.Fragment>
@@ -56,19 +48,15 @@ const App = () => {
                     }
                     component={Auth}
                 ></Route>
-                <Route exact path="/revenue" component={RevenueList} />
-                <Route
-                    exact
-                    path="/statistic/revenue"
-                    component={RevenueStatistic}
-                />
 
+                {/* ----------------- REVENUE ----------------------- */}
+
+                <Route exact path="/revenue" component={RevenueList} />
                 <Route
                     exact
                     path="/revenue/add"
                     component={() => <RevenueForm view="ADD" />}
                 />
-
                 <Route
                     exact
                     path="/revenue/view/:id"
@@ -80,7 +68,50 @@ const App = () => {
                     component={() => <RevenueForm view="EDIT" />}
                 />
 
-                <Route exact path="/student/list" component={StudentList} />
+                {/* ----------------- EXPENSE ----------------------- */}
+
+                <Route exact path="/expense" component={ExpenseList} />
+                <Route
+                    exact
+                    path="/expense/add"
+                    component={() => <ExpenseForm view="ADD" />}
+                />
+                <Route
+                    exact
+                    path="/expense/view/:id"
+                    component={() => <ExpenseForm view="VIEW" />}
+                />
+                <Route
+                    exact
+                    path="/expense/edit/:id"
+                    component={() => <ExpenseForm view="EDIT" />}
+                />
+
+                {/* ----------------- REPORT ----------------------- */}
+
+                <Route exact path="/report" component={ReportList} />
+                <Route path="/report/generate" component={ReportGenerator} />
+                <Route
+                    path="/report/:id"
+                    component={() => <ReportGenerator view="VIEW" />}
+                />
+
+                {/* ----------------- STATISTIC ----------------------- */}
+
+                <Route
+                    exact
+                    path="/statistic/revenue"
+                    component={RevenueStatistic}
+                />
+                <Route
+                    exact
+                    path="/statistic/expense"
+                    component={ExpenseStatistic}
+                />
+
+                {/* ----------------- STUDENT ----------------------- */}
+
+                {/* <Route exact path="/student/list" component={StudentList} />
                 <Route
                     exact
                     path="/student/add"
@@ -93,7 +124,9 @@ const App = () => {
                 <Route
                     path="/student/view/:id"
                     component={() => <StudentForm view="VIEW" />}
-                ></Route>
+                ></Route> */}
+
+                <Route component={NotFound}></Route>
             </Switch>
         </React.Fragment>
     );

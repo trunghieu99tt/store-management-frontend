@@ -1,0 +1,27 @@
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.printWrapper {
+    display: block !important;
+    height: 0px;
+    overflow: hidden;
+}
+.logo {
+    margin-bottom: 1rem;
+}
+
+.footer {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+@media print {
+    .printWrapper {
+        height: auto;
+        padding: 30px;
+    }
+}

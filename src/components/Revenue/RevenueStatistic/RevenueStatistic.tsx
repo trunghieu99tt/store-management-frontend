@@ -1,15 +1,14 @@
 import React from "react";
-import ReactEcharts from "echarts-for-react";
-import { merge } from "lodash";
 
 // utils
 import mergeClasses from "../../../utils/mergeClasses";
 
 // components
-import { Form, Button, DatePicker } from "antd";
+import { Form, Button, DatePicker, Empty } from "antd";
 
 import defaultClasses from "./revenueStatistic.module.css";
 import { useRevenueStatistic } from "../../../talons/Revenue/useRevenueStatistic";
+import SmoothedLineChart from "../../CompareChart/SmoothedLineChart";
 
 interface Props {
     classes?: object;
@@ -21,44 +20,6 @@ const RevenueStatistic = ({ classes: propsClasses }: Props) => {
     const classes = mergeClasses(defaultClasses, propsClasses);
 
     const { data, option, handleGenerateStatistic } = useRevenueStatistic();
-
-    const defaultOption = {
-        title: {
-            text: "Thống kê doanh thu",
-        },
-        tooltip: {
-            trigger: "axis",
-            formatter: function (params: any) {
-                params = params[0];
-                var date = new Date(params.name);
-                return (
-                    date.getDate() +
-                    "/" +
-                    (date.getMonth() + 1) +
-                    "/" +
-                    date.getFullYear() +
-                    " : " +
-                    params.value[1]
-                );
-            },
-            axisPointer: {
-                animation: false,
-            },
-        },
-        xAxis: {
-            type: "time",
-            splitLine: {
-                show: true,
-            },
-        },
-        yAxis: {
-            type: "value",
-            boundaryGap: [0, "100%"],
-            splitLine: {
-                show: false,
-            },
-        },
-    };
 
     return (
         <div className={classes.root}>
@@ -84,12 +45,13 @@ const RevenueStatistic = ({ classes: propsClasses }: Props) => {
                 </Form>
             </header>
             <div className={classes.main}>
-                {data && (
-                    <ReactEcharts
-                        style={{ height: 500 }}
-                        option={merge({}, defaultOption, option)}
+                {(data && (
+                    <SmoothedLineChart
+                        title="Thống kê doanh thu"
+                        option={option}
+                        width="100%"
                     />
-                )}
+                )) || <Empty description={false} />}
             </div>
         </div>
     );

@@ -8,6 +8,11 @@
     grid-template-columns: repeat(4, 1fr);
 }
 
+.title {
+    font-weight: 600;
+    margin-bottom: 500;
+}
+
 .compareRevenue {
     padding: 2rem;
     margin-top: 5rem;

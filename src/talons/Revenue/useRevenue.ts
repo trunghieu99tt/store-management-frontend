@@ -1,5 +1,5 @@
 /**
- * A [React Hook]{@link https://reactjs.org/docs/hooks-intro.html} that revenue actions logic
+ * A [React Hook]{@link https://reactjs.org/docs/hooks-intro.html} that contains revenue actions logic
  *
  * @kind function.
  *
@@ -11,12 +11,18 @@
  * deleteRevenue: func,
  * fetch2NearestMonths: func,
  * fetchRevenuesInRange: func,
- *
+ *}}
  * */
+
+import { useData } from "../common/useData";
 
 const BACKEND_URL = `${process.env.REACT_APP_API_LINK}/revenue`;
 
 const useRevenue = () => {
+    const { addOne, deleteOne, updateOne } = useData({
+        backendURL: BACKEND_URL,
+    });
+
     const fetchRevenues = async (
         pageNumber = 1,
         pageSize = 10,
@@ -25,7 +31,7 @@ const useRevenue = () => {
         isAsc = true
     ) => {
         const response = await fetch(
-            `${BACKEND_URL}/?pageSize=${pageSize}&pageNumber=${pageNumber}${
+            `${BACKEND_URL}?pageSize=${pageSize}&pageNumber=${pageNumber}${
                 (day !== null && `&day=${day}`) || ""
             }&sortBy=${sortBy}&isAsc=${isAsc}`
         );
@@ -37,9 +43,7 @@ const useRevenue = () => {
         const response = await fetch(
             `${BACKEND_URL}/statistic?dayStart=${dateFrom}&dayEnd=${dateTo}`
         );
-
         const data = await response.json();
-
         return data;
     };
 
@@ -55,44 +59,25 @@ const useRevenue = () => {
         return data;
     };
 
-    const addRevenue = async (data: any, type = "json") => {
+    const addRevenue = async (data: any) => {
         if (!data.staffID) {
             data.staffID = 1;
         }
-
-        const response = await fetch(`${BACKEND_URL}/`, {
-            method: "POST",
-            body: type === "json" ? JSON.stringify(data) : data,
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-        const responseData = await response.json();
-        return responseData;
+        const response = await addOne(data);
+        return response;
     };
 
     const updateRevenue = async (data: any, revenueID: number) => {
         if (!data.staffID) {
             data.staffID = 1;
         }
-
-        const response = await fetch(`${BACKEND_URL}/${revenueID}`, {
-            method: "PUT",
-            body: JSON.stringify(data),
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-        const responseData = await response.json();
-        return responseData;
+        const response = await updateOne(data, revenueID);
+        return response;
     };
 
     const deleteRevenue = async (revenueID: number) => {
-        const response = await fetch(`${BACKEND_URL}/${revenueID}`, {
-            method: "DELETE",
-        });
-        const data = await response.json();
-        return data;
+        const response = await deleteOne(revenueID);
+        return response;
     };
 
     return {

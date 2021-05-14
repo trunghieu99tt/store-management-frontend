@@ -69,7 +69,12 @@ const Overview = ({ classes: propsClasses }: Props) => {
             </section>
 
             <section className={classes.compareRevenue}>
-                <TwoLinesCompare />
+                <div>
+                    <h4 className={classes.title}>
+                        Thống kê doanh thu tháng trước và tháng hiện tại
+                    </h4>
+                    <TwoLinesCompare />
+                </div>
                 <RaceBar />
             </section>
         </div>

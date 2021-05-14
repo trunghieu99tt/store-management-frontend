@@ -1,5 +1,5 @@
 import React from "react";
-import UserLogo from "../../components/UserLogo";
+import UserLogo from "../../components/User/UserLogo";
 
 import classes from "./header.module.css";
 

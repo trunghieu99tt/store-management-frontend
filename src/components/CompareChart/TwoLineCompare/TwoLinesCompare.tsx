@@ -7,7 +7,7 @@ import { useCompareOverview } from "../../../talons/useCompareOverview";
 const TwoLinesCompare = () => {
     const [option, setOption] = useState<any>(null);
 
-    const { parse2NearestMonthData } = useCompareOverview();
+    const { parse2NearestMonthData, loading } = useCompareOverview();
 
     useEffect(() => {
         parseData();
@@ -76,7 +76,8 @@ const TwoLinesCompare = () => {
         <div className={classes.root}>
             <ReactEcharts
                 style={{ height: 500, width: "100%" }}
-                option={option}
+                option={option || {}}
+                showLoading={loading}
             />
         </div>
     );
