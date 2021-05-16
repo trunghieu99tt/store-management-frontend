@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 
+// utils
+import client from "../../api/client";
+
 // talons
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { useHistory } from "react-router";
+import { useLocalStorage } from "../../utils/useLocalStorage";
 
 // components
 import { Form, Input, Button, message } from "antd";
@@ -11,8 +15,7 @@ import { Form, Input, Button, message } from "antd";
 import classes from "./auth.module.css";
 
 // states
-import { authState } from "../../states/app.state";
-import { useLocalStorage } from "../../utils/useLocalStorage";
+import { userState } from "../../states/user.state";
 
 const layout = {
     labelCol: { span: 8 },
@@ -27,56 +30,39 @@ interface iLoginForm {
     password: string;
 }
 
-const USERNAME = process.env.REACT_APP_USERNAME;
-const PASSWORD = process.env.REACT_APP_PASSWORD;
+const ENDPOINT = "/users";
 
 const Auth = () => {
-    const [auth, setAuth] = useRecoilState(authState);
-    const [user, setUser] = useLocalStorage("user", false);
-    const [failedCounter, setFailedCounter] = useState<number>(0);
-    const [fineTime, setFineTime] = useState<Date | null>(null);
+    const setUser = useSetRecoilState(userState);
+    const [token, setToken] = useLocalStorage("token", false);
     const history = useHistory();
 
     useEffect(() => {
-        if (user) history.push("/");
-    }, []);
+        if (token) {
+            getUser();
+            history.push("/");
+        }
+    }, [token]);
 
     const onFinish = (values: iLoginForm) => {
-        if (fineTime) {
-            const dateNow = new Date();
-            const diffTime = Math.abs(dateNow.getTime() - fineTime.getTime());
-            if (diffTime / 1000 >= 5 * 60) {
-                handleLogin(values);
-            } else {
-                message.error(
-                    "Bạn đã nhập sai thông tin quá nhiều, xin chờ ít nhất 5 phút và thử lại"
-                );
-            }
-        } else {
-            handleLogin(values);
+        handleLogin(values);
+    };
+
+    const handleLogin = async (values: iLoginForm) => {
+        try {
+            const response = await client
+                .post(`${ENDPOINT}/login`, values)
+                .then((res) => res.data);
+            const token = response?.data?.access_token;
+            setToken(token);
+        } catch (error) {
+            message.error("Wrong username or password");
         }
     };
 
-    const handleLogin = (values: iLoginForm) => {
-        const { username, password } = values;
-
-        if (username === USERNAME && password === PASSWORD) {
-            message.success("Đăng nhập thành công");
-            setAuth(true);
-            history.push("/");
-            setUser(true);
-        } else {
-            message.error("Thông tin đăng nhập không chính xác");
-            setFailedCounter((value) => value + 1);
-            if (failedCounter >= 5) {
-                setFineTime(new Date());
-                setFailedCounter(0);
-            }
-        }
-    };
-
-    const onFinishFailed = (errorInfo: any) => {
-        message.error("Error");
+    const getUser = async () => {
+        const response = await client.get("/users/getMe");
+        setUser(response.data.data);
     };
 
     return (
@@ -85,7 +71,6 @@ const Auth = () => {
                 {...layout}
                 name="basic"
                 onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
                 className={classes.form}
             >
                 <h2 className={classes.title}>Đăng nhập</h2>
