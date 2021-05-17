@@ -12,7 +12,7 @@ import { useData } from "../common/useData";
 
 const BASE_BACKEND_URL = `${process.env.REACT_APP_API_LINK}/expense`;
 
-const useExpense = ({ type }: { type: TExpense }) => {
+const useExpense = ({ type = "EMPLOYEE_SALARY" }: { type: TExpense }) => {
     let BACKEND_URL = BASE_BACKEND_URL;
 
     switch (type) {

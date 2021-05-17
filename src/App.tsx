@@ -21,10 +21,16 @@ import RevenueStatistic from "./components/Revenue/RevenueStatistic";
 import ExpenseList from "./components/Expense/ExpenseList";
 import ExpenseForm from "./components/Expense/ExpenseForm";
 import ExpenseStatistic from "./components/Expense/ExpenseStatistic";
+import RevenueView from "./components/Revenue/RevenueView";
+import ExpenseView from "./components/Expense/ExpenseView";
+import BudgetList from "./components/Budget/BudgetList";
+import BudgetForm from "./components/Budget/BudgetForm";
+import BudgetView from "./components/Budget/BudgetView";
 
 // styles
 import "bootstrap/dist/css/bootstrap.min.css";
 import "antd/dist/antd.css";
+import "./styles/override.css";
 import "./App.css";
 
 // states
@@ -60,7 +66,7 @@ const App = () => {
                 <Route
                     exact
                     path="/revenue/view/:id"
-                    component={() => <RevenueForm view="VIEW" />}
+                    component={() => <RevenueView />}
                 />
                 <Route
                     exact
@@ -79,7 +85,7 @@ const App = () => {
                 <Route
                     exact
                     path="/expense/view/:id"
-                    component={() => <ExpenseForm view="VIEW" />}
+                    component={() => <ExpenseView />}
                 />
                 <Route
                     exact
@@ -108,6 +114,23 @@ const App = () => {
                     path="/statistic/expense"
                     component={ExpenseStatistic}
                 />
+
+                {/* ----------------- BUDGET ----------------------- */}
+
+                <Route exact path="/budget" component={BudgetList} />
+                <Route
+                    exact
+                    path="/budget/add"
+                    component={() => <BudgetForm view="ADD" />}
+                />
+                <Route
+                    path="/budget/edit/:id"
+                    component={() => <BudgetForm view="EDIT" />}
+                ></Route>
+                <Route
+                    path="/budget/view/:id"
+                    component={() => <BudgetView />}
+                ></Route>
 
                 {/* ----------------- STUDENT ----------------------- */}
 

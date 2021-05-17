@@ -1,50 +1,51 @@
 import React from "react";
 
 // talons
-import { useRevenueForm } from "../../../talons/Revenue/useRevenueForm";
+import { useBudgetForm } from "../../../talons/Budget/useBudgetForm";
 
 // utils
 import mergeClasses from "../../../utils/mergeClasses";
 
 // components
-import { Button, Form, Input, InputNumber } from "antd";
+import { Form, Input, InputNumber } from "antd";
+
+// types
+import { FORM_TYPE } from "../../../types/app.types";
 
 // styles
-import defaultClasses from "./revenueForm.module.css";
-
-// types'
-import { FORM_TYPE } from "../../../types/app.types";
+import defaultClasses from "./budgetForm.module.css";
 
 interface Props {
     classes?: object;
     view: FORM_TYPE;
 }
 
-const RevenueForm = ({ classes: propsClasses, view }: Props) => {
+const BudgetForm = ({ classes: propsClasses, view }: Props) => {
     const classes = mergeClasses(defaultClasses, propsClasses);
 
-    const { form, revenue, handleCancel, onChange, onSubmit } = useRevenueForm({
-        view,
-    });
+    const { form, type, budget, handleCancel, onSubmit, onChange } =
+        useBudgetForm({
+            view,
+        });
 
     let title = null;
     let buttonText = null;
 
     switch (view) {
         case "ADD":
-            title = "Thêm thông tin doanh thu";
+            title = "Thêm thông tin ngân sách";
             buttonText = "Thêm";
             break;
         case "EDIT":
-            title = "Sửa thông tin doanh thu";
+            title = "Sửa thông tin ngân sách";
             buttonText = "Lưu thông tin";
             break;
         case "VIEW":
-            title = "Thông tin chi tiết doanh thu";
+            title = "Thông tin chi tiết ngân sách";
             buttonText = "Sửa";
             break;
         default:
-            title = "Thông tin doanh thu";
+            title = "Thông tin ngân sách";
             buttonText = "";
     }
 
@@ -59,7 +60,7 @@ const RevenueForm = ({ classes: propsClasses, view }: Props) => {
                 onFinish={onSubmit}
                 onValuesChange={onChange}
                 form={form}
-                initialValues={revenue || {}}
+                initialValues={budget || {}}
                 key={Math.random()}
             >
                 {view !== "ADD" && (
@@ -73,11 +74,11 @@ const RevenueForm = ({ classes: propsClasses, view }: Props) => {
                     rules={[
                         {
                             required: true,
-                            message: "Xin hãy nhập tên cho phiếu thu",
+                            message: "Please input name",
                         },
                     ]}
                 >
-                    <Input disabled={view === "VIEW"} />
+                    <Input />
                 </Form.Item>
                 <Form.Item
                     label="Mô tả"
@@ -85,54 +86,13 @@ const RevenueForm = ({ classes: propsClasses, view }: Props) => {
                     rules={[
                         {
                             required: true,
-                            message: "Xin hãy nhập mô tả cho phiếu thu",
+                            message: "Please input description",
                         },
                     ]}
                 >
-                    <Input disabled={view === "VIEW"} />
+                    <Input />
                 </Form.Item>
-                <Form.Item
-                    label="Số lượng"
-                    name="quantity"
-                    rules={[
-                        {
-                            required: true,
-                            message: "Xin hãy nhập số lượng",
-                        },
-                    ]}
-                >
-                    <InputNumber
-                        disabled={view === "VIEW"}
-                        formatter={(value) =>
-                            `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                        }
-                        parser={(value: any) =>
-                            (value && value.replace(/\$\s?|(,*)/g, "")) || ""
-                        }
-                        min={0}
-                    />
-                </Form.Item>{" "}
-                <Form.Item
-                    label="Đơn giá"
-                    name="priceUnit"
-                    rules={[
-                        {
-                            required: true,
-                            message: "Xin hãy nhập đơn giá",
-                        },
-                    ]}
-                >
-                    <InputNumber
-                        disabled={view === "VIEW"}
-                        formatter={(value) =>
-                            `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                        }
-                        parser={(value: any) =>
-                            (value && value.replace(/\$\s?|(,*)/g, "")) || ""
-                        }
-                        min={0}
-                    />
-                </Form.Item>
+
                 <Form.Item
                     label="Tổng tiền"
                     name="total"
@@ -154,18 +114,7 @@ const RevenueForm = ({ classes: propsClasses, view }: Props) => {
                         min={0}
                     />
                 </Form.Item>
-                <Form.Item
-                    label="Số tài khoản ngân hàng"
-                    name="bankAccountNumber"
-                    rules={[
-                        {
-                            required: true,
-                            message: "Xin hãy nhập số tài khoản ngân hàng",
-                        },
-                    ]}
-                >
-                    <Input disabled={view === "VIEW"} />
-                </Form.Item>
+
                 <div className={classes.btnGroup}>
                     <button type="submit" className={classes.btn}>
                         {buttonText}
@@ -179,4 +128,4 @@ const RevenueForm = ({ classes: propsClasses, view }: Props) => {
     );
 };
 
-export default RevenueForm;
+export default BudgetForm;

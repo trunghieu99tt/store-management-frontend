@@ -233,22 +233,14 @@ const ExpenseForm = ({ classes: propsClasses, view }: Props) => {
                     />
                 </Form.Item>
 
-                <Form.Item className={classes.btnGroup}>
-                    <Button
-                        type="primary"
-                        htmlType="submit"
-                        className={classes.btn}
-                    >
+                <div className={classes.btnGroup}>
+                    <button type="submit" className={classes.btn}>
                         {buttonText}
-                    </Button>
-                    <Button
-                        type="primary"
-                        className={classes.btn}
-                        onClick={handleCancel}
-                    >
+                    </button>
+                    <button className={classes.btn} onClick={handleCancel}>
                         Hủy
-                    </Button>
-                </Form.Item>
+                    </button>
+                </div>
             </Form>
         </div>
     );

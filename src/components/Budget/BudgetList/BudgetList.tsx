@@ -1,57 +1,53 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import cn from "classnames";
-
-// talons
-import { useRevenueList } from "../../../talons/Revenue/useRevenueList";
+import { Link } from "react-router-dom";
 
 // utils
 import mergeClasses from "../../../utils/mergeClasses";
 
+// talons
+import { useBudgetList } from "../../../talons/Budget/useBudgetList";
+
 // components
-import { Button, DatePicker, Form, Space, Table } from "antd";
+import { Button, DatePicker, Form, Space, Table, Tag } from "antd";
 
 // icons
-import { Eye, Edit3, Delete } from "react-feather";
-
-// styles
-import defaultClasses from "./revenueList.module.css";
+import { Delete, Edit3, Eye } from "react-feather";
 
 // types
-import { iRevenue } from "../../../types/revenue.types";
 import { iBankAccount } from "../../../types/bankAccount.types";
-import { iStaff } from "../../../types/user.types";
+
+// styles
+import defaultClasses from "./budgetList.module.css";
 
 interface Props {
     classes?: object;
 }
 
-const RevenueList = ({ classes: propsClasses }: Props) => {
+const BudgetList = ({ classes: propsClasses }: Props) => {
     const classes = mergeClasses(defaultClasses, propsClasses);
 
     const {
         data,
-        pageSize,
         loading,
         totalNumber,
 
         onDelete,
         handleSearch,
-        handleChangeTable,
-    } = useRevenueList();
+    } = useBudgetList();
 
     const columns = [
         {
             title: "ID",
             dataIndex: "id",
             key: "id",
-            width: 100,
+            width: 150,
         },
         {
             title: "Tên",
             dataIndex: "name",
             key: "name",
-            width: 250,
+            width: 200,
             sorter: (a: any, b: any) => NaN,
         },
         {
@@ -65,71 +61,25 @@ const RevenueList = ({ classes: propsClasses }: Props) => {
             },
         },
         {
-            title: "Ngày tạo",
-            dataIndex: "createdAt",
-            key: "createdAt",
-            width: 200,
-            render: (record: Date) => {
-                return <p>{new Date(record).toLocaleDateString()}</p>;
-            },
-        },
-        {
-            title: "Số lượng",
-            dataIndex: "quantity",
-            key: "quantity",
-            width: 150,
-            sorter: (a: any, b: any) => NaN,
-        },
-        {
-            title: "Đơn giá",
-            dataIndex: "priceUnit",
-            key: "priceUnit",
-            width: 150,
-            sorter: (a: any, b: any) => NaN,
-        },
-        {
             title: "Tổng tiền",
             dataIndex: "total",
             key: "total",
-            width: 200,
+            width: 150,
             sorter: (a: any, b: any) => NaN,
-        },
-
-        {
-            title: "Số tài khoản ngân hàng",
-            dataIndex: "bankAccount",
-            key: "bankAccount",
-            width: 300,
-            render: (record: iBankAccount) => {
-                return <p>{record.accountNumber}</p>;
-            },
-        },
-        {
-            title: "Nhân viên ",
-            dataIndex: "staff",
-            key: "staff",
-            width: 300,
-            render: (record: iStaff) => {
-                return (
-                    <p>
-                        {record.id} - {record.name}
-                    </p>
-                );
-            },
         },
 
         {
             title: "Thao tác",
             key: "action",
-            render: (text: any, record: iRevenue) => (
+            render: (text: any, record: any) => (
                 <Space size="middle">
                     <button className={cn(classes.btn, classes.view)}>
-                        <Link to={`/revenue/view/${record.id}`}>
+                        <Link to={`/expense/view/${record.id}`}>
                             <Eye />
                         </Link>
                     </button>
                     <button className={cn(classes.btn, classes.edit)}>
-                        <Link to={`/revenue/edit/${record.id}`}>
+                        <Link to={`/expense/edit/${record.id}`}>
                             <Edit3 />
                         </Link>
                     </button>
@@ -145,11 +95,10 @@ const RevenueList = ({ classes: propsClasses }: Props) => {
             fixed: "right" as "right",
         },
     ];
-
     return (
         <div className={classes.root}>
             <header className={classes.header}>
-                <Link to="/revenue/add">
+                <Link to="/budget/add">
                     <Button type="primary">Thêm mới</Button>
                 </Link>
 
@@ -170,11 +119,9 @@ const RevenueList = ({ classes: propsClasses }: Props) => {
                 columns={columns}
                 dataSource={data}
                 pagination={{
-                    pageSize: pageSize,
                     total: totalNumber,
                     pageSizeOptions: ["10", "20", "30"],
                 }}
-                onChange={handleChangeTable}
                 scroll={{ x: "500px" }}
                 loading={loading}
             />
@@ -182,4 +129,4 @@ const RevenueList = ({ classes: propsClasses }: Props) => {
     );
 };
 
-export default RevenueList;
+export default BudgetList;

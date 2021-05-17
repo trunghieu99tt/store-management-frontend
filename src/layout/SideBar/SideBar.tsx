@@ -60,6 +60,11 @@ const SideBar = ({ classes: propsClasses }: Props) => {
             ],
         },
         {
+            name: "Quản lí ngân sách",
+            icon: <ContainerOutlined />,
+            path: "budget",
+        },
+        {
             name: "Thống kê tài chính",
             icon: <RadarChartOutlined />,
             children: [
@@ -122,9 +127,14 @@ const SideBar = ({ classes: propsClasses }: Props) => {
                     <button
                         key={item.name}
                         name="child"
-                        className={cn(classes.btn, classes.itemRoot, {
-                            [classes.itemActive]: isActive,
-                        })}
+                        className={cn(
+                            classes.btn,
+                            classes.itemRoot,
+                            classes.itemActive,
+                            {
+                                [classes.itemActive]: isActive,
+                            }
+                        )}
                     >
                         <div className={classes.item}>
                             {item.icon}

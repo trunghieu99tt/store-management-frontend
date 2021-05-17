@@ -1,14 +1,46 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,700;1,400&family=Roboto:wght@400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap");
+
+:root {
+    --blue: #287cf2;
+    --bg-1: #eff4ff;
+    --box-shadow-1: 0px 5px 25px 2px rgb(40 124 242 / 38%);
+}
 
 html {
     font-size: 62.5%;
 }
 
 * {
-    font-family: "Roboto", sans-serif;
+    font-family: "Nunito", "Roboto", sans-serif;
     box-sizing: border-box;
 }
 
 p {
     margin-bottom: 0;
+}
+
+ul {
+    margin: 0;
+}
+
+li {
+    list-style: none;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 8px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: red;
+}
+
+::-webkit-scrollbar-thumb {
+    /* background: #5686ca; */
+    background: var(--blue);
+    width: 5px;
 }
