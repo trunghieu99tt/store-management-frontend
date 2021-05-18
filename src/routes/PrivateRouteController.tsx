@@ -17,15 +17,10 @@ import ReportGenerator from "../components/Report/ReportGenerator";
 import RevenueStatistic from "../components/Revenue/RevenueStatistic";
 import ExpenseStatistic from "../components/Expense/ExpenseStatistic";
 
-// components
-import BaseView from "../layout/BaseView";
-
-// Route types
-
 const PrivateRoutesController = () => {
     return (
         <Switch>
-            <PrivateRoute path="/" component={Overview} />
+            <PrivateRoute exact path="/" component={Overview} />
 
             {/* ----------------- REVENUE ----------------------- */}
 
@@ -92,4 +87,4 @@ const PrivateRoutesController = () => {
     );
 };
 
-export default BaseView(PrivateRoutesController);
+export default PrivateRoutesController;

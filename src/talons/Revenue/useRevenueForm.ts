@@ -1,6 +1,6 @@
 import { Form, message } from "antd";
 import { Modal } from "antd";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import { FORM_TYPE } from "../../types/app.types";
 import { iRevenue, iRevenueDTO } from "../../types/revenue.types";

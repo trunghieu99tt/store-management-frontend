@@ -12,15 +12,23 @@
  *
  * */
 
+import { useData } from "../common/useData";
+
 const BACKEND_URL = `${process.env.REACT_APP_API_LINK}/report`;
 
 const useReport = () => {
+    const { addOne, fetchList, fetchOne } = useData({
+        endpoint: "report",
+        additionalEndpoint: "/report/generate",
+    });
+
     const fetchReports = async (pageNumber = 1, pageSize = 10) => {
-        const response = await fetch(
-            `${BACKEND_URL}?pageSize=${pageSize}&pageNumber=${pageNumber}`
-        );
-        const data = await response.json();
-        return data;
+        const response = await fetchList({
+            pageSize,
+            pageNumber,
+        });
+
+        return response;
     };
 
     const fetchReport = async (id: number) => {
@@ -39,15 +47,8 @@ const useReport = () => {
     };
 
     const generateReport = async (data: any) => {
-        const response = await fetch(`${BACKEND_URL}/generate`, {
-            method: "POST",
-            body: JSON.stringify(data),
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-        const responseData = await response.json();
-        return responseData;
+        const response = await addOne(data);
+        return response;
     };
 
     return {

@@ -14,7 +14,7 @@ const BASE_BACKEND_URL = `${process.env.REACT_APP_API_LINK}/budget`;
 
 const useBudget = () => {
     const { fetchList, fetchOne, addOne, updateOne, deleteOne } = useData({
-        backendURL: BASE_BACKEND_URL,
+        endpoint: BASE_BACKEND_URL,
     });
 
     const fetchBudgets = async () => {

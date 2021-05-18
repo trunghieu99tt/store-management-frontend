@@ -38,8 +38,9 @@ const App = () => {
     }, []);
 
     const getUser = async () => {
-        const response = await client.get("/users/getMe");
-        setUser(response.data.data);
+        // const response = await client.get("/users/getMe");
+        // setUser(response.data.data);
+        setUser(true);
         setLoading(false);
     };
 

@@ -7,29 +7,30 @@
  *}}
  * */
 
+import client from "../../api/client";
 import { TExpense } from "../../types/expense.types";
 import { useData } from "../common/useData";
 
 const BASE_BACKEND_URL = `${process.env.REACT_APP_API_LINK}/expense`;
 
 const useExpense = ({ type = "EMPLOYEE_SALARY" }: { type: TExpense }) => {
-    let BACKEND_URL = BASE_BACKEND_URL;
+    let ADDITIONAL_ENDPOINT = "/expense";
 
     switch (type) {
         case "EMPLOYEE_SALARY":
-            BACKEND_URL = `${BASE_BACKEND_URL}/employeeSalary`;
+            ADDITIONAL_ENDPOINT = `/expense/employeeSalary`;
             break;
         case "SERVICE":
-            BACKEND_URL = `${BASE_BACKEND_URL}/service`;
+            ADDITIONAL_ENDPOINT = `/expense/service`;
             break;
         case "SHOPPING":
-            BACKEND_URL = `${BASE_BACKEND_URL}/shopping`;
+            ADDITIONAL_ENDPOINT = `/expense/shopping`;
             break;
     }
 
     const { fetchList, fetchOne, addOne, updateOne, deleteOne } = useData({
-        backendURL: BASE_BACKEND_URL,
-        additionalBackendURL: BACKEND_URL,
+        endpoint: "/expense",
+        additionalEndpoint: ADDITIONAL_ENDPOINT,
     });
 
     const fetchExpenses = async () => {
@@ -64,11 +65,10 @@ const useExpense = ({ type = "EMPLOYEE_SALARY" }: { type: TExpense }) => {
     };
 
     const fetchExpenseInRange = async (dateFrom: String, dateTo: String) => {
-        const response = await fetch(
+        const response = await client.get(
             `${BASE_BACKEND_URL}/statistic?dayStart=${dateFrom}&dayEnd=${dateTo}`
         );
-        const data = await response.json();
-        return data;
+        return response.data;
     };
 
     return {

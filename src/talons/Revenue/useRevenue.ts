@@ -14,13 +14,14 @@
  *}}
  * */
 
+import client from "../../api/client";
 import { useData } from "../common/useData";
 
 const BACKEND_URL = `${process.env.REACT_APP_API_LINK}/revenue`;
 
 const useRevenue = () => {
-    const { addOne, deleteOne, updateOne } = useData({
-        backendURL: BACKEND_URL,
+    const { addOne, deleteOne, updateOne, fetchList, fetchOne } = useData({
+        endpoint: "/revenue",
     });
 
     const fetchRevenues = async (
@@ -30,27 +31,27 @@ const useRevenue = () => {
         sortBy = 4,
         isAsc = true
     ) => {
-        const response = await fetch(
-            `${BACKEND_URL}?pageSize=${pageSize}&pageNumber=${pageNumber}${
-                (day !== null && `&day=${day}`) || ""
-            }&sortBy=${sortBy}&isAsc=${isAsc}`
-        );
-        const data = await response.json();
-        return data;
+        const params: any = {
+            pageSize,
+            pageNumber,
+            sortBy,
+            isAsc,
+        };
+        if (day !== null) params.day = day;
+        const response = await fetchList(params);
+        return response;
     };
 
     const fetchRevenuesInRange = async (dateFrom: String, dateTo: String) => {
-        const response = await fetch(
+        const response = await client.get(
             `${BACKEND_URL}/statistic?dayStart=${dateFrom}&dayEnd=${dateTo}`
         );
-        const data = await response.json();
-        return data;
+        return response.data;
     };
 
     const fetchRevenue = async (revenueID: number) => {
-        const response = await fetch(`${BACKEND_URL}/${revenueID}`);
-        const data = await response.json();
-        return data.data;
+        const response = await fetchOne(revenueID);
+        return response.data;
     };
 
     const fetch2NearestMonths = async () => {
@@ -81,9 +82,9 @@ const useRevenue = () => {
     };
 
     return {
-        fetchRevenues,
-        fetchRevenue,
         addRevenue,
+        fetchRevenue,
+        fetchRevenues,
         deleteRevenue,
         updateRevenue,
         fetch2NearestMonths,
