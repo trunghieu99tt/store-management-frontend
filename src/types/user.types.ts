@@ -6,6 +6,8 @@ export interface iUser {
     username: string;
     password: string;
     role: string;
+    department?: string;
+    position?: string;
 }
 
 export interface iStaff extends iUser {

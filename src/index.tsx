@@ -6,6 +6,11 @@ import reportWebVitals from "./reportWebVitals";
 import { RecoilRoot } from "recoil";
 import { BrowserRouter, HashRouter } from "react-router-dom";
 
+// styles
+import "bootstrap/dist/css/bootstrap.min.css";
+import "antd/dist/antd.css";
+import "./App.css";
+
 ReactDOM.render(
     <React.StrictMode>
         <RecoilRoot>
