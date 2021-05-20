@@ -16,6 +16,8 @@ import ExpenseForm from "../components/Expense/ExpenseForm";
 import ReportGenerator from "../components/Report/ReportGenerator";
 import RevenueStatistic from "../components/Revenue/RevenueStatistic";
 import ExpenseStatistic from "../components/Expense/ExpenseStatistic";
+import RevenueView from "../components/Revenue/RevenueView";
+import ExpenseView from "../components/Expense/ExpenseView";
 
 const PrivateRoutesController = () => {
     return (
@@ -33,7 +35,7 @@ const PrivateRoutesController = () => {
             <PrivateRoute
                 exact
                 path="/revenue/view/:id"
-                component={() => <RevenueForm view="VIEW" />}
+                component={() => <RevenueView />}
             />
             <PrivateRoute
                 exact
@@ -52,7 +54,7 @@ const PrivateRoutesController = () => {
             <PrivateRoute
                 exact
                 path="/expense/view/:id"
-                component={() => <ExpenseForm view="VIEW" />}
+                component={() => <ExpenseView />}
             />
             <PrivateRoute
                 exact
