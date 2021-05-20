@@ -19,7 +19,8 @@ const { RangePicker } = DatePicker;
 const RevenueStatistic = ({ classes: propsClasses }: Props) => {
     const classes = mergeClasses(defaultClasses, propsClasses);
 
-    const { data, option, handleGenerateStatistic } = useRevenueStatistic();
+    const { data, largest, smallest, total, option, handleGenerateStatistic } =
+        useRevenueStatistic();
 
     return (
         <div className={classes.root}>
@@ -53,6 +54,28 @@ const RevenueStatistic = ({ classes: propsClasses }: Props) => {
                     />
                 )) || <Empty description={false} />}
             </div>
+            {data && (
+                <footer className={classes.footer}>
+                    <ul className={classes.statisticList}>
+                        <li className={classes.statisticListItem}>
+                            <strong>Doanh thu nhỏ nhất: </strong>
+                            <span>{smallest?.amount} </span>
+                            đạt được vào ngày:
+                            <span> {smallest?.day}</span>
+                        </li>
+                        <li className={classes.statisticListItem}>
+                            <strong>Doanh thu lớn nhất: </strong>
+                            <span>{largest?.amount} </span>
+                            đạt được vào ngày:
+                            <span> {largest?.day}</span>
+                        </li>
+                        <li className={classes.statisticListItem}>
+                            <strong>Tổng doanh thu : </strong>
+                            <span> {total}</span>
+                        </li>
+                    </ul>
+                </footer>
+            )}
         </div>
     );
 };

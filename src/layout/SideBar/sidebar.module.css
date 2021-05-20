@@ -70,10 +70,6 @@
     border-radius: 1rem;
 }
 
-.itemRoot {
-    margin-bottom: 2rem;
-}
-
 .itemRoot,
 .item:hover {
     background-color: var(--blue);

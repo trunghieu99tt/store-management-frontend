@@ -1,7 +1,7 @@
 import React from "react";
 
 // talons
-import { useExpenseView } from "../../../talons/Expense/useExpenseView";
+import { useBudgetView } from "../../../talons/Budget/useBudgetView";
 
 // utils
 import DataView from "../../DataView";
@@ -11,11 +11,11 @@ interface Props {
 }
 
 const BudgetView = ({ classes: propsClasses }: Props) => {
-    const { expense, params, onGoBack, onGoToEdit } = useExpenseView();
+    const { budget, params, onGoBack, onGoToEdit } = useBudgetView();
 
     return (
         <DataView
-            data={expense}
+            data={budget}
             onGoBack={onGoBack}
             onGoToEdit={onGoToEdit}
             params={params}

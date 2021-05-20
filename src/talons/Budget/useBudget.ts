@@ -24,20 +24,20 @@ const useBudget = () => {
 
     const fetchBudget = async (budgetID: number) => {
         const response = await fetchOne(budgetID);
-        return response;
+        return response.data;
     };
 
     const addBudget = async (data: any) => {
         if (!data.managerID) {
-            data.managerID = 1;
+            data.managerID = 2;
         }
         const response = await addOne(data);
         return response;
     };
 
     const updateBudget = async (data: any, budgetID: number) => {
-        if (!data.staffID) {
-            data.staffID = 1;
+        if (!data.managerID) {
+            data.managerID = 1;
         }
         const response = await updateOne(data, budgetID);
         return response;

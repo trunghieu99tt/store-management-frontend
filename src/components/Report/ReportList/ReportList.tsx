@@ -10,13 +10,8 @@ import classes from "./reportList.module.css";
 interface Props {}
 
 const ReportList = (props: Props) => {
-    const {
-        data,
-        pageSize,
-        loading,
-        totalNumber,
-        handleSearch,
-    } = useReportList();
+    const { data, pageSize, loading, totalNumber, handleSearch } =
+        useReportList();
 
     const columns = [
         {
@@ -70,22 +65,24 @@ const ReportList = (props: Props) => {
 
     return (
         <div className={classes.root}>
-            <Link to="/report/generate">
-                <Button type="primary">Tạo báo cáo</Button>
-            </Link>
+            <header className={classes.header}>
+                <Link to="/report/generate">
+                    <Button type="primary">Tạo báo cáo</Button>
+                </Link>
 
-            <div className={classes.header}>
-                <Form layout="inline" onFinish={handleSearch}>
-                    <Form.Item label="Tìm kiếm theo ngày" name="createdAt">
-                        <DatePicker />
-                    </Form.Item>
-                    <Form.Item>
-                        <Button type="primary" htmlType="submit">
-                            Tìm kiếm
-                        </Button>
-                    </Form.Item>
-                </Form>
-            </div>
+                <div className={classes.search}>
+                    <Form layout="inline" onFinish={handleSearch}>
+                        <Form.Item label="Tìm kiếm theo ngày" name="createdAt">
+                            <DatePicker />
+                        </Form.Item>
+                        <Form.Item>
+                            <Button type="primary" htmlType="submit">
+                                Tìm kiếm
+                            </Button>
+                        </Form.Item>
+                    </Form>
+                </div>
+            </header>
             <Table
                 columns={columns}
                 dataSource={data}

@@ -74,12 +74,12 @@ const BudgetList = ({ classes: propsClasses }: Props) => {
             render: (text: any, record: any) => (
                 <Space size="middle">
                     <button className={cn(classes.btn, classes.view)}>
-                        <Link to={`/expense/view/${record.id}`}>
+                        <Link to={`/budget/view/${record.id}`}>
                             <Eye />
                         </Link>
                     </button>
                     <button className={cn(classes.btn, classes.edit)}>
-                        <Link to={`/expense/edit/${record.id}`}>
+                        <Link to={`/budget/edit/${record.id}`}>
                             <Edit3 />
                         </Link>
                     </button>

@@ -9,3 +9,21 @@
 .main {
     margin-top: 5rem;
 }
+
+.statisticList {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(50rem, 1fr));
+    grid-gap: 2rem;
+}
+
+.statisticListItem {
+    padding: 1.5rem;
+    border: 2px solid var(--blue);
+    border-radius: 5px;
+    font-size: 1.5rem;
+}
+
+.statisticListItem span {
+    color: red;
+    font-weight: bold;
+}

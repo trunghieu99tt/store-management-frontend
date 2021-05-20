@@ -1,9 +1,6 @@
 import { message, Modal } from "antd";
 import { useEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
-import { pageSizeState } from "../../states/app.state";
 import { iBudget } from "../../types/budget.types";
-import { iReport } from "../../types/report.types";
 import { useBudget } from "./useBudget";
 
 /**
@@ -13,7 +10,7 @@ import { useBudget } from "./useBudget";
  *
  *
  * @return {{
- * data: iReport
+ * data: iBudget[]
  * }}
  *
  * */
@@ -40,16 +37,16 @@ const useBudgetList = () => {
 
     const onDelete = (budgetID: number) => {
         Modal.confirm({
-            title: "Xóa phiếu chi này?",
-            content: `Bạn có chắc muốn xóa phiếu chi này không? 
-                Tất cả các báo cáo liên quan đến phiếu chi này cũng sẽ bị xóa`,
+            title: "Xóa ngân sách này này?",
+            content: `Bạn có chắc muốn xóa ngân sách này không? 
+                Tất cả các báo cáo liên quan đến ngân sách này cũng sẽ bị xóa`,
             okText: "Xác nhận xóa",
             cancelText: "Hủy",
             onOk: async () => {
                 const data = await deleteBudget(budgetID);
                 await handleFetchBudgets();
                 if (data.status === 200) {
-                    message.success("Xóa phiếu chi thành công");
+                    message.success("Xóa ngân sách thành công");
                 } else {
                     message.error("Đã xảy ra lỗi. Xin thử lại sau");
                 }

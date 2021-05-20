@@ -4,7 +4,6 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 
 // pages
-
 import NotFound from "../pages/NotFound";
 import Overview from "../pages/Overview";
 import ReportList from "../components/Report/ReportList";
@@ -18,6 +17,9 @@ import RevenueStatistic from "../components/Revenue/RevenueStatistic";
 import ExpenseStatistic from "../components/Expense/ExpenseStatistic";
 import RevenueView from "../components/Revenue/RevenueView";
 import ExpenseView from "../components/Expense/ExpenseView";
+import BudgetList from "../components/Budget/BudgetList";
+import BudgetForm from "../components/Budget/BudgetForm";
+import BudgetView from "../components/Budget/BudgetView";
 
 const PrivateRoutesController = () => {
     return (
@@ -41,6 +43,25 @@ const PrivateRoutesController = () => {
                 exact
                 path="/revenue/edit/:id"
                 component={() => <RevenueForm view="EDIT" />}
+            />
+
+            {/* ----------------- BUDGET ----------------------- */}
+
+            <PrivateRoute exact path="/budget" component={BudgetList} />
+            <PrivateRoute
+                exact
+                path="/budget/add"
+                component={() => <BudgetForm view="ADD" />}
+            />
+            <PrivateRoute
+                exact
+                path="/budget/view/:id"
+                component={() => <BudgetView />}
+            />
+            <PrivateRoute
+                exact
+                path="/budget/edit/:id"
+                component={() => <BudgetForm view="EDIT" />}
             />
 
             {/* ----------------- EXPENSE ----------------------- */}

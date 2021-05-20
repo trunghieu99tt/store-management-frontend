@@ -33,9 +33,10 @@ interface Props {
 }
 
 export type SideBarItemType = {
+    icon?: any;
     name: string;
     path?: string;
-    icon?: any;
+    level: number;
     children?: SideBarItemType[];
 };
 
@@ -46,53 +47,76 @@ const SideBar = ({ classes: propsClasses }: Props) => {
         {
             name: "Quản lí thu chi",
             icon: <DashboardOutlined />,
+            level: 1,
             children: [
                 {
                     name: "Quản lí thu",
                     icon: <TransactionOutlined />,
                     path: "revenue",
+                    level: 2,
                 },
                 {
                     name: "Quản lí chi",
                     icon: <TransactionOutlined />,
                     path: "expense",
+                    level: 2,
                 },
             ],
         },
         {
             name: "Quản lí ngân sách",
             icon: <ContainerOutlined />,
-            path: "budget",
+            level: 1,
+            children: [
+                {
+                    name: "Danh sách ngân sách",
+                    icon: <DatabaseOutlined />,
+                    path: "budget",
+                    level: 2,
+                },
+                {
+                    name: "Tạo ngân sách",
+                    icon: <FileAddOutlined />,
+                    path: "budget/add",
+                    level: 2,
+                },
+            ],
         },
         {
             name: "Thống kê tài chính",
             icon: <RadarChartOutlined />,
+            level: 1,
             children: [
                 {
                     name: "Thống kê theo doanh thu",
                     icon: <LineChartOutlined />,
                     path: "statistic/revenue",
+                    level: 2,
                 },
                 {
                     name: "Thống kê theo chi phí",
                     icon: <LineChartOutlined />,
                     path: "statistic/expense",
+                    level: 2,
                 },
             ],
         },
         {
             name: "Báo cáo",
             icon: <ContainerOutlined />,
+            level: 1,
             children: [
                 {
                     name: "Danh sách báo cáo",
                     icon: <DatabaseOutlined />,
                     path: "report",
+                    level: 2,
                 },
                 {
                     name: "Tạo báo cáo",
                     icon: <FileAddOutlined />,
                     path: "report/generate",
+                    level: 2,
                 },
             ],
         },
@@ -100,6 +124,7 @@ const SideBar = ({ classes: propsClasses }: Props) => {
             name: "Quản lí người dùng",
             icon: <UserOutlined />,
             path: "users",
+            level: 1,
         },
     ];
 
@@ -127,14 +152,9 @@ const SideBar = ({ classes: propsClasses }: Props) => {
                     <button
                         key={item.name}
                         name="child"
-                        className={cn(
-                            classes.btn,
-                            classes.itemRoot,
-                            classes.itemActive,
-                            {
-                                [classes.itemActive]: isActive,
-                            }
-                        )}
+                        className={cn(classes.btn, classes.itemRoot, {
+                            [classes.itemActive]: isActive || item.level === 1,
+                        })}
                     >
                         <div className={classes.item}>
                             {item.icon}
