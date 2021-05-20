@@ -72,7 +72,7 @@ const useRevenue = () => {
         if (!data.staffID) {
             data.staffID = 1;
         }
-        const response = await updateOne(data, revenueID);
+        const response = await updateOne(revenueID, data);
         return response;
     };
 

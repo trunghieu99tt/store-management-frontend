@@ -84,7 +84,6 @@ const useRevenueForm = ({ view: propsView }: { view: FORM_TYPE }) => {
 
     const handleUpdateRevenue = async (values: iRevenueDTO) => {
         const response = await updateRevenue(values, ~~params.id);
-        console.log(`response`, response);
         if (response.status === 200) {
             message.success("Update thành công!");
         } else {

@@ -43,6 +43,8 @@ const useData = ({ endpoint, additionalEndpoint }: Props) => {
     };
 
     const updateOne = async (id: number | string, obj: any) => {
+        console.log(`endpoint`, endpoint);
+        console.log(`id`, id);
         const response = await client.put(`${endpoint}/${id}`, obj);
         return response.data;
     };

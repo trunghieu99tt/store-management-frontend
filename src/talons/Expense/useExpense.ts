@@ -40,7 +40,7 @@ const useExpense = ({ type = "EMPLOYEE_SALARY" }: { type: TExpense }) => {
 
     const fetchExpense = async (expenseID: number) => {
         const response = await fetchOne(expenseID);
-        return response;
+        return response.data;
     };
 
     const addExpense = async (data: any) => {
@@ -55,7 +55,7 @@ const useExpense = ({ type = "EMPLOYEE_SALARY" }: { type: TExpense }) => {
         if (!data.staffID) {
             data.staffID = 1;
         }
-        const response = await updateOne(data, expenseID);
+        const response = await updateOne(expenseID, data);
         return response;
     };
 
