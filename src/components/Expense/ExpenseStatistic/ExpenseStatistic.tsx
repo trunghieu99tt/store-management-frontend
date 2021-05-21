@@ -16,18 +16,14 @@ const { RangePicker } = DatePicker;
 const ExpenseStatistic = ({ classes: propsClasses }: Props) => {
     const classes = mergeClasses(defaultClasses, propsClasses);
 
-    const {
-        data,
-        optionByDate,
-        optionByType,
-        handleGenerateStatistic,
-    } = useExpenseStatistic();
-
-    console.log(`optionByType`, optionByType);
+    const { data, optionByDate, optionByType, handleGenerateStatistic } =
+        useExpenseStatistic();
 
     return (
         <div className={classes.root}>
             <header className={classes.header}>
+                <h2 className={classes.heading}>Thống kê chi phí </h2>
+
                 <Form layout="inline" onFinish={handleGenerateStatistic}>
                     <Form.Item
                         label="Xem thống kê theo khoảng ngày"
@@ -43,33 +39,31 @@ const ExpenseStatistic = ({ classes: propsClasses }: Props) => {
                     </Form.Item>
                     <Form.Item>
                         <Button type="primary" htmlType="submit">
-                            Trích xuất
+                            Xem thống kê
                         </Button>
                     </Form.Item>
                 </Form>
             </header>
-            <div className={classes.main}>
-                {(data && (
-                    <React.Fragment>
-                        <div className={classes.item}>
-                            <SmoothedLineChart
-                                title="Thống kê chi phí"
-                                option={optionByDate}
-                                width={"100%"}
-                                padding="2rem"
-                            />
-                        </div>
-                        <div className={classes.item}>
-                            <PieChart
-                                title="Thống kê theo loại chi phí"
-                                option={optionByType}
-                                width={"100%"}
-                                padding="2rem"
-                            />
-                        </div>
-                    </React.Fragment>
-                )) || <Empty description={false} />}
-            </div>
+            {(data && (
+                <div className={classes.main}>
+                    <div className={classes.item}>
+                        <SmoothedLineChart
+                            title="Thống kê chi phí"
+                            option={optionByDate}
+                            width={"100%"}
+                            padding="2rem"
+                        />
+                    </div>
+                    <div className={classes.item}>
+                        <PieChart
+                            title="Thống kê theo loại chi phí"
+                            option={optionByType}
+                            width={"100%"}
+                            padding="2rem"
+                        />
+                    </div>
+                </div>
+            )) || <Empty description={false} />}
         </div>
     );
 };

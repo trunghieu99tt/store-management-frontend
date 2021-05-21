@@ -15,7 +15,6 @@ import classes from "./reportGenerator.module.css";
 
 // types
 import { FORM_TYPE } from "../../../types/app.types";
-import { dataTool } from "echarts";
 
 interface Props {
     view: FORM_TYPE;
@@ -24,14 +23,10 @@ interface Props {
 const { RangePicker } = DatePicker;
 
 const ReportGenerator = ({ view }: Props) => {
-    const {
-        data,
-        loading,
-        handleGenerateReport,
-        handleGetInfoForReport,
-    } = useGenerateReport({
-        view,
-    });
+    const { data, loading, handleGenerateReport, handleGetInfoForReport } =
+        useGenerateReport({
+            view,
+        });
 
     const printComponentRef = useRef(null);
 
