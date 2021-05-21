@@ -222,7 +222,7 @@ const ExpenseForm = ({ classes: propsClasses, view }: Props) => {
                     ]}
                 >
                     <InputNumber
-                        disabled={view === "VIEW"}
+                        disabled={view === "VIEW" || type === "SHOPPING"}
                         formatter={(value) =>
                             `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                         }

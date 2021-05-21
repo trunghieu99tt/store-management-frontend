@@ -77,7 +77,13 @@ const useExpenseForm = ({ view }: { view: FORM_TYPE }) => {
         }
     };
 
-    const onChange = () => {};
+    const onChange = (values: any, allValues: any) => {
+        if (allValues.priceUnit && allValues.quantity) {
+            form.setFieldsValue({
+                total: allValues.priceUnit * allValues.quantity,
+            });
+        }
+    };
 
     const handleCancel = () => {
         history.push("/expense");
