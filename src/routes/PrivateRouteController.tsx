@@ -20,6 +20,9 @@ import ExpenseView from "../components/Expense/ExpenseView";
 import BudgetList from "../components/Budget/BudgetList";
 import BudgetForm from "../components/Budget/BudgetForm";
 import BudgetView from "../components/Budget/BudgetView";
+import UserList from "../components/User/UserList";
+import UserForm from "../components/User/UserForm";
+import UserView from "../components/User/UserView";
 
 const PrivateRoutesController = () => {
     return (
@@ -105,6 +108,23 @@ const PrivateRoutesController = () => {
                 component={ExpenseStatistic}
             />
 
+            {/* ----------------- USER ----------------------- */}
+            <PrivateRoute exact path="/users" component={UserList} />
+            <PrivateRoute
+                exact
+                path="/user/add"
+                component={() => <UserForm view="ADD" />}
+            />
+            <PrivateRoute
+                exact
+                path="/user/view/:id"
+                component={() => <UserView />}
+            />
+            <PrivateRoute
+                exact
+                path="/user/edit/:id"
+                component={() => <UserForm view="EDIT" />}
+            />
             <Route component={NotFound} />
         </Switch>
     );

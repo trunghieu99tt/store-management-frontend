@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import cn from "classnames";
 import { Link } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 
 // talons
 import { useWindowSize } from "../../utils/useWindowSize";
@@ -28,6 +29,9 @@ import Logo from "../../components/Logo";
 // types
 import { Size } from "../../types/app.types";
 
+// states
+import { userState } from "../../states/user.state";
+
 interface Props {
     classes?: object;
 }
@@ -37,29 +41,34 @@ export type SideBarItemType = {
     name: string;
     path?: string;
     level: number;
+    role: string[];
     children?: SideBarItemType[];
 };
 
 const SideBar = ({ classes: propsClasses }: Props) => {
     const [hide, setHide] = useState<boolean>(true);
+    const user = useRecoilValue(userState);
 
     const navigation = [
         {
             name: "Quản lí thu chi",
             icon: <DashboardOutlined />,
             level: 1,
+            role: ["staff", "manager"],
             children: [
                 {
                     name: "Quản lí thu",
                     icon: <TransactionOutlined />,
                     path: "revenue",
                     level: 2,
+                    role: ["staff", "manager"],
                 },
                 {
                     name: "Quản lí chi",
                     icon: <TransactionOutlined />,
                     path: "expense",
                     level: 2,
+                    role: ["staff", "manager"],
                 },
             ],
         },
@@ -67,18 +76,21 @@ const SideBar = ({ classes: propsClasses }: Props) => {
             name: "Quản lí ngân sách",
             icon: <ContainerOutlined />,
             level: 1,
+            role: ["manager"],
             children: [
                 {
                     name: "Danh sách ngân sách",
                     icon: <DatabaseOutlined />,
                     path: "budget",
                     level: 2,
+                    role: ["manager"],
                 },
                 {
                     name: "Tạo ngân sách",
                     icon: <FileAddOutlined />,
                     path: "budget/add",
                     level: 2,
+                    role: ["manager"],
                 },
             ],
         },
@@ -86,18 +98,21 @@ const SideBar = ({ classes: propsClasses }: Props) => {
             name: "Thống kê tài chính",
             icon: <RadarChartOutlined />,
             level: 1,
+            role: ["satff", "manager"],
             children: [
                 {
                     name: "Thống kê theo doanh thu",
                     icon: <LineChartOutlined />,
                     path: "statistic/revenue",
                     level: 2,
+                    role: ["staff", "manager"],
                 },
                 {
                     name: "Thống kê theo chi phí",
                     icon: <LineChartOutlined />,
                     path: "statistic/expense",
                     level: 2,
+                    role: ["staff", "manager"],
                 },
             ],
         },
@@ -105,18 +120,21 @@ const SideBar = ({ classes: propsClasses }: Props) => {
             name: "Báo cáo",
             icon: <ContainerOutlined />,
             level: 1,
+            role: ["staff", "manager"],
             children: [
                 {
                     name: "Danh sách báo cáo",
                     icon: <DatabaseOutlined />,
                     path: "report",
                     level: 2,
+                    role: ["staff", "manager"],
                 },
                 {
                     name: "Tạo báo cáo",
                     icon: <FileAddOutlined />,
                     path: "report/generate",
                     level: 2,
+                    role: ["staff", "manager"],
                 },
             ],
         },
@@ -125,12 +143,15 @@ const SideBar = ({ classes: propsClasses }: Props) => {
             icon: <UserOutlined />,
             path: "users",
             level: 1,
+            role: ["admin"],
         },
     ];
 
     const renderLevels = (data: SideBarItemType[]) => {
         return data.map((item, idx) => {
             const isActive = false;
+
+            if (user && !item.role.includes(user.role)) return null;
 
             if (item.children) {
                 return (

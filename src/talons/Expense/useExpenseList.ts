@@ -56,7 +56,6 @@ const useExpenseList = () => {
     };
 
     const handleSearch = async (values: any) => {
-        console.log(`values`, values);
         if (!values.createdAt) {
             setData(initialData);
             setPageNumber(1);
