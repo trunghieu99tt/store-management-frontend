@@ -1,6 +1,5 @@
-import { Form, Table } from "antd";
-import TextArea from "antd/lib/input/TextArea";
 import React from "react";
+import { Table } from "antd";
 import { iCustomReport } from "../../../types/report.types";
 
 import classes from "./reportDetail.module.css";
@@ -45,7 +44,7 @@ const ReportDetail = ({ data }: Props) => {
             pagination={false}
             bordered
             title={() => (
-                <p>
+                <strong>
                     Báo cáo thống kê từ ngày{" "}
                     {new Date(
                         (data && data.dateFrom) || (data && data.reportFrom)
@@ -54,7 +53,7 @@ const ReportDetail = ({ data }: Props) => {
                     {new Date(
                         (data && data.dateTo) || (data && data.reportTo)
                     ).toLocaleDateString()}
-                </p>
+                </strong>
             )}
             footer={() => {
                 if (!data) return <p>Loading...</p>;
