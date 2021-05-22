@@ -7,7 +7,7 @@ import { useBudgetForm } from "../../../talons/Budget/useBudgetForm";
 import mergeClasses from "../../../utils/mergeClasses";
 
 // components
-import { Form, Input, InputNumber } from "antd";
+import { DatePicker, Form, Input, InputNumber } from "antd";
 
 // types
 import { FORM_TYPE } from "../../../types/app.types";
@@ -23,10 +23,9 @@ interface Props {
 const BudgetForm = ({ classes: propsClasses, view }: Props) => {
     const classes = mergeClasses(defaultClasses, propsClasses);
 
-    const { form, type, budget, handleCancel, onSubmit, onChange } =
-        useBudgetForm({
-            view,
-        });
+    const { form, budget, handleCancel, onSubmit, onChange } = useBudgetForm({
+        view,
+    });
 
     let title = null;
     let buttonText = null;
@@ -63,11 +62,18 @@ const BudgetForm = ({ classes: propsClasses, view }: Props) => {
                 initialValues={budget || {}}
                 key={Math.random()}
             >
-                {view !== "ADD" && (
-                    <Form.Item label="Ngày tạo" name="createdAt">
-                        <Input disabled />
-                    </Form.Item>
-                )}
+                <Form.Item
+                    label="Ngân sách cho tháng"
+                    name="date"
+                    rules={[
+                        {
+                            required: true,
+                            message: "Xin hãy nhập tháng cho ngân sách",
+                        },
+                    ]}
+                >
+                    <DatePicker picker="month" />
+                </Form.Item>
                 <Form.Item
                     label="Tên"
                     name="name"
@@ -92,7 +98,6 @@ const BudgetForm = ({ classes: propsClasses, view }: Props) => {
                 >
                     <Input />
                 </Form.Item>
-
                 <Form.Item
                     label="Tổng tiền"
                     name="total"
@@ -114,7 +119,6 @@ const BudgetForm = ({ classes: propsClasses, view }: Props) => {
                         min={0}
                     />
                 </Form.Item>
-
                 <div className={classes.btnGroup}>
                     <button type="submit" className={classes.btn}>
                         {buttonText}

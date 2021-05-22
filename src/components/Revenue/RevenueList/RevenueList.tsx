@@ -21,6 +21,7 @@ import defaultClasses from "./revenueList.module.css";
 import { iRevenue } from "../../../types/revenue.types";
 import { iBankAccount } from "../../../types/bankAccount.types";
 import { iStaff } from "../../../types/user.types";
+import { formatNumber } from "../../../utils/helper";
 
 interface Props {
     classes?: object;
@@ -79,6 +80,9 @@ const RevenueList = ({ classes: propsClasses }: Props) => {
             key: "quantity",
             width: 150,
             sorter: (a: any, b: any) => NaN,
+            render: (value: number) => {
+                return <strong>{formatNumber(value)}</strong>;
+            },
         },
         {
             title: "Đơn giá",
@@ -86,13 +90,19 @@ const RevenueList = ({ classes: propsClasses }: Props) => {
             key: "priceUnit",
             width: 150,
             sorter: (a: any, b: any) => NaN,
+            render: (value: number) => {
+                return <strong>{formatNumber(value)}</strong>;
+            },
         },
         {
-            title: "Tổng tiền",
+            title: "Tổng tiền (VND)",
             dataIndex: "total",
             key: "total",
             width: 200,
             sorter: (a: any, b: any) => NaN,
+            render: (value: number) => {
+                return <strong>{formatNumber(value)}</strong>;
+            },
         },
 
         {

@@ -7,7 +7,7 @@ import { useRevenueForm } from "../../../talons/Revenue/useRevenueForm";
 import mergeClasses from "../../../utils/mergeClasses";
 
 // components
-import { Button, Form, Input, InputNumber } from "antd";
+import { Form, Input, InputNumber } from "antd";
 
 // styles
 import defaultClasses from "./revenueForm.module.css";
@@ -144,7 +144,7 @@ const RevenueForm = ({ classes: propsClasses, view }: Props) => {
                     ]}
                 >
                     <InputNumber
-                        disabled={view === "VIEW"}
+                        disabled
                         formatter={(value) =>
                             `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                         }

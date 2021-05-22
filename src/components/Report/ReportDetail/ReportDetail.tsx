@@ -1,8 +1,16 @@
 import React from "react";
-import { Table } from "antd";
-import { iCustomReport } from "../../../types/report.types";
 
+// components
+import ReportStaffInfo from "../ReportStaffInfo";
+import ReportSummary from "../ReportSummary";
+import { Table } from "antd";
+
+// styles
 import classes from "./reportDetail.module.css";
+
+// types
+import { iCustomReport } from "../../../types/report.types";
+import { formatNumber } from "../../../utils/helper";
 
 interface Props {
     data: iCustomReport;
@@ -24,16 +32,25 @@ const ReportDetail = ({ data }: Props) => {
             title: "Tổng thu",
             dataIndex: "totalRevenue",
             width: 100,
+            render: (value: number) => {
+                return <strong>{formatNumber(value)} VND</strong>;
+            },
         },
         {
             title: "Tổng chi",
             dataIndex: "totalExpense",
             width: 100,
+            render: (value: number) => {
+                return <strong>{formatNumber(value)} VND</strong>;
+            },
         },
         {
             title: "Lợi nhuận",
             dataIndex: "profit",
             width: 100,
+            render: (value: number) => {
+                return <strong>{formatNumber(value)} VND</strong>;
+            },
         },
     ];
 
@@ -59,47 +76,16 @@ const ReportDetail = ({ data }: Props) => {
                 if (!data) return <p>Loading...</p>;
                 return (
                     <div className={classes.summary}>
-                        <div className={classes.summaryInfo}>
-                            <p>Tổng kết : </p>
-                            <p>
-                                Tổng chi: <strong>{data.expense}</strong>
-                            </p>
-                            <p>
-                                Tổng thu: <strong>{data.revenue}</strong>
-                            </p>
-                            <p>
-                                Lợi nhuận: <strong>{data.profit}</strong>
-                            </p>
-                            <p>
-                                Đơn vị: <strong>VND</strong>
-                            </p>
-                        </div>
-
+                        <ReportSummary
+                            data={{
+                                budget: (data && data.budget) || 0,
+                                expense: data.expense || 0,
+                                profit: data.profit || 0,
+                            }}
+                        />
                         <div>Mô tả : {data.description}</div>
 
-                        <div className={classes.staffInfo}>
-                            <p>Nhân viên lập báo cáo: </p>
-                            <p>
-                                Ten: <strong>{data.staff.name}</strong>
-                            </p>
-                            <p>
-                                {" "}
-                                Chức vụ:
-                                <strong>{data.staff.role}</strong>
-                            </p>
-                            <p>
-                                Số điện thoại:{" "}
-                                <strong>{data.staff.phoneNumber}</strong>
-                            </p>
-                            <p>
-                                Phòng ban:{" "}
-                                <strong>{data.staff.department}</strong>
-                            </p>
-                            <p>
-                                Địa chỉ email :{" "}
-                                <strong>{data.staff.email}</strong>
-                            </p>
-                        </div>
+                        <ReportStaffInfo data={data.staff} />
                     </div>
                 );
             }}

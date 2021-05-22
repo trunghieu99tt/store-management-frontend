@@ -19,6 +19,7 @@ import { iBankAccount } from "../../../types/bankAccount.types";
 
 // styles
 import defaultClasses from "./budgetList.module.css";
+import { formatNumber } from "../../../utils/helper";
 
 interface Props {
     classes?: object;
@@ -48,7 +49,18 @@ const BudgetList = ({ classes: propsClasses }: Props) => {
             dataIndex: "name",
             key: "name",
             width: 200,
-            sorter: (a: any, b: any) => NaN,
+        },
+        {
+            title: "Tháng",
+            dataIndex: "month",
+            key: "month",
+            width: 200,
+        },
+        {
+            title: "Năm",
+            dataIndex: "year",
+            key: "year",
+            width: 200,
         },
         {
             title: "Mô tả",
@@ -65,7 +77,18 @@ const BudgetList = ({ classes: propsClasses }: Props) => {
             dataIndex: "total",
             key: "total",
             width: 150,
-            sorter: (a: any, b: any) => NaN,
+            render: (number: number) => {
+                return (
+                    <p
+                        style={{
+                            color: "red",
+                            fontWeight: "bold",
+                        }}
+                    >
+                        {formatNumber(number)}
+                    </p>
+                );
+            },
         },
 
         {

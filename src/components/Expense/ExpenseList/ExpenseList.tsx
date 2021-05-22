@@ -20,6 +20,7 @@ import { iBankAccount } from "../../../types/bankAccount.types";
 
 // styles
 import defaultClasses from "./expenseList.module.css";
+import { formatNumber } from "../../../utils/helper";
 
 interface Props {
     classes?: object;
@@ -105,6 +106,9 @@ const ExpenseList = ({ classes: propsClasses }: Props) => {
             key: "total",
             width: 150,
             sorter: (a: any, b: any) => NaN,
+            render: (value: number) => {
+                return <strong>{formatNumber(value)}</strong>;
+            },
         },
 
         {

@@ -1,4 +1,5 @@
 import React from "react";
+import { formatNumber } from "../../utils/helper";
 
 // utils
 import mergeClasses from "../../utils/mergeClasses";
@@ -40,6 +41,10 @@ const DataView = ({
 
                             if (typeof value === "object") {
                                 viewValue = (value as { id: number }).id;
+                            }
+
+                            if (typeof value === "number") {
+                                viewValue = formatNumber(viewValue);
                             }
 
                             return (

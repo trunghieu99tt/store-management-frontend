@@ -14,7 +14,7 @@ const BASE_BACKEND_URL = `${process.env.REACT_APP_API_LINK}/budget`;
 
 const useBudget = () => {
     const { fetchList, fetchOne, addOne, updateOne, deleteOne } = useData({
-        endpoint: BASE_BACKEND_URL,
+        endpoint: "/budget",
     });
 
     const fetchBudgets = async () => {
@@ -37,9 +37,9 @@ const useBudget = () => {
 
     const updateBudget = async (data: any, budgetID: number) => {
         if (!data.managerID) {
-            data.managerID = 1;
+            data.managerID = 2;
         }
-        const response = await updateOne(data, budgetID);
+        const response = await updateOne(budgetID, data);
         return response;
     };
 
