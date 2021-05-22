@@ -7,6 +7,7 @@ import { iRevenue, iRevenueDTO } from "../../types/revenue.types";
 import { randomDate } from "../../utils/helper";
 import { useRevenue } from "./useRevenue";
 import faker from "faker";
+import moment from "moment";
 
 /**
  * A [React Hook]{@link https://reactjs.org/docs/hooks-intro.html} that revenue form  logic
@@ -40,11 +41,11 @@ const useRevenueForm = ({ view: propsView }: { view: FORM_TYPE }) => {
             history.push("/revenue");
             message.error("Không tồn tại phiếu thu với id này");
         }
-        setRevenue(data);
         form.setFieldsValue({
             bankAccountNumber: data.bankAccount.accountNumber,
-            createdAt: new Date(data.createdAt).toLocaleDateString(),
+            createdAt: moment(new Date(data.createdAt)),
         });
+        setRevenue(data);
     };
 
     useEffect(() => {

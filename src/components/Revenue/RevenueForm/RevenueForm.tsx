@@ -7,7 +7,7 @@ import { useRevenueForm } from "../../../talons/Revenue/useRevenueForm";
 import mergeClasses from "../../../utils/mergeClasses";
 
 // components
-import { Form, Input, InputNumber } from "antd";
+import { DatePicker, Form, Input, InputNumber } from "antd";
 
 // styles
 import defaultClasses from "./revenueForm.module.css";
@@ -62,8 +62,8 @@ const RevenueForm = ({ classes: propsClasses, view }: Props) => {
                 initialValues={revenue || {}}
                 key={Math.random()}
             >
-                <Form.Item label="Ngày tạo" name="createdAt">
-                    <Input disabled />
+                <Form.Item label="Ngày" name="createdAt">
+                    <DatePicker />
                 </Form.Item>
                 <Form.Item
                     label="Tên"
