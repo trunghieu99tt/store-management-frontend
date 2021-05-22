@@ -49,18 +49,24 @@ const ReportGenerator = ({ view }: Props) => {
             dataIndex: "totalRevenue",
             width: 100,
             render: (value: number) => {
-                return <p>{formatNumber(value)}VND</p>;
+                return <p>{formatNumber(value)} VND</p>;
             },
         },
         {
             title: "Tổng chi",
             dataIndex: "totalExpense",
             width: 100,
+            render: (value: number) => {
+                return <p>{formatNumber(value)} VND</p>;
+            },
         },
         {
             title: "Lợi nhuận",
             dataIndex: "profit",
             width: 100,
+            render: (value: number) => {
+                return <p>{formatNumber(value)} VND</p>;
+            },
         },
     ];
 

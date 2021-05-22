@@ -62,11 +62,9 @@ const RevenueForm = ({ classes: propsClasses, view }: Props) => {
                 initialValues={revenue || {}}
                 key={Math.random()}
             >
-                {view !== "ADD" && (
-                    <Form.Item label="Ngày tạo" name="createdAt">
-                        <Input disabled />
-                    </Form.Item>
-                )}
+                <Form.Item label="Ngày tạo" name="createdAt">
+                    <Input disabled />
+                </Form.Item>
                 <Form.Item
                     label="Tên"
                     name="name"

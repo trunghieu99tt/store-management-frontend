@@ -4,6 +4,10 @@ import { useHistory, useParams } from "react-router";
 import { FORM_TYPE } from "../../types/app.types";
 import { TExpense } from "../../types/expense.types";
 import { useExpense } from "./useExpense";
+import moment from "moment";
+import { randomDate } from "../../utils/helper";
+import faker from "faker";
+import client from "../../api/client";
 
 const useExpenseForm = ({ view }: { view: FORM_TYPE }) => {
     const [form] = Form.useForm();
@@ -15,6 +19,10 @@ const useExpenseForm = ({ view }: { view: FORM_TYPE }) => {
     const [expense, setExpense] = useState<any | null>(null);
 
     const { addExpense, fetchExpense, updateExpense } = useExpense({ type });
+
+    useEffect(() => {
+        // mockData();
+    }, []);
 
     useEffect(() => {
         if (params?.id) {
@@ -30,16 +38,15 @@ const useExpenseForm = ({ view }: { view: FORM_TYPE }) => {
             history.push("/revenue");
             message.error("Không tồn tại phiếu thu với id này");
         }
-        setExpense(data);
         form.setFieldsValue({
             bankAccountNumber: data.bankAccount.accountNumber,
-            createdAt: new Date(data.date).toLocaleDateString(),
+            date: moment(new Date(data.date)),
             staffID: data.staff.id,
         });
-
         if (data.hasOwnProperty("productID")) setType("SHOPPING");
         else if (data.hasOwnProperty("employeeID")) setType("EMPLOYEE_SALARY");
         else setType("SERVICE");
+        setExpense(data);
     };
 
     const onSubmit = (values: any) => {
@@ -65,6 +72,81 @@ const useExpenseForm = ({ view }: { view: FORM_TYPE }) => {
         } else {
             message.error(response.message);
         }
+    };
+
+    const mockData = async () => {
+        let additionalInfo = {};
+
+        const types: TExpense[] = ["EMPLOYEE_SALARY", "SERVICE", "SHOPPING"];
+        [...Array(50)].map(async () => {
+            const type: TExpense =
+                types[Math.floor(Math.random() * types.length)];
+
+            let endpoint = "/expense";
+
+            switch (type) {
+                case "EMPLOYEE_SALARY":
+                    endpoint = `/expense/employeeSalary`;
+                    break;
+                case "SERVICE":
+                    endpoint = `/expense/service`;
+                    break;
+                default:
+                    endpoint = `/expense/shopping`;
+                    break;
+            }
+
+            switch (type) {
+                case "SHOPPING":
+                    const quantity = faker.datatype.number({
+                        min: 1,
+                        max: 1000000,
+                    });
+                    const priceUnit = faker.datatype.number({
+                        min: 1,
+                        max: 10000000,
+                    });
+                    additionalInfo = {
+                        quantity,
+                        priceUnit,
+                        total: quantity * priceUnit,
+                    };
+                    break;
+                case "EMPLOYEE_SALARY":
+                    additionalInfo = {
+                        staffID: 1,
+                        total: faker.datatype.number({
+                            min: 1000000,
+                            max: 100000000,
+                        }),
+                    };
+                    break;
+                default:
+                    additionalInfo = {
+                        total: faker.datatype.number({
+                            min: 1000000,
+                            max: 100000000,
+                        }),
+                    };
+            }
+
+            const values = {
+                date: randomDate(
+                    new Date("01-01-2021"),
+                    new Date("12-31-2021"),
+                    0,
+                    24
+                ),
+                type,
+                name: faker.lorem.word(),
+                bankAccountNumber: 1,
+                description: faker.lorem.sentence(),
+                paymentMethod: faker.lorem.word(),
+                ...additionalInfo,
+            };
+
+            await client.post(endpoint, values);
+        });
     };
 
     const handleUpdateExpense = async (values: any) => {

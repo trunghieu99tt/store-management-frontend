@@ -65,7 +65,7 @@ const ExpenseList = ({ classes: propsClasses }: Props) => {
             },
         },
         {
-            title: "Ngày tạo",
+            title: "Ngày",
             dataIndex: "date",
             key: "date",
             width: 200,

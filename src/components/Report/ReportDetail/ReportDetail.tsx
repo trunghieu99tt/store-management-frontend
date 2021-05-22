@@ -33,7 +33,7 @@ const ReportDetail = ({ data }: Props) => {
             dataIndex: "totalRevenue",
             width: 100,
             render: (value: number) => {
-                return <strong>{formatNumber(value)} VND</strong>;
+                return <strong>{formatNumber(value) || 0} VND</strong>;
             },
         },
         {

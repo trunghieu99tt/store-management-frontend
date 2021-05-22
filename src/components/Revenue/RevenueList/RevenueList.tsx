@@ -66,7 +66,7 @@ const RevenueList = ({ classes: propsClasses }: Props) => {
             },
         },
         {
-            title: "Ngày tạo",
+            title: "Ngày",
             dataIndex: "createdAt",
             key: "createdAt",
             width: 200,

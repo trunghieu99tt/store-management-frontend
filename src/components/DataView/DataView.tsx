@@ -37,7 +37,7 @@ const DataView = ({
                         Object.entries(data).map(([key, value], idx) => {
                             let viewValue = value;
 
-                            if (key === "password") return null;
+                            if (key === "password" || !value) return null;
 
                             if (typeof value === "object") {
                                 viewValue = (value as { id: number }).id;

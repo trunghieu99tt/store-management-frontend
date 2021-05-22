@@ -145,6 +145,13 @@ const SideBar = ({ classes: propsClasses }: Props) => {
             level: 1,
             role: ["admin"],
         },
+        {
+            name: "Dự đoán tài chính",
+            icon: <DashboardOutlined />,
+            level: 1,
+            role: ["manager"],
+            path: "financialForecasting",
+        },
     ];
 
     const renderLevels = (data: SideBarItemType[]) => {

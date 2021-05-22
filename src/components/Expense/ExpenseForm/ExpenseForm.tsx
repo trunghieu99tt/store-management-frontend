@@ -7,7 +7,7 @@ import { useExpenseForm } from "../../../talons/Expense/useExpenseForm";
 import mergeClasses from "../../../utils/mergeClasses";
 
 // components
-import { Button, Form, Input, InputNumber, Select } from "antd";
+import { DatePicker, Form, Input, InputNumber, Select } from "antd";
 
 // types
 import { FORM_TYPE } from "../../../types/app.types";
@@ -56,8 +56,6 @@ const ExpenseForm = ({ classes: propsClasses, view }: Props) => {
             buttonText = "";
     }
 
-    console.log(`type`, type);
-
     return (
         <div className={classes.root}>
             <h2 className={classes.title}>{title}</h2>
@@ -72,11 +70,9 @@ const ExpenseForm = ({ classes: propsClasses, view }: Props) => {
                 initialValues={expense || {}}
                 key={Math.random()}
             >
-                {view !== "ADD" && (
-                    <Form.Item label="Ngày tạo" name="createdAt">
-                        <Input disabled />
-                    </Form.Item>
-                )}
+                <Form.Item label="Ngày" name="date">
+                    <DatePicker />
+                </Form.Item>
                 <Form.Item
                     label="Tên"
                     name="name"
