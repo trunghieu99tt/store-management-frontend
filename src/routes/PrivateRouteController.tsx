@@ -23,6 +23,7 @@ import BudgetView from "../components/Budget/BudgetView";
 import UserList from "../components/User/UserList";
 import UserForm from "../components/User/UserForm";
 import UserView from "../components/User/UserView";
+import FinancialForecasting from "../components/FinancialForecasting";
 
 const PrivateRoutesController = () => {
     return (
@@ -124,6 +125,13 @@ const PrivateRoutesController = () => {
                 exact
                 path="/user/edit/:id"
                 component={() => <UserForm view="EDIT" />}
+            />
+
+            {/* ---------------- FINANCIAL FORECASTING --------------- */}
+            <PrivateRoute
+                exact
+                path="/financialForecasting"
+                component={() => <FinancialForecasting />}
             />
             <Route component={NotFound} />
         </Switch>

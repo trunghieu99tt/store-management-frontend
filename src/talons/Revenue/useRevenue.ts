@@ -23,6 +23,13 @@ const useRevenue = () => {
     const { addOne, deleteOne, updateOne, fetchList, fetchOne } = useData({
         endpoint: "/revenue",
     });
+    
+    const fetchAllRevenues = async () => {
+        const response = await client.get(
+            `${BACKEND_URL}/getAll`
+        );;
+        return response.data.data;
+    }
 
     const fetchRevenues = async (
         pageNumber = 1,
@@ -85,6 +92,7 @@ const useRevenue = () => {
         addRevenue,
         fetchRevenue,
         fetchRevenues,
+        fetchAllRevenues,
         deleteRevenue,
         updateRevenue,
         fetch2NearestMonths,

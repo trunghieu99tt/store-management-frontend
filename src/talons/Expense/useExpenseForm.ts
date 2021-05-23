@@ -78,7 +78,7 @@ const useExpenseForm = ({ view }: { view: FORM_TYPE }) => {
         let additionalInfo = {};
 
         const types: TExpense[] = ["EMPLOYEE_SALARY", "SERVICE", "SHOPPING"];
-        [...Array(50)].map(async () => {
+        [...Array(40)].map(async () => {
             const type: TExpense =
                 types[Math.floor(Math.random() * types.length)];
 
@@ -140,11 +140,12 @@ const useExpenseForm = ({ view }: { view: FORM_TYPE }) => {
                 type,
                 name: faker.lorem.word(),
                 bankAccountNumber: 1,
+                staffID: 1,
                 description: faker.lorem.sentence(),
                 paymentMethod: faker.lorem.word(),
                 ...additionalInfo,
             };
-
+            console.log('values', values)
             await client.post(endpoint, values);
         });
     };
