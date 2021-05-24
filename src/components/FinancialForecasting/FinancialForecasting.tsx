@@ -1,16 +1,22 @@
-import { Table } from "antd";
-import moment from "moment";
 import React, { useEffect, useState } from "react";
+import moment from "moment";
+
+// talons
 import { useExpense } from "../../talons/Expense/useExpense";
 import { useRevenue } from "../../talons/Revenue/useRevenue";
-import { iExpense } from "../../types/expense.types";
-import { iRevenue } from "../../types/revenue.types";
-import { formatNumber } from "../../utils/helper";
 
 // utils
 import mergeClasses from "../../utils/mergeClasses";
+import { formatNumber } from "../../utils/helper";
+
+// components
+import { Table } from "antd";
 import OverviewCard from "../Cards/OverviewCard";
-import Loading from "../Loading";
+// import Loading from "../Loading";
+
+// types
+import { iExpense } from "../../types/expense.types";
+import { iRevenue } from "../../types/revenue.types";
 
 // classes
 import defaultClasses from "./financialForecasting.module.css";
@@ -85,6 +91,8 @@ const FinancialForecasting = ({ classes: propsClasses }: Props) => {
     );
     const profit = revenueCount - expenseCount;
 
+    console.log(`forecast`, forecast);
+
     return (
         <section className={classes.root}>
             <OverviewCard name="Doanh thu" number={revenueCount || 0} />
@@ -154,6 +162,7 @@ const getFinancialData = async (
     };
 
     let data: any = [];
+    const profits: number[] = [];
     let forecast = 0;
     for (let i = 1; i < 12; i++) {
         let value = 0;
@@ -165,7 +174,13 @@ const getFinancialData = async (
             profit: value,
         };
         data.push(item);
+        if (i > 1) {
+            forecast += (value / profits[profits.length - 1]) * 100;
+        }
+        profits.push(value);
     }
+    forecast /= 12;
+    forecast = Math.round(forecast * 100) / 100;
     return { data, forecast };
 };
 
