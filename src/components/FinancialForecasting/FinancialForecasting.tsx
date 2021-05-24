@@ -1,4 +1,5 @@
 import { Table } from "antd";
+import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useExpense } from "../../talons/Expense/useExpense";
 import { useRevenue } from "../../talons/Revenue/useRevenue";
@@ -39,7 +40,8 @@ const FinancialForecasting = ({ classes: propsClasses }: Props) => {
   const [revenues, setRevenues] = useState<iRevenue[] | any>(null);
   const [expenses, setExpenses] = useState<iExpense[] | any>(null);
 
-  const { fetchAllRevenues } = useRevenue();
+  const { fetchAllRevenues, fetchRevenuesInRange } = useRevenue();
+  const { fetchExpenseInRange } = useExpense({ type: "BASE" });
   const { fetchExpenses } = useExpense({ type: "BASE" });
 
   const handleFetchAllExpenses = async () => {
@@ -57,7 +59,7 @@ const FinancialForecasting = ({ classes: propsClasses }: Props) => {
     handleFetchAllExpenses();
   }, []);
 
-  // if(!revenues){
+  // if(!revenues || !expenses){
   //     return <Loading />
   // }
 
@@ -71,7 +73,7 @@ const FinancialForecasting = ({ classes: propsClasses }: Props) => {
   );
   const profit = revenueCount - expenseCount;
 
-  const {data, forecast} = getFinancialData()
+  const { data, forecast } = getFinancialData(fetchRevenuesInRange, fetchExpenseInRange);
 
   return (
     <section className={classes.root}>
@@ -83,33 +85,76 @@ const FinancialForecasting = ({ classes: propsClasses }: Props) => {
         columns={columns}
         dataSource={data}
         pagination={{
-            pageSize: 12,
-            total: 12,
+          pageSize: 12,
+          total: 12,
         }}
         scroll={{ x: "500px" }}
         loading={!revenues || !expenses}
       />
-      <p>Dự báo năm {new Date().getFullYear() + 1}: Tăng trưởng {forecast} %</p>
+      <p>
+        Dự báo năm {new Date().getFullYear() + 1}: Tăng trưởng {forecast} %
+      </p>
     </section>
   );
 };
 
-const getFinancialData = () => {
+const getTotalRevenues = (monthlyRevenues: any) => {
+    return monthlyRevenues?.reduce(
+        (prev: any, curr: any) => prev + curr.total,
+        0
+      );
+}
 
-    // const getRevenueByMonth = (month) => {
+const getTotalExpenses = (monthlyExpenses: any) => {
+    return monthlyExpenses?.reduce(
+        (prev: any, curr: any) => prev + curr.total,
+        0
+      );
+}
 
-    // }
-
-    let data: any = [];
-    let forecast = 0;
-    for(let i = 1; i < 12; i++){
-        const item = {
-            month: `Tháng ${i} -> Tháng ${i+1}`,
-            profit: '10'
-        }
-        data.push(item)
+const getFinancialData = (fetchRevenuesInRange: any, fetchExpenseInRange: any) => {
+    
+  const currentYear = new Date().getFullYear();
+  const getRevenueByMonth = async (monthNumber: number) => {
+    let month = monthNumber.toString();
+    if (monthNumber < 10) {
+      month = "0" + monthNumber;
     }
-  return {data, forecast}
+    const dateFrom = moment(`${month}${currentYear}`, "MMYYYY")
+      .toDate()
+      .toLocaleDateString();
+    const dateTo = moment(dateFrom)
+      .endOf("month")
+      .toDate()
+      .toLocaleDateString();
+
+    // console.log("dateFrom", dateFrom);
+    // console.log("dateTo", dateTo);
+
+    const revenues = await fetchRevenuesInRange(dateFrom, dateTo);
+    const expenses = await fetchExpenseInRange(dateFrom, dateTo);
+
+    const profit = getTotalRevenues(revenues.data) - getTotalExpenses(expenses.data)
+    return profit;
+    // console.log('data', data)
+  };
+
+  let data: any = [];
+  let forecast = 0;
+  for (let i = 1; i < 12; i++) {
+    let value = 0;
+    getRevenueByMonth(i).then((r) => {
+        value = r;
+        console.log('value', value)
+    });
+    const item = {
+      month: `Tháng ${i} -> Tháng ${i + 1}`,
+      profit: value,
+    };
+    console.log('value', value)
+    data.push(item);
+  }
+  return { data, forecast };
 };
 
 export default FinancialForecasting;
