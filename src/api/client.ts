@@ -5,7 +5,7 @@ const headers = {
     "Content-Type": "application/json",
 };
 const client = axios.create({
-    baseURL: process.env.REACT_APP_API_URL || "http://api.ptitfinancial.me:8080/financial/api/v1",
+    baseURL: process.env.REACT_APP_API_URL || "http://8f2861776ef7.ngrok.io/api/v1",
     headers,
 });
 
