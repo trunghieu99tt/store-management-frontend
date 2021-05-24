@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { pageSizeState } from "../../states/app.state";
-import { iExpense } from "../../types/expense.types";
 import { useExpense } from "./useExpense";
 import moment from "moment";
 import { message, Modal } from "antd";
@@ -38,7 +37,7 @@ const useExpenseList = () => {
         const data = await fetchExpenses();
         const populatedData = populateType(data.data);
         setInitialData(populatedData);
-        setTotalNumber(populatedData);
+        setTotalNumber(populatedData.length);
         setData(populatedData);
         setLoading(false);
     };
@@ -57,7 +56,6 @@ const useExpenseList = () => {
     };
 
     const handleSearch = async (values: any) => {
-        console.log(`values`, values);
         if (!values.createdAt) {
             setData(initialData);
             setPageNumber(1);

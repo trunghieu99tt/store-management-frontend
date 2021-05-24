@@ -14,11 +14,8 @@ type Props = {
 };
 
 const useGenerateReport = ({ view }: Props) => {
-    const {
-        fetchReport,
-        generateReport,
-        getInformationForReport,
-    } = useReport();
+    const { fetchReport, generateReport, getInformationForReport } =
+        useReport();
 
     const [loading, setLoading] = useState<boolean>(false);
     const [data, setData] = useState<iReport | null>(null);
@@ -44,6 +41,7 @@ const useGenerateReport = ({ view }: Props) => {
             profit: 0,
             row: [],
             staff: data?.staff,
+            budget: data.budget,
         };
         const { expenses, revenues } = data;
         const tempRow: any = {};
@@ -63,7 +61,6 @@ const useGenerateReport = ({ view }: Props) => {
         revenues.forEach((revenue: iRevenue) => {
             const { createdAt, total } = revenue;
             const date = new Date(createdAt).toLocaleDateString();
-            console.log(`date`, date);
             if (tempRow.hasOwnProperty(date)) {
                 tempRow[date].revenues += total;
             } else {
@@ -99,22 +96,15 @@ const useGenerateReport = ({ view }: Props) => {
     };
 
     const handleGetInfoForReport = async (values: any) => {
-        const dateFrom = moment(values.dateRange[0])
-            .toDate()
-            .toLocaleDateString();
-
-        const dateTo = moment(values.dateRange[1])
-            .toDate()
-            .toLocaleDateString();
+        const dateFrom = moment(values.range[0]).toDate().toLocaleDateString();
+        const dateTo = moment(values.range[1]).toDate().toLocaleDateString();
 
         const dataDTO = {
             dateFrom,
             dateTo,
             staffID: 1,
         };
-
         setLoading(true);
-
         const response = await getInformationForReport(dataDTO);
         if (response.status === 200) {
             const temp = parseFromReportToCustomReport(response.data);
@@ -136,7 +126,6 @@ const useGenerateReport = ({ view }: Props) => {
         if (response.status === 201) {
             message.success("Tạo báo cáo thành công");
             history.push(`/report/${response.data.id}`);
-            console.log(`response.data`, response.data);
         } else {
             message.error(response.message);
         }

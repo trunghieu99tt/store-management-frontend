@@ -12,63 +12,53 @@
  * }}
  */
 
+import client from "../../api/client";
+
 interface Props {
-    backendURL: string;
-    additionalBackendURL?: string;
+    endpoint: string;
+    additionalEndpoint?: string;
 }
 
-const useData = ({ backendURL, additionalBackendURL }: Props) => {
-    const fetchList = async () => {
-        const response = await fetch(`${backendURL}`);
-        const data = await response.json();
-        return data;
-    };
-
-    const fetchOne = async (expenseID: number) => {
-        const response = await fetch(`${backendURL}/${expenseID}`);
-        const data = await response.json();
-        return data.data;
-    };
-
-    const addOne = async (data: any) => {
-        const response = await fetch(`${additionalBackendURL || backendURL}`, {
-            method: "POST",
-            body: JSON.stringify(data),
-            headers: {
-                "Content-Type": "application/json",
+const useData = ({ endpoint, additionalEndpoint }: Props) => {
+    const getList = async (params = {}) => {
+        const response = await client.get(endpoint, {
+            params: {
+                ...params,
             },
         });
-        const responseData = await response.json();
-        return responseData;
+        return response.data;
     };
 
-    const updateOne = async (data: any, id: number) => {
-        const response = await fetch(
-            `${additionalBackendURL || backendURL}/${id}`,
-            {
-                method: "PUT",
-                body: JSON.stringify(data),
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            }
+    const getOne = async (id: number | string) => {
+        const response = await client.get(`${endpoint}/${id}`);
+        return response.data;
+    };
+
+    const createOne = async (obj: any) => {
+        const response = await client.post(
+            `${additionalEndpoint || endpoint}`,
+            obj
         );
-        const responseData = await response.json();
-        return responseData;
+        return response.data;
     };
 
-    const deleteOne = async (id: number) => {
-        const response = await fetch(`${backendURL}/${id}`, {
-            method: "DELETE",
-        });
-        const data = await response.json();
-        return data;
+    const updateOne = async (id: number | string, obj: any) => {
+        const response = await client.put(
+            `${additionalEndpoint || endpoint}/${id}`,
+            obj
+        );
+        return response.data;
+    };
+
+    const deleteOne = async (id: number | string) => {
+        const response = await client.delete(`${endpoint}/${id}`);
+        return response.data;
     };
 
     return {
-        addOne,
-        fetchOne,
-        fetchList,
+        addOne: createOne,
+        fetchOne: getOne,
+        fetchList: getList,
         updateOne,
         deleteOne,
     };

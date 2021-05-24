@@ -22,6 +22,17 @@ import { message } from "antd";
 const useRevenueStatistic = () => {
     const [data, setData] = useState<iRevenueStatistic[] | null>(null);
     const [option, setOption] = useState<any>(null);
+    const [largest, setLargest] =
+        useState<{
+            day: String | Date;
+            amount: Number;
+        } | null>(null);
+    const [smallest, setSmallest] =
+        useState<{
+            day: String | Date;
+            amount: Number;
+        } | null>(null);
+    const [total, setTotal] = useState<Number>(0);
 
     const { fetchRevenuesInRange } = useRevenue();
 
@@ -38,8 +49,35 @@ const useRevenueStatistic = () => {
             setData(data.data);
             const allData = data.data;
             const mappingData: any = {};
+            let tempLargest = {
+                day: new Date(),
+                amount: 0,
+            };
+            let tempSmallest = {
+                day: new Date(),
+                amount: Number.MAX_SAFE_INTEGER,
+            };
+
+            let sum = 0;
+
             allData.forEach((data: any) => {
                 const { createdAt, total } = data;
+
+                if (total > tempLargest.amount) {
+                    tempLargest = {
+                        day: createdAt.toLocaleString(),
+                        amount: total,
+                    };
+                }
+
+                if (total < tempSmallest.amount) {
+                    tempSmallest = {
+                        day: createdAt.toLocaleString(),
+                        amount: total,
+                    };
+                }
+
+                sum += total;
 
                 if (mappingData.hasOwnProperty(createdAt)) {
                     mappingData[createdAt] += total;
@@ -72,6 +110,9 @@ const useRevenueStatistic = () => {
                 ],
             };
             setOption(newOption);
+            setTotal(sum);
+            setLargest(tempLargest);
+            setSmallest(tempSmallest);
         } else {
             message.error("Something went wrong. Please try again later");
         }
@@ -79,7 +120,11 @@ const useRevenueStatistic = () => {
 
     return {
         data,
+        total,
         option,
+        largest,
+        smallest,
+
         handleGenerateStatistic,
     };
 };

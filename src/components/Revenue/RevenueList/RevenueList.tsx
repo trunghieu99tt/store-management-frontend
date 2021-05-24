@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import cn from "classnames";
 
 // talons
 import { useRevenueList } from "../../../talons/Revenue/useRevenueList";
@@ -10,6 +11,9 @@ import mergeClasses from "../../../utils/mergeClasses";
 // components
 import { Button, DatePicker, Form, Space, Table } from "antd";
 
+// icons
+import { Eye, Edit3, Delete } from "react-feather";
+
 // styles
 import defaultClasses from "./revenueList.module.css";
 
@@ -17,7 +21,7 @@ import defaultClasses from "./revenueList.module.css";
 import { iRevenue } from "../../../types/revenue.types";
 import { iBankAccount } from "../../../types/bankAccount.types";
 import { iStaff } from "../../../types/user.types";
-import { LoadingOutlined } from "@ant-design/icons";
+import { formatNumber } from "../../../utils/helper";
 
 interface Props {
     classes?: object;
@@ -42,29 +46,30 @@ const RevenueList = ({ classes: propsClasses }: Props) => {
             title: "ID",
             dataIndex: "id",
             key: "id",
+            width: 100,
         },
         {
             title: "Tên",
             dataIndex: "name",
             key: "name",
-            width: 300,
+            width: 250,
             sorter: (a: any, b: any) => NaN,
         },
         {
             title: "Mô tả",
             dataIndex: "description",
             key: "description",
-            width: 300,
+            width: 250,
             render: (record: string) => {
                 if (record.length > 50) return <p>{record.slice(0, 50)}...</p>;
                 return <p>{record}</p>;
             },
         },
         {
-            title: "Ngày tạo",
+            title: "Ngày",
             dataIndex: "createdAt",
             key: "createdAt",
-            width: 300,
+            width: 200,
             render: (record: Date) => {
                 return <p>{new Date(record).toLocaleDateString()}</p>;
             },
@@ -75,6 +80,9 @@ const RevenueList = ({ classes: propsClasses }: Props) => {
             key: "quantity",
             width: 150,
             sorter: (a: any, b: any) => NaN,
+            render: (value: number) => {
+                return <strong>{formatNumber(value)}</strong>;
+            },
         },
         {
             title: "Đơn giá",
@@ -82,13 +90,19 @@ const RevenueList = ({ classes: propsClasses }: Props) => {
             key: "priceUnit",
             width: 150,
             sorter: (a: any, b: any) => NaN,
+            render: (value: number) => {
+                return <strong>{formatNumber(value)}</strong>;
+            },
         },
         {
-            title: "Tổng tiền",
+            title: "Tổng tiền (VND)",
             dataIndex: "total",
             key: "total",
-            width: 150,
+            width: 200,
             sorter: (a: any, b: any) => NaN,
+            render: (value: number) => {
+                return <strong>{formatNumber(value)}</strong>;
+            },
         },
 
         {
@@ -119,43 +133,49 @@ const RevenueList = ({ classes: propsClasses }: Props) => {
             key: "action",
             render: (text: any, record: iRevenue) => (
                 <Space size="middle">
-                    <Link to={`/revenue/view/${record.id}`}>
-                        <Button type="primary">Xem</Button>
-                    </Link>
-                    <Link to={`/revenue/edit/${record.id}`}>
-                        <Button type="primary">Sửa</Button>
-                    </Link>
-                    <Button
-                        type="primary"
-                        danger
+                    <button className={cn(classes.btn, classes.view)}>
+                        <Link to={`/revenue/view/${record.id}`}>
+                            <Eye />
+                        </Link>
+                    </button>
+                    <button className={cn(classes.btn, classes.edit)}>
+                        <Link to={`/revenue/edit/${record.id}`}>
+                            <Edit3 />
+                        </Link>
+                    </button>
+                    <button
+                        className={cn(classes.btn, classes.delete)}
                         onClick={() => onDelete(record.id)}
                     >
-                        Xóa
-                    </Button>
+                        <Delete />
+                    </button>
                 </Space>
             ),
-            width: 300,
+            width: 200,
+            fixed: "right" as "right",
         },
     ];
 
     return (
         <div className={classes.root}>
-            <Link to="/revenue/add">
-                <Button type="primary">Thêm mới</Button>
-            </Link>
+            <header className={classes.header}>
+                <Link to="/revenue/add">
+                    <Button type="primary">Thêm mới</Button>
+                </Link>
 
-            <div className={classes.header}>
-                <Form layout="inline" onFinish={handleSearch}>
-                    <Form.Item label="Tìm kiếm theo ngày" name="createdAt">
-                        <DatePicker />
-                    </Form.Item>
-                    <Form.Item>
-                        <Button type="primary" htmlType="submit">
-                            Tìm kiếm
-                        </Button>
-                    </Form.Item>
-                </Form>
-            </div>
+                <div className={classes.search}>
+                    <Form layout="inline" onFinish={handleSearch}>
+                        <Form.Item label="Tìm kiếm theo ngày" name="createdAt">
+                            <DatePicker />
+                        </Form.Item>
+                        <Form.Item>
+                            <Button type="primary" htmlType="submit">
+                                Tìm kiếm
+                            </Button>
+                        </Form.Item>
+                    </Form>
+                </div>
+            </header>
             <Table
                 columns={columns}
                 dataSource={data}

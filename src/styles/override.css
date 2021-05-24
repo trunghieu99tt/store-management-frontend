@@ -1,0 +1,41 @@
+.ant-table-thead > tr > th {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.ant-table-tbody > tr > td {
+    font-weight: 600;
+}
+
+.ant-table table {
+    padding-bottom: 5rem;
+}
+
+.ant-pagination-prev button,
+.ant-pagination-next button {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+}
+
+.ant-pagination-item {
+    font-size: 1.5rem;
+    font-weight: 600;
+    border-radius: 5px;
+}
+
+.ant-pagination-item:focus-visible,
+.ant-pagination-item:hover {
+    background: #1890ff;
+    color: #fff;
+}
+
+.ant-form-item-label > label {
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+.ant-input {
+    font-size: 1.5rem;
+    line-height: 2;
+}

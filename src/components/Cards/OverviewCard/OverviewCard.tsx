@@ -14,10 +14,10 @@ interface Props {
     classes?: object;
     name: string;
     number: number;
-    percent: number;
-    isInc: boolean;
-    icon: any;
-    key: any;
+    percent?: number;
+    isInc?: boolean;
+    icon?: any;
+    key?: any;
 }
 
 const OverviewCard = ({
@@ -39,14 +39,16 @@ const OverviewCard = ({
                         ","
                     )}
                 </p>
-                <p
-                    className={classNames(classes.percent, {
-                        [classes.inc]: isInc,
-                    })}
-                >
-                    ({isInc ? "+" : "-"} {percent}%){" "}
-                    {isInc ? <ArrowUpOutlined /> : <ArrowDownOutlined />}
-                </p>
+                {percent && (
+                    <p
+                        className={classNames(classes.percent, {
+                            [classes.inc]: isInc,
+                        })}
+                    >
+                        ({isInc ? "+" : "-"} {percent}%){" "}
+                        {isInc ? <ArrowUpOutlined /> : <ArrowDownOutlined />}
+                    </p>
+                )}
             </div>
             <div className={classes.right}>{icon}</div>
         </article>

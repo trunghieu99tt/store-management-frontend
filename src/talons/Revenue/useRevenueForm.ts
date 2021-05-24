@@ -1,10 +1,13 @@
 import { Form, message } from "antd";
 import { Modal } from "antd";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import { FORM_TYPE } from "../../types/app.types";
 import { iRevenue, iRevenueDTO } from "../../types/revenue.types";
+import { randomDate } from "../../utils/helper";
 import { useRevenue } from "./useRevenue";
+import faker from "faker";
+import moment from "moment";
 
 /**
  * A [React Hook]{@link https://reactjs.org/docs/hooks-intro.html} that revenue form  logic
@@ -38,11 +41,11 @@ const useRevenueForm = ({ view: propsView }: { view: FORM_TYPE }) => {
             history.push("/revenue");
             message.error("Không tồn tại phiếu thu với id này");
         }
-        setRevenue(data);
         form.setFieldsValue({
             bankAccountNumber: data.bankAccount.accountNumber,
-            createdAt: new Date(data.createdAt).toLocaleDateString(),
+            createdAt: moment(new Date(data.createdAt)),
         });
+        setRevenue(data);
     };
 
     useEffect(() => {
@@ -50,6 +53,10 @@ const useRevenueForm = ({ view: propsView }: { view: FORM_TYPE }) => {
             handleFetchRevenue();
         }
     }, [params.id]);
+
+    useEffect(() => {
+        // mockData();
+    }, []);
 
     const onSubmit = (values: iRevenueDTO) => {
         if (propsView === "ADD") {
@@ -67,7 +74,13 @@ const useRevenueForm = ({ view: propsView }: { view: FORM_TYPE }) => {
         }
     };
 
-    const onChange = () => {};
+    const onChange = (values: any, allValues: any) => {
+        if (allValues.priceUnit && allValues.quantity) {
+            form.setFieldsValue({
+                total: allValues.priceUnit * allValues.quantity,
+            });
+        }
+    };
 
     const handleCancel = () => {
         history.push("/revenue");
@@ -84,12 +97,41 @@ const useRevenueForm = ({ view: propsView }: { view: FORM_TYPE }) => {
 
     const handleUpdateRevenue = async (values: iRevenueDTO) => {
         const response = await updateRevenue(values, ~~params.id);
-        console.log(`response`, response);
         if (response.status === 200) {
             message.success("Update thành công!");
         } else {
             message.error(response.message);
         }
+    };
+
+    const mockData = async () => {
+        [...Array(1000)].map(async () => {
+            const quantity = faker.datatype.number({
+                min: 1,
+                max: 550,
+            });
+            const priceUnit = faker.datatype.number({
+                min: 1,
+                max: 200000,
+            });
+            const total = quantity * priceUnit;
+            const values = {
+                createdAt: randomDate(
+                    new Date("01-01-2021"),
+                    new Date("12-31-2021"),
+                    0,
+                    24
+                ),
+                name: faker.lorem.word(),
+                bankAccountNumber: 1,
+                description: faker.lorem.sentence(),
+                paymentMethod: faker.lorem.word(),
+                quantity,
+                priceUnit,
+                total,
+            };
+            await addRevenue(values);
+        });
     };
 
     return {

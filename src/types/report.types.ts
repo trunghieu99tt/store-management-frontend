@@ -1,3 +1,4 @@
+import { iBudget } from "./budget.types";
 import { iExpense } from "./expense.types";
 import { iRevenue } from "./revenue.types";
 
@@ -15,6 +16,7 @@ export interface iBaseReport {
     dateTo: Date;
     expense: number;
     revenue: number;
+    budget: number;
     profit: number;
     staffID: number;
     reportFrom?: Date;
@@ -25,6 +27,7 @@ export interface iBaseReport {
 export interface iReport extends iBaseReport {
     expenses: iExpense[];
     revenues: iRevenue[];
+    budgets: iBudget[];
 }
 
 export interface iCustomReport extends iBaseReport {

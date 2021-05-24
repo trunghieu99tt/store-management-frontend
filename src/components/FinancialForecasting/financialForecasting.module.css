@@ -1,0 +1,25 @@
+.statistic {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 5rem;
+}
+
+.summary {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.summary span {
+    margin-left: 5px;
+    font-weight: bold;
+    color: green;
+}
+
+.forecast {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}

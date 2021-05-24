@@ -7,7 +7,7 @@ import { useRevenueForm } from "../../../talons/Revenue/useRevenueForm";
 import mergeClasses from "../../../utils/mergeClasses";
 
 // components
-import { Button, Form, Input, InputNumber } from "antd";
+import { DatePicker, Form, Input, InputNumber } from "antd";
 
 // styles
 import defaultClasses from "./revenueForm.module.css";
@@ -62,11 +62,9 @@ const RevenueForm = ({ classes: propsClasses, view }: Props) => {
                 initialValues={revenue || {}}
                 key={Math.random()}
             >
-                {view !== "ADD" && (
-                    <Form.Item label="Ngày tạo" name="createdAt">
-                        <Input disabled />
-                    </Form.Item>
-                )}
+                <Form.Item label="Ngày" name="createdAt">
+                    <DatePicker />
+                </Form.Item>
                 <Form.Item
                     label="Tên"
                     name="name"
@@ -144,7 +142,7 @@ const RevenueForm = ({ classes: propsClasses, view }: Props) => {
                     ]}
                 >
                     <InputNumber
-                        disabled={view === "VIEW"}
+                        disabled
                         formatter={(value) =>
                             `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                         }
@@ -166,22 +164,14 @@ const RevenueForm = ({ classes: propsClasses, view }: Props) => {
                 >
                     <Input disabled={view === "VIEW"} />
                 </Form.Item>
-                <Form.Item className={classes.btnGroup}>
-                    <Button
-                        type="primary"
-                        htmlType="submit"
-                        className={classes.btn}
-                    >
+                <div className={classes.btnGroup}>
+                    <button type="submit" className={classes.btn}>
                         {buttonText}
-                    </Button>
-                    <Button
-                        type="primary"
-                        className={classes.btn}
-                        onClick={handleCancel}
-                    >
+                    </button>
+                    <button className={classes.btn} onClick={handleCancel}>
                         Hủy
-                    </Button>
-                </Form.Item>
+                    </button>
+                </div>
             </Form>
         </div>
     );
