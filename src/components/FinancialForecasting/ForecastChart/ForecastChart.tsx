@@ -29,12 +29,12 @@ const ForecastChart = ({
                 type: "shadow", // 默认为直线，可选为：'line' | 'shadow'
             },
             formatter: (params: any) => {
-                console.log(`params`, params[0]);
+                // console.log(`params`, params[0]);
                 return `${formatNumber(params[0].data)} VND`;
             },
         },
         xAxis: {
-            data: ["2022", "2023", "2024", "2025", "2026"],
+            data: ["2022", "2023"],
             axisLabel: {
                 inside: true,
                 textStyle: {
@@ -71,6 +71,7 @@ const ForecastChart = ({
 
     return (
         <ReactEcharts
+            key="theanhdz"
             style={{ height, width, padding }}
             option={merge({}, defaultOption, option)}
         />

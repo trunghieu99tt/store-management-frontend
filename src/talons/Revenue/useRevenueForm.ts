@@ -108,11 +108,11 @@ const useRevenueForm = ({ view: propsView }: { view: FORM_TYPE }) => {
         [...Array(1000)].map(async () => {
             const quantity = faker.datatype.number({
                 min: 1,
-                max: 1000,
+                max: 550,
             });
             const priceUnit = faker.datatype.number({
                 min: 1,
-                max: 100000,
+                max: 200000,
             });
             const total = quantity * priceUnit;
             const values = {

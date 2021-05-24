@@ -111,7 +111,7 @@ const FinancialForecasting = ({ classes: propsClasses }: Props) => {
             </p>
             <section className={classes.forecast}>
                 <ForecastChart
-                    title="Dự đoán lợi nhuận 5 năm tới:"
+                    title="Dự đoán lợi nhuận 2 năm tới:"
                     option={forecastOption}
                     width={1000}
                 />

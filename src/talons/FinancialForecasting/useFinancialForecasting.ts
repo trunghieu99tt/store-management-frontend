@@ -78,15 +78,14 @@ const useFinancialForecasting = () => {
         // round to 2 numbers after decimal
         calc = Math.round(calc * 100) / 100;
         setAvgProfit(calc);
-
         let currProfit = profits.reduce(
             (res: number, curr: number) => res + curr,
             0
         );
         const futureProfits: number[] = [];
 
-        for (let idx = 0; idx < 5; idx += 1) {
-            currProfit *= 1 + avgProfit;
+        for (let idx = 0; idx < 2; idx += 1) {
+            currProfit *= (1 + calc/100);
             futureProfits.push(currProfit);
         }
         setForecastProfits(futureProfits);

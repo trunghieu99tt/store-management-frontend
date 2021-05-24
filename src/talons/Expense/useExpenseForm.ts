@@ -78,7 +78,7 @@ const useExpenseForm = ({ view }: { view: FORM_TYPE }) => {
         let additionalInfo = {};
 
         const types: TExpense[] = ["EMPLOYEE_SALARY", "SERVICE", "SHOPPING"];
-        [...Array(1000)].map(async () => {
+        [...Array(500)].map(async () => {
             const type: TExpense =
                 types[Math.floor(Math.random() * types.length)];
 
