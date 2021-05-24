@@ -73,7 +73,6 @@ const useFinancialForecasting = () => {
         let calc: number = 0;
         for (let idx = 1; idx <= Math.min(profits.length, 11); idx += 1) {
             calc += (profits[idx] / Math.max(profits[idx - 1], 1)) * 100 - 100;
-            console.log(idx, calc);
         }
         calc /= 11;
         // round to 2 numbers after decimal

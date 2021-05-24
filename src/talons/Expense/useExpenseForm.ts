@@ -104,7 +104,7 @@ const useExpenseForm = ({ view }: { view: FORM_TYPE }) => {
                     });
                     const priceUnit = faker.datatype.number({
                         min: 1,
-                        max: 10,
+                        max: 100,
                     });
                     additionalInfo = {
                         quantity,
@@ -117,7 +117,7 @@ const useExpenseForm = ({ view }: { view: FORM_TYPE }) => {
                         staffID: 1,
                         total: faker.datatype.number({
                             min: 1000,
-                            max: 100000,
+                            max: 1000000,
                         }),
                     };
                     break;
@@ -125,7 +125,7 @@ const useExpenseForm = ({ view }: { view: FORM_TYPE }) => {
                     additionalInfo = {
                         total: faker.datatype.number({
                             min: 10000,
-                            max: 100000,
+                            max: 1000000,
                         }),
                     };
             }
@@ -145,7 +145,6 @@ const useExpenseForm = ({ view }: { view: FORM_TYPE }) => {
                 paymentMethod: faker.lorem.word(),
                 ...additionalInfo,
             };
-            console.log("values", values);
             await client.post(endpoint, values);
         });
     };

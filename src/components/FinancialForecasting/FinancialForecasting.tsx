@@ -101,7 +101,13 @@ const FinancialForecasting = ({ classes: propsClasses }: Props) => {
             <p className={classes.summary}>
                 Tăng trưởng trung bình mỗi tháng của năm{" "}
                 {new Date().getFullYear()} là:
-                <span>{avgProfit} %</span>
+                <span
+                    style={{
+                        color: avgProfit > 0 ? "green" : "red",
+                    }}
+                >
+                    {avgProfit} %
+                </span>
             </p>
             <section className={classes.forecast}>
                 <ForecastChart
