@@ -1,187 +1,117 @@
-import React, { useEffect, useState } from "react";
-import moment from "moment";
+import React from "react";
 
 // talons
-import { useExpense } from "../../talons/Expense/useExpense";
-import { useRevenue } from "../../talons/Revenue/useRevenue";
+import { useFinancialForecasting } from "../../talons/FinancialForecasting/useFinancialForecasting";
 
 // utils
 import mergeClasses from "../../utils/mergeClasses";
-import { formatNumber } from "../../utils/helper";
 
 // components
 import { Table } from "antd";
 import OverviewCard from "../Cards/OverviewCard";
-// import Loading from "../Loading";
-
-// types
-import { iExpense } from "../../types/expense.types";
-import { iRevenue } from "../../types/revenue.types";
+import Loading from "../Loading";
 
 // classes
 import defaultClasses from "./financialForecasting.module.css";
+import FinancialChart from "./FinancialChart/FinancialChart";
+import ForecastChart from "./ForecastChart/ForecastChart";
 
 interface Props {
     classes?: object;
 }
 
-const columns = [
-    {
-        title: "Tháng",
-        dataIndex: "month",
-        key: "month",
-    },
-    {
-        title: "Lợi nhuận",
-        dataIndex: "profit",
-        key: "profit",
-        render: (value: number) => {
-            return <strong>{formatNumber(value)}</strong>;
-        },
-    },
-];
-
 const FinancialForecasting = ({ classes: propsClasses }: Props) => {
     const classes = mergeClasses(defaultClasses, propsClasses);
-    const [revenues, setRevenues] = useState<iRevenue[] | any>(null);
-    const [expenses, setExpenses] = useState<iExpense[] | any>(null);
-    const [data, setData] = useState<any>(null);
-    const [forecast, setForecast] = useState<any>(null);
 
-    const { fetchAllRevenues, fetchRevenuesInRange } = useRevenue();
-    const { fetchExpenseInRange } = useExpense({ type: "BASE" });
-    const { fetchExpenses } = useExpense({ type: "BASE" });
+    const { expenses, avgProfit, profits, revenues, forecastProfits } =
+        useFinancialForecasting();
 
-    const handleFetchAllExpenses = async () => {
-        const data = await fetchExpenses();
-        setExpenses(data.data);
+    if (
+        !revenues ||
+        !expenses ||
+        !profits ||
+        !revenues.length ||
+        !expenses.length ||
+        !profits.length
+    ) {
+        return <Loading />;
+    }
+
+    const totalExpense =
+        expenses?.length > 0 &&
+        expenses.reduce((res: number, curr: number) => (res += curr), 0);
+
+    const totalProfit =
+        profits?.length > 0 &&
+        profits.reduce((res: number, curr: number) => (res += curr), 0);
+
+    const totalRevenue =
+        revenues?.length > 0 &&
+        revenues.reduce((res: number, curr: number) => (res += curr), 0);
+
+    const financialOption = {
+        legend: {
+            data: ["Doanh thu", "Chi phí", "Lợi nhuận"],
+        },
+        series: [
+            {
+                name: "Doanh thu",
+                type: "bar",
+                data: revenues,
+            },
+            {
+                name: "Chi phí",
+                type: "bar",
+                data: expenses,
+            },
+            {
+                name: "Lợi nhuận",
+                type: "line",
+                data: profits,
+            },
+        ],
     };
 
-    const handleFetchAllRevenues = async () => {
-        const data = await fetchAllRevenues();
-        setRevenues(data);
+    const forecastOption = {
+        series: [
+            {
+                type: "bar",
+                showBackground: true,
+                data: forecastProfits,
+            },
+        ],
     };
-
-    useEffect(() => {
-        handleFetchAllRevenues();
-        handleFetchAllExpenses();
-        handleFetchData();
-    }, []);
-
-    const handleFetchData = async () => {
-        const { data, forecast } = await getFinancialData(
-            fetchRevenuesInRange,
-            fetchExpenseInRange
-        );
-        setData(data);
-        setForecast(forecast);
-    };
-
-    // if(!revenues || !expenses){
-    //     return <Loading />
-    // }
-
-    const revenueCount = revenues?.reduce(
-        (prev: any, curr: any) => prev + curr.total,
-        0
-    );
-    const expenseCount = expenses?.reduce(
-        (prev: any, curr: any) => prev + curr.total,
-        0
-    );
-    const profit = revenueCount - expenseCount;
-
-    console.log(`forecast`, forecast);
 
     return (
         <section className={classes.root}>
-            <OverviewCard name="Doanh thu" number={revenueCount || 0} />
-            <br />
-            <OverviewCard name="Lợi nhuận" number={profit || 0} />
-            <br />
-            <Table
-                columns={columns}
-                dataSource={data}
-                pagination={{
-                    pageSize: 12,
-                    total: 12,
-                }}
-                scroll={{ x: "500px" }}
-                loading={!revenues || !expenses || !data}
+            <section className={classes.statistic}>
+                <OverviewCard name="Tổng Chi phí" number={totalExpense || 0} />
+                <OverviewCard
+                    name="Tổng Doanh thu"
+                    number={totalRevenue || 0}
+                />
+                <OverviewCard name="Tổng Lợi nhuận" number={totalProfit || 0} />
+            </section>
+            <FinancialChart
+                title={`Thống kê chi phí, doanh thu và lợi nhuận năm ${new Date().getFullYear()}`}
+                option={financialOption}
+                width={"100%"}
+                padding="2rem"
             />
-            <p>
-                Dự báo năm {new Date().getFullYear() + 1}: Tăng trưởng{" "}
-                {forecast} %
+            <p className={classes.summary}>
+                Tăng trưởng trung bình mỗi tháng của năm{" "}
+                {new Date().getFullYear()} là:
+                <span>{avgProfit} %</span>
             </p>
+            <section className={classes.forecast}>
+                <ForecastChart
+                    title="Dự đoán lợi nhuận 5 năm tới:"
+                    option={forecastOption}
+                    width={1000}
+                />
+            </section>
         </section>
     );
-};
-
-const getTotalRevenues = (monthlyRevenues: any) => {
-    return monthlyRevenues?.reduce(
-        (prev: any, curr: any) => prev + curr.total,
-        0
-    );
-};
-
-const getTotalExpenses = (monthlyExpenses: any) => {
-    return monthlyExpenses?.reduce(
-        (prev: any, curr: any) => prev + curr.total,
-        0
-    );
-};
-
-const getFinancialData = async (
-    fetchRevenuesInRange: any,
-    fetchExpenseInRange: any
-) => {
-    const currentYear = new Date().getFullYear();
-    const getRevenueByMonth = async (monthNumber: number) => {
-        let month = monthNumber.toString();
-        if (monthNumber < 10) {
-            month = "0" + monthNumber;
-        }
-        const dateFrom = moment(`${month}${currentYear}`, "MMYYYY")
-            .toDate()
-            .toLocaleDateString();
-        const dateTo = moment(dateFrom)
-            .endOf("month")
-            .toDate()
-            .toLocaleDateString();
-
-        // console.log("dateFrom", dateFrom);
-        // console.log("dateTo", dateTo);
-
-        const revenues = await fetchRevenuesInRange(dateFrom, dateTo);
-        const expenses = await fetchExpenseInRange(dateFrom, dateTo);
-
-        const profit =
-            getTotalRevenues(revenues.data) - getTotalExpenses(expenses.data);
-        return profit;
-        // console.log('data', data)
-    };
-
-    let data: any = [];
-    const profits: number[] = [];
-    let forecast = 0;
-    for (let i = 1; i < 12; i++) {
-        let value = 0;
-        await getRevenueByMonth(i).then((r) => {
-            value = r;
-        });
-        const item = {
-            month: `Tháng ${i} -> Tháng ${i + 1}`,
-            profit: value,
-        };
-        data.push(item);
-        if (i > 1) {
-            forecast += (value / profits[profits.length - 1]) * 100;
-        }
-        profits.push(value);
-    }
-    forecast /= 12;
-    forecast = Math.round(forecast * 100) / 100;
-    return { data, forecast };
 };
 
 export default FinancialForecasting;

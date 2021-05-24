@@ -78,7 +78,7 @@ const useExpenseForm = ({ view }: { view: FORM_TYPE }) => {
         let additionalInfo = {};
 
         const types: TExpense[] = ["EMPLOYEE_SALARY", "SERVICE", "SHOPPING"];
-        [...Array(40)].map(async () => {
+        [...Array(1000)].map(async () => {
             const type: TExpense =
                 types[Math.floor(Math.random() * types.length)];
 
@@ -100,11 +100,11 @@ const useExpenseForm = ({ view }: { view: FORM_TYPE }) => {
                 case "SHOPPING":
                     const quantity = faker.datatype.number({
                         min: 1,
-                        max: 1000000,
+                        max: 100,
                     });
                     const priceUnit = faker.datatype.number({
                         min: 1,
-                        max: 10000000,
+                        max: 10,
                     });
                     additionalInfo = {
                         quantity,
@@ -116,16 +116,16 @@ const useExpenseForm = ({ view }: { view: FORM_TYPE }) => {
                     additionalInfo = {
                         staffID: 1,
                         total: faker.datatype.number({
-                            min: 1000000,
-                            max: 100000000,
+                            min: 1000,
+                            max: 100000,
                         }),
                     };
                     break;
                 default:
                     additionalInfo = {
                         total: faker.datatype.number({
-                            min: 1000000,
-                            max: 100000000,
+                            min: 10000,
+                            max: 100000,
                         }),
                     };
             }
@@ -145,7 +145,7 @@ const useExpenseForm = ({ view }: { view: FORM_TYPE }) => {
                 paymentMethod: faker.lorem.word(),
                 ...additionalInfo,
             };
-            console.log('values', values)
+            console.log("values", values);
             await client.post(endpoint, values);
         });
     };

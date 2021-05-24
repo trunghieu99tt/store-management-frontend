@@ -5,9 +5,8 @@ import { iExpenseStatisticByDate } from "../../types/expense.types";
 import { useExpense } from "./useExpense";
 
 const useExpenseStatistic = () => {
-    const [dataByDate, setDataByDate] = useState<
-        iExpenseStatisticByDate[] | null
-    >(null);
+    const [dataByDate, setDataByDate] =
+        useState<iExpenseStatisticByDate[] | null>(null);
     const [optionByDate, setOptionByDate] = useState<any>(null);
     const [optionByType, setOptionByType] = useState<any>(null);
 
