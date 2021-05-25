@@ -71,8 +71,9 @@ const ReportGenerator = ({ view }: Props) => {
         },
     ];
 
-    if (loading) {
-        return <Loading />;
+
+    if(loading){
+        return <Loading />
     }
 
     return (
