@@ -71,7 +71,9 @@ const ReportGenerator = ({ view }: Props) => {
         },
     ];
 
-    if (loading) return <Loading></Loading>;
+    if(loading || !data){
+        return <Loading />
+    }
 
     return (
         <div className={classes.root}>
