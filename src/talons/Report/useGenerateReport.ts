@@ -86,11 +86,12 @@ const useGenerateReport = ({ view }: Props) => {
                         profit,
                     };
                 })
-                .sort((a: any, b: any) => {
-                    const { date: dateA } = a;
-                    const { date: dateB } = b;
-                    return dateA.localeCompare(dateB);
-                });
+                .sort((a: any, b: any) => a.id - b.id);
+        // .sort((a: any, b: any) => {
+        //     const { date: dateA } = a;
+        //     const { date: dateB } = b;
+        //     return dateA.localeCompare(dateB);
+        // });
 
         return result;
     };
