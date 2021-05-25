@@ -17,7 +17,6 @@ import {
 
 // styles
 import defaultClasses from "./overview.module.css";
-import RaceBar from "../../components/CompareChart/RaceBar";
 
 interface Props {
     classes?: object;
@@ -62,11 +61,11 @@ const Overview = ({ classes: propsClasses }: Props) => {
 
     return (
         <div className={classes.root}>
-            <section className={classes.overviewCards}>
+            {/* <section className={classes.overviewCards}>
                 {testData.map((e, idx) => {
                     return <OverviewCard {...e} key={idx} />;
                 })}
-            </section>
+            </section> */}
 
             <section className={classes.compareRevenue}>
                 <div>
@@ -75,7 +74,6 @@ const Overview = ({ classes: propsClasses }: Props) => {
                     </h4>
                     <TwoLinesCompare />
                 </div>
-                <RaceBar />
             </section>
         </div>
     );

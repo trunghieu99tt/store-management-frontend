@@ -1,5 +1,6 @@
 .root {
     padding: 2rem;
+    text-align: center;
 }
 
 .overviewCards {
@@ -18,8 +19,8 @@
     margin-top: 5rem;
     box-shadow: 0 3px 5px 3px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
-    display: grid;
-    grid-template-columns: repeat(2, calc(90% / 2));
+    /* display: grid;
+    grid-template-columns: repeat(2, calc(90% / 2)); */
     gap: 2rem;
     max-width: 100vw;
 }
