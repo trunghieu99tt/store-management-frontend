@@ -118,6 +118,8 @@ const useGenerateReport = ({ view }: Props) => {
     };
 
     const handleGenerateReport = async (values: any) => {
+        setLoading(true);
+
         const description = values?.description || "";
         const response = await generateReport({
             ...data,
@@ -129,17 +131,24 @@ const useGenerateReport = ({ view }: Props) => {
         } else {
             message.error(response.message);
         }
+
+        setLoading(false);
     };
 
     const handleGetReport = async (id: string) => {
+        setLoading(true);
+        console.log(`loading`, loading);
         const response = await fetchReport(~~id);
         if (response.status === 200) {
             const temp = parseFromReportToCustomReport(response.data);
+            setLoading(false);
             setCustomData(temp);
         } else {
             message.error(response.message);
             history.push("/report");
         }
+        setLoading(false);
+        console.log(`loading`, loading);
     };
 
     return {

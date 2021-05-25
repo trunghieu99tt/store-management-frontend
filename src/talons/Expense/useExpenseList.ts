@@ -20,22 +20,25 @@ const useExpenseList = () => {
     }, []);
 
     const populateType = (data: any) => {
-        return data.map((e: any) => {
-            let type = "Mua sắm";
-            if (e.hasOwnProperty("productID")) type = "Mua sắm";
-            else if (e.hasOwnProperty("employeeID")) type = "Trả lương";
-            else type = "Trang thiết bị";
-            return {
-                ...e,
-                type,
-            };
-        });
+        return data
+            .map((e: any) => {
+                let type = "Mua sắm";
+                if (e.hasOwnProperty("productID")) type = "Mua sắm";
+                else if (e.hasOwnProperty("employeeID")) type = "Trả lương";
+                else type = "Trang thiết bị";
+                return {
+                    ...e,
+                    type,
+                };
+            })
+            .sort((a: any, b: any) => a.id - b.id);
     };
 
     const handleFetchExpenses = async (sortBy = 4, isAsc = true) => {
         setLoading(true);
         const data = await fetchExpenses();
         const populatedData = populateType(data.data);
+        console.log(`populatedData`, populatedData);
         setInitialData(populatedData);
         setTotalNumber(populatedData.length);
         setData(populatedData);

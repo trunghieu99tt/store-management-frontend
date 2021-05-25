@@ -18,6 +18,7 @@ import classes from "./reportGenerator.module.css";
 // types
 import { FORM_TYPE } from "../../../types/app.types";
 import { formatNumber } from "../../../utils/helper";
+import Loading from "../../Loading";
 
 interface Props {
     view: FORM_TYPE;
@@ -69,6 +70,8 @@ const ReportGenerator = ({ view }: Props) => {
             },
         },
     ];
+
+    if (loading) return <Loading></Loading>;
 
     return (
         <div className={classes.root}>
