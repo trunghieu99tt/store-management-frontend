@@ -23,6 +23,7 @@ const useRevenueView = () => {
 
     const { fetchRevenue } = useRevenue();
     const [revenue, setRevenue] = useState<iRevenue | any>(null);
+    const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
         if (params?.id) {
@@ -32,6 +33,7 @@ const useRevenueView = () => {
 
     const handleFetchRevenue = async () => {
         if (params?.id) {
+            setLoading(true);
             const id = ~~params.id;
             const data = await fetchRevenue(id);
             if (!data) {
@@ -39,6 +41,7 @@ const useRevenueView = () => {
                 message.error("Không tồn tại phiếu thu với id này");
             }
             setRevenue(data);
+            setLoading(false);
         }
     };
 
@@ -49,6 +52,7 @@ const useRevenueView = () => {
     return {
         params,
         revenue,
+        loading,
 
         onGoBack,
         onGoToEdit,

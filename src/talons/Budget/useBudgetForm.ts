@@ -14,6 +14,7 @@ const useBudgetForm = ({ view }: { view: FORM_TYPE }) => {
 
     const [type, setType] = useState<TExpense>("EMPLOYEE_SALARY");
     const [budget, setBudget] = useState<any | null>(null);
+    const [loading, setLoading] = useState<boolean>(false);
 
     const { addBudget, fetchBudget, updateBudget } = useBudget();
 
@@ -24,6 +25,7 @@ const useBudgetForm = ({ view }: { view: FORM_TYPE }) => {
     }, [params.id]);
 
     const handleFetchBudget = async () => {
+        setLoading(true);
         const id = params?.id && ~~params.id;
         if (id === 0) return;
         const data = await fetchBudget(~~id);
@@ -37,6 +39,7 @@ const useBudgetForm = ({ view }: { view: FORM_TYPE }) => {
             ),
         });
         setBudget(data);
+        setLoading(false);
     };
 
     const onSubmit = (values: any) => {
@@ -104,6 +107,7 @@ const useBudgetForm = ({ view }: { view: FORM_TYPE }) => {
         form,
         type,
         budget,
+        loading,
         onSubmit,
         onChange,
         handleCancel,

@@ -7,7 +7,8 @@ import mergeClasses from "../../utils/mergeClasses";
 // styles
 import defaultClasses from "./dataView.module.css";
 
-// state
+// translate
+import { translate } from "../../static/translate/translate.data";
 
 interface Props {
     classes?: object;
@@ -53,7 +54,7 @@ const DataView = ({
                                     key={`${title}-${params?.id || ""}-${idx}`}
                                 >
                                     <span className={classes.itemTitle}>
-                                        {key}
+                                        {translate[key] || key}
                                     </span>
                                     <span
                                         className={classes.itemValue}
@@ -64,10 +65,10 @@ const DataView = ({
                 </ul>
                 <div className={classes.footer}>
                     <button className={classes.btn} onClick={onGoToEdit}>
-                        Edit
+                        Sửa
                     </button>
                     <button className={classes.btn} onClick={onGoBack}>
-                        Back
+                        QUay lại
                     </button>
                 </div>
             </div>

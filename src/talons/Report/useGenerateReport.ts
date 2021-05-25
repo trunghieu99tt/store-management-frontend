@@ -138,7 +138,6 @@ const useGenerateReport = ({ view }: Props) => {
 
     const handleGetReport = async (id: string) => {
         setLoading(true);
-        console.log(`loading`, loading);
         const response = await fetchReport(~~id);
         if (response.status === 200) {
             const temp = parseFromReportToCustomReport(response.data);

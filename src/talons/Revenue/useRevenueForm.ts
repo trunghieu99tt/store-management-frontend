@@ -30,10 +30,12 @@ const useRevenueForm = ({ view: propsView }: { view: FORM_TYPE }) => {
     const history = useHistory();
 
     const [revenue, setRevenue] = useState<iRevenue | null>(null);
+    const [loading, setLoading] = useState<boolean>(false);
 
     const { fetchRevenue, addRevenue, updateRevenue } = useRevenue();
 
     const handleFetchRevenue = async () => {
+        setLoading(true);
         const id = params?.id && ~~params.id;
         if (id === 0) return;
         const data = await fetchRevenue(~~id);
@@ -46,6 +48,7 @@ const useRevenueForm = ({ view: propsView }: { view: FORM_TYPE }) => {
             createdAt: moment(new Date(data.createdAt)),
         });
         setRevenue(data);
+        setLoading(false);
     };
 
     useEffect(() => {
@@ -137,6 +140,7 @@ const useRevenueForm = ({ view: propsView }: { view: FORM_TYPE }) => {
     return {
         form,
         revenue,
+        loading,
 
         onSubmit,
         onChange,

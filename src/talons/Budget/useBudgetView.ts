@@ -24,6 +24,7 @@ const useBudgetView = () => {
 
     const { fetchBudget } = useBudget();
     const [budget, setBudget] = useState<iBudget | any>(null);
+    const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
         if (params?.id) {
@@ -33,6 +34,7 @@ const useBudgetView = () => {
 
     const handleFetchExpense = async () => {
         if (params?.id) {
+            setLoading(true);
             const id = ~~params.id;
             const data = await fetchBudget(id);
             if (!data) {
@@ -40,6 +42,7 @@ const useBudgetView = () => {
                 message.error("Không tồn tại ngân sách với id này");
             }
             setBudget(data);
+            setLoading(false);
         }
     };
 
@@ -50,6 +53,7 @@ const useBudgetView = () => {
     return {
         params,
         budget,
+        loading,
 
         onGoBack,
         onGoToEdit,

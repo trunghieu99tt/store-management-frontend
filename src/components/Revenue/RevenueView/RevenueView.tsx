@@ -1,3 +1,4 @@
+import { Spin } from "antd";
 import React from "react";
 
 // talons
@@ -7,7 +8,9 @@ import { useRevenueView } from "../../../talons/Revenue/useRevenueView";
 import DataView from "../../DataView";
 
 const RevenueView = () => {
-    const { revenue, params, onGoBack, onGoToEdit } = useRevenueView();
+    const { revenue, params, onGoBack, onGoToEdit, loading } = useRevenueView();
+
+    if (loading) return <Spin />;
 
     return (
         <DataView

@@ -23,6 +23,7 @@ const useExpenseView = () => {
 
     const { fetchExpense } = useExpense({ type: "BASE" });
     const [expense, setExpense] = useState<iExpense | any>(null);
+    const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
         if (params?.id) {
@@ -32,6 +33,7 @@ const useExpenseView = () => {
 
     const handleFetchExpense = async () => {
         if (params?.id) {
+            setLoading(true);
             const id = ~~params.id;
             const data = await fetchExpense(id);
             if (!data) {
@@ -39,6 +41,7 @@ const useExpenseView = () => {
                 message.error("Không tồn tại phiếu thu với id này");
             }
             setExpense(data);
+            setLoading(false);
         }
     };
 
@@ -48,6 +51,7 @@ const useExpenseView = () => {
 
     return {
         params,
+        loading,
         expense: expense,
 
         onGoBack,

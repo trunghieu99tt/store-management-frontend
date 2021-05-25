@@ -1,3 +1,4 @@
+import { Spin } from "antd";
 import React from "react";
 
 // talons
@@ -11,7 +12,9 @@ interface Props {
 }
 
 const BudgetView = ({ classes: propsClasses }: Props) => {
-    const { budget, params, onGoBack, onGoToEdit } = useBudgetView();
+    const { budget, params, onGoBack, onGoToEdit, loading } = useBudgetView();
+
+    if (loading) return <Spin />;
 
     return (
         <DataView

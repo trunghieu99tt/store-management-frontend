@@ -17,6 +17,7 @@ const useExpenseForm = ({ view }: { view: FORM_TYPE }) => {
 
     const [type, setType] = useState<TExpense>("EMPLOYEE_SALARY");
     const [expense, setExpense] = useState<any | null>(null);
+    const [loading, setLoading] = useState<boolean>(false);
 
     const { addExpense, fetchExpense, updateExpense } = useExpense({ type });
 
@@ -31,6 +32,7 @@ const useExpenseForm = ({ view }: { view: FORM_TYPE }) => {
     }, [params.id]);
 
     const handleFetchExpense = async () => {
+        setLoading(true);
         const id = params?.id && ~~params.id;
         if (id === 0) return;
         const data = await fetchExpense(~~id);
@@ -47,6 +49,7 @@ const useExpenseForm = ({ view }: { view: FORM_TYPE }) => {
         else if (data.hasOwnProperty("employeeID")) setType("EMPLOYEE_SALARY");
         else setType("SERVICE");
         setExpense(data);
+        setLoading(false);
     };
 
     const onSubmit = (values: any) => {
@@ -179,6 +182,7 @@ const useExpenseForm = ({ view }: { view: FORM_TYPE }) => {
         form,
         type,
         expense,
+        loading,
         onSubmit,
         onChange,
         handleCancel,

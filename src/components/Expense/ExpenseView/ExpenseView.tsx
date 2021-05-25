@@ -1,3 +1,4 @@
+import { Spin } from "antd";
 import React from "react";
 
 // talons
@@ -11,7 +12,9 @@ interface Props {
 }
 
 const ExpenseView = ({ classes: propsClasses }: Props) => {
-    const { expense, params, onGoBack, onGoToEdit } = useExpenseView();
+    const { expense, params, onGoBack, onGoToEdit, loading } = useExpenseView();
+
+    if (loading) return <Spin />;
 
     return (
         <DataView

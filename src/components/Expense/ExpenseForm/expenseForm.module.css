@@ -15,6 +15,12 @@
     box-shadow: 0px 10px 40px rgb(0 0 0 / 12%);
 }
 
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .form {
     background-color: #fff;
     padding: 3rem 2rem 2rem 3rem !important;
