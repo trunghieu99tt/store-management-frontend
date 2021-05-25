@@ -8,6 +8,7 @@ interface Props {}
 const Header = (props: Props) => {
     return (
         <header className={classes.root}>
+            <p className={classes.title}>PTIT Financial</p>
             <div className={classes.right}>
                 <UserLogo />
             </div>
